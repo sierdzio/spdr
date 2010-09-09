@@ -1,0 +1,53 @@
+/*
+ GUI backing class.
+ Currently also responsible for redistributing (to be changed).
+ TODO:
+ - move redistributor to a separate class,
+ - add QSettings functionality,
+ - add translation support,
+ - (maybe) write QML GUI.
+ */
+
+#ifndef PDMAINWINDOW_H
+#define PDMAINWINDOW_H
+
+#include <QtGui>
+#include <QtCore>
+
+#include "pddownloader.h"
+#include "pdredistributor.h"
+
+namespace Ui
+{
+    class PDMainWindow;
+}
+
+class PDMainWindow : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    PDMainWindow(QWidget *parent = 0);
+    ~PDMainWindow();
+
+private:
+    Ui::PDMainWindow *ui;
+    void loadSettings();
+    void saveSettings();
+
+    QString appVersion;
+
+private slots:
+    void on_pushButtonTransferBack_clicked();
+    void on_pushButtonTo_clicked();
+    void on_pushButtonFrom_clicked();
+    void on_pushButtonTransfer_clicked();
+    void on_pushButtonExport_clicked();
+    void on_pushButtonImport_clicked();
+    void on_actionAbout_triggered();
+    void on_actionExit_triggered();
+    void updateDownloaderProgressBar(int val);
+    void updateRedistributorProgressBar(int val);
+};
+
+#endif // PDMAINWINDOW_H

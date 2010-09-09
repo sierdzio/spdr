@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PDMainWindow</class>
+ <widget class="QMainWindow" name="PDMainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>458</width>
+    <height>450</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string/>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>icons/folder-download.png</normaloff>icons/folder-download.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>451</width>
+      <height>401</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="tabDownloader">
+     <attribute name="title">
+      <string>photoDownloader</string>
+     </attribute>
+     <widget class="QPushButton" name="pushButtonTransfer">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>280</y>
+        <width>90</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Transfer!</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEditExport">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>130</y>
+        <width>361</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>/media/archiwum</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="radioButton">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>190</y>
+        <width>401</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&lt;specified folder&gt;/&lt;year&gt;/&lt;month&gt;/&lt;YYYY_MM_DD&gt;/</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="radioButton_3">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>250</y>
+        <width>431</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>//not implemented yet</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonImport">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>201</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Select folder to import from</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="radioButton_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>220</y>
+        <width>421</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>//not implemented yet</string>
+      </property>
+     </widget>
+     <widget class="QProgressBar" name="progressBar">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>320</y>
+        <width>411</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="value">
+       <number>24</number>
+      </property>
+      <property name="invertedAppearance">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelFormatChoose">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>170</y>
+        <width>161</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Select save method:</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEditImport">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>361</width>
+        <height>26</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonExport">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>90</y>
+        <width>201</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Select folder to export to</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tabRedistributor">
+     <attribute name="title">
+      <string>Redistributor</string>
+     </attribute>
+     <widget class="QPushButton" name="pushButtonFrom">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>221</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Select folder containing photos</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonTo">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>90</y>
+        <width>201</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Select the destination folder</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEditTo">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>130</y>
+        <width>361</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>/media/STUFF/Zdjęcia prywatne</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEditFrom">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>361</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>/media/archiwum</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonTransferBack">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>170</y>
+        <width>90</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Transfer!</string>
+      </property>
+     </widget>
+     <widget class="QProgressBar" name="progressBarRedistributor">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>220</y>
+        <width>411</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="value">
+       <number>24</number>
+      </property>
+      <property name="invertedAppearance">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>458</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuOpts">
+    <property name="title">
+     <string>Opts</string>
+    </property>
+    <addaction name="actionAbout"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <addaction name="menuOpts"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="sizeGripEnabled">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <action name="actionAbout">
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/help-contents.png</normaloff>icons/help-contents.png</iconset>
+   </property>
+   <property name="text">
+    <string>About</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/system-shutdown.png</normaloff>icons/system-shutdown.png</iconset>
+   </property>
+   <property name="text">
+    <string>Exit</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
