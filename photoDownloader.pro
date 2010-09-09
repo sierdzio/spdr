@@ -25,4 +25,5 @@ OTHER_FILES += \
     COPYING.txt \
     DEVELOPER_README.txt \
     LICENCE.txt \
-    README.txt
+    README.txt \
+    CHANGELOG.txt

@@ -57,7 +57,7 @@ void PDMainWindow::on_actionAbout_triggered()
                           "with Qt exception. "
                           "Whole code is available on "
                           "<a href=\"https://sourceforge.net/projects/spdar/\">SourceForge</a>"
-                          "<br />Author: Tomasz Siekierda"
+                          "<br />Author: Tomasz Siekierda<br />"
                           "<br /><a href=\"http://www.sierdzio.com\">http://www.sierdzio.com</a>"
                           "<br /><a href=\"sierdzio@gmail.com\">sierdzio@gmail.com</a>"
                           "<br /><br />"
