@@ -22,10 +22,12 @@ signals:
 
 public slots:
     void redistribute();
+    void setFormats(QStringList newFormats);
 
 private:
     QString fromFolder;
     QString toFolder;
+    QStringList formats;
 
     PDFolderHandlers *folderHandlers;
 };

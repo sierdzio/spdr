@@ -23,10 +23,12 @@ signals:
 
 public slots:
     void download(quint8 handlerType);
+    void setFormats(QStringList newFormats);
 
 private:
     QString importFolder;
     QString exportFolder;
+    QStringList formats;
 
     PDFolderHandlers *folderHandlers;
 };

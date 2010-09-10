@@ -26,8 +26,8 @@ void PDDownloader::download(quint8 handlerType)
     importDir.setFilter(QDir::Files);
     importDir.setSorting(QDir::Time);
 
-    QStringList extensionFilter;
-    extensionFilter << "*.jpg" << "*.JPG" << "*.CR2" << "*.cr2";
+    QStringList extensionFilter = formats;
+//    extensionFilter << "*.jpg" << "*.JPG" << "*.CR2" << "*.cr2";
 
     importDir.setNameFilters(extensionFilter);
     QStringList fileList = importDir.entryList();
@@ -57,4 +57,10 @@ void PDDownloader::download(quint8 handlerType)
 
         currentCopyFile.close();
     }
+}
+
+
+void PDDownloader::setFormats(QStringList newFormats)
+{
+    formats = newFormats;
 }

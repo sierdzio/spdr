@@ -16,6 +16,7 @@
 
 #include "pddownloader.h"
 #include "pdredistributor.h"
+#include "pdsettingsdialog.h"
 
 namespace Ui
 {
@@ -30,14 +31,11 @@ public:
     PDMainWindow(QWidget *parent = 0);
     ~PDMainWindow();
 
-private:
-    Ui::PDMainWindow *ui;
-    void loadSettings();
-    void saveSettings();
-
-    QString appVersion;
+signals:
+//    preferencesChanged(QStringList dPrefs, QStringList rPrefs);
 
 private slots:
+    void on_actionPreferences_triggered();
     void on_pushButtonTransferBack_clicked();
     void on_pushButtonTo_clicked();
     void on_pushButtonFrom_clicked();
@@ -48,6 +46,16 @@ private slots:
     void on_actionExit_triggered();
     void updateDownloaderProgressBar(int val);
     void updateRedistributorProgressBar(int val);
+    void on_settingsDialog_accepted();
+
+private:
+    Ui::PDMainWindow *ui;
+    pdSettingsDialog *settingsDialog;
+    void loadSettings();
+    void saveSettings();
+
+    QString appVersion;
+//    QMap<QString, QVariant> preferences;
 };
 
 #endif // PDMAINWINDOW_H

@@ -2,13 +2,22 @@
 #include "ui_pdmainwindow.h"
 
 PDMainWindow::PDMainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::PDMainWindow)
+    : QMainWindow(parent),
+      ui(new Ui::PDMainWindow)
 {
     appVersion = "alpha1";
 
     ui->setupUi(this);
+    centralWidget()->setLayout(ui->mainLayout);
+
+    ui->tabDownloader->setLayout(ui->downloaderLayout);
+    ui->tabRedistributor->setLayout(ui->redistributorLayout);
     ui->progressBar->setValue(0);
     ui->progressBarRedistributor->setValue(0);
+    ui->tabWidget->setCurrentWidget(ui->tabDownloader);
+
+    ui->actionExit->setShortcut(QKeySequence::Close);
+
     setWindowTitle(tr("sPDar - %1").arg(appVersion));
 
     loadSettings();  
@@ -22,25 +31,28 @@ PDMainWindow::~PDMainWindow()
 
 void PDMainWindow::loadSettings()
 {
-    QSettings settings("sierdzio", "photoDownloader");
-    if (settings.contains("geometry") == TRUE)
-    {
-        restoreGeometry(settings.value("geometry").toByteArray());
-        ui->lineEditExport->setText(settings.value("exportPath").toString());
-        ui->lineEditImport->setText(settings.value("importPath").toString());
-        ui->lineEditTo->setText(settings.value("toPath").toString());
-        ui->lineEditFrom->setText(settings.value("fromPath").toString());
-    }
+    QSettings settings("sierdzio", "sPDaR");
+
+    restoreGeometry(settings.value("geometry").toByteArray());
+    ui->lineEditExport->setText(settings.value("exportPath", "").toString());
+    ui->lineEditImport->setText(settings.value("importPath", "").toString());
+    ui->lineEditTo->setText(settings.value("toPath", "").toString());
+    ui->lineEditFrom->setText(settings.value("fromPath", "").toString());
+    settingsDialog = new pdSettingsDialog(settings.value("preferences").toMap(), this);
+
+    connect(settingsDialog, SIGNAL(accepted()), this, SLOT(on_settingsDialog_accepted()));
+
 }
 
 void PDMainWindow::saveSettings()
 {
-    QSettings settings("sierdzio", "photoDownloader");
+    QSettings settings("sierdzio", "sPDaR");
     settings.setValue("geometry", saveGeometry());
     settings.setValue("exportPath", ui->lineEditExport->text());
     settings.setValue("importPath", ui->lineEditImport->text());
     settings.setValue("toPath", ui->lineEditTo->text());
     settings.setValue("fromPath", ui->lineEditFrom->text());
+    settings.setValue("preferences", settingsDialog->preferences());
 }
 
 void PDMainWindow::on_actionExit_triggered()
@@ -98,6 +110,7 @@ void PDMainWindow::on_pushButtonTransfer_clicked()
     //We get paths of import and export folders:
     PDDownloader *downloader;
     downloader = new PDDownloader(this, ui->lineEditImport->text(), ui->lineEditExport->text());
+    downloader->setFormats(settingsDialog->downloadFormatsList());
     connect(downloader, SIGNAL(updateProgressBar(int)), this, SLOT(updateDownloaderProgressBar(int)));
     downloader->download(1);
 
@@ -129,6 +142,7 @@ void PDMainWindow::on_pushButtonTransferBack_clicked()
 
     PDRedistributor *redistributor;
     redistributor = new PDRedistributor(this, ui->lineEditFrom->text(), ui->lineEditTo->text());
+    redistributor->setFormats(settingsDialog->redistributeFormatsList());
     connect(redistributor, SIGNAL(updateProgressBar(int)), this, SLOT(updateRedistributorProgressBar(int)));
     redistributor->redistribute();
 
@@ -146,4 +160,17 @@ void PDMainWindow::updateDownloaderProgressBar(int val)
 void PDMainWindow::updateRedistributorProgressBar(int val)
 {
     ui->progressBarRedistributor->setValue(val);
+}
+
+void PDMainWindow::on_actionPreferences_triggered()
+{
+    settingsDialog->show();
+//    settingsDialog->raise();
+}
+
+void PDMainWindow::on_settingsDialog_accepted()
+{
+//    preferences = settingsDialog->preferences();
+//    emit preferencesChanged(settingsDialog->downloadFormatsList(),
+//                            settingsDialog->redistributeFormatsList());
 }

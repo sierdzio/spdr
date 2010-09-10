@@ -12,12 +12,15 @@ SOURCES += main.cpp \
     pdmainwindow.cpp \
     pddownloader.cpp \
     pdredistributor.cpp \
-    pdfolderhandlers.cpp
+    pdfolderhandlers.cpp \
+    pdsettingsdialog.cpp
 HEADERS += pdmainwindow.h \
     pddownloader.h \
     pdredistributor.h \
-    pdfolderhandlers.h
-FORMS += pdmainwindow.ui
+    pdfolderhandlers.h \
+    pdsettingsdialog.h
+FORMS += pdmainwindow.ui \
+    pdsettingsdialog.ui
 TRANSLATIONS += ./locale/sPDaR_pl.ts
 
 OTHER_FILES += \

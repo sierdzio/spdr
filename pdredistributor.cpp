@@ -67,8 +67,8 @@ void PDRedistributor::redistribute()
                 fileListFromDir.setFilter(QDir::Files);
                 fileListFromDir.setSorting(QDir::Time);
 
-                QStringList extFilter;
-                extFilter << "*.jpg" << "*.JPG" << "*.tif" << "*.tiff";
+                QStringList extFilter = formats;
+//                extFilter << "*.jpg" << "*.JPG" << "*.tif" << "*.tiff";
 
                 fileListFromDir.setNameFilters(extFilter);
                 QStringList fileListFrom = fileListFromDir.entryList();
@@ -79,10 +79,10 @@ void PDRedistributor::redistribute()
                 checkListDir.setFilter(QDir::Files);
                 checkListDir.setSorting(QDir::Time);
 
-                QStringList crFilter;
-                crFilter << "*.CR2" << "*.cr2";
+                QStringList rawFilter;
+                rawFilter << "*.cr2" << ".nef" << "*.orf"  << "*.pef"<< "*.arw"<< "*.x3f"<< "*.dng";
 
-                checkListDir.setNameFilters(crFilter);
+                checkListDir.setNameFilters(rawFilter);
                 QStringList checkList = checkListDir.entryList();
 
 
@@ -109,6 +109,9 @@ void PDRedistributor::redistribute()
                         //And copy it, with basic error detection:
                         QString tempFName = fileListFrom.at(k);
                         tempFName.chop(3);
+                        /////////////////////////////////////////////////////
+                        // IMPORTANT! Rewrite that to include not only CR2!//
+                        /////////////////////////////////////////////////////
                         tempFName.append("CR2");
                         if (checkList.contains(tempFName, Qt::CaseInsensitive))
                         {
@@ -154,8 +157,8 @@ void PDRedistributor::redistribute()
             fileListFromDir.setCurrent(tempFromDate);
             fileListFromDir.setFilter(QDir::Files);
             fileListFromDir.setSorting(QDir::Time);
-            QStringList extFilter;
-            extFilter << "*.jpg" << "*.JPG" << "*.tif" << "*.tiff";
+            QStringList extFilter = formats;
+//            extFilter << "*.jpg" << "*.JPG" << "*.tif" << "*.tiff";
             fileListFromDir.setNameFilters(extFilter);
             QStringList fileListFrom = fileListFromDir.entryList();
 
@@ -190,4 +193,9 @@ void PDRedistributor::redistribute()
             }
         }
     }
+}
+
+void PDRedistributor::setFormats(QStringList newFormats)
+{
+    formats = newFormats;
 }
