@@ -106,34 +106,38 @@ void PDRedistributor::redistribute()
                         redDestination = folderHandlers->folderHandlerType1(redTempDate, tempTo);
 
                         QDir::setCurrent(tempFromDate);
-                        //And copy it, with basic error detection:
-                        QString tempFName = fileListFrom.at(k);
-                        tempFName.chop(3);
-                        /////////////////////////////////////////////////////
-                        // IMPORTANT! Rewrite that to include not only CR2!//
-                        /////////////////////////////////////////////////////
-                        tempFName.append("CR2");
-                        if (checkList.contains(tempFName, Qt::CaseInsensitive))
+
+                        bool copied = FALSE;
+
+                        foreach (QString suffix, rawFilter)
+                        {
+                            QString tempFName = fileListFrom.at(k);
+                            tempFName.chop(3);
+                            tempFName.append(suffix);
+
+                            if (checkList.contains(tempFName, Qt::CaseInsensitive))
+                            {
+                                sta = currentRedFile.copy(redDestination
+                                                          + fileListFrom.at(k).toLocal8Bit().constData());
+                                emit updateProgressBar(((k + 1) * 100) / (fileListFrom.size()));
+
+                                currentRedFile.open(QIODevice::ReadWrite);
+                                currentRedFile.remove();
+                                currentRedFile.close();
+
+                                copied = TRUE;
+                            }
+                        }
+
+                        if (copied == FALSE)
                         {
                             sta = currentRedFile.copy(redDestination
                                                       + fileListFrom.at(k).toLocal8Bit().constData());
                             emit updateProgressBar(((k + 1) * 100) / (fileListFrom.size()));
 
                             currentRedFile.open(QIODevice::ReadWrite);
-                            currentRedFile.remove();
                             currentRedFile.close();
                         }
-                        else
-                        {
-                            sta = currentRedFile.copy(redDestination
-                                                      + fileListFrom.at(k).toLocal8Bit().constData());
-                            emit updateProgressBar(((k + 1) * 100) / (fileListFrom.size()));
-
-                            currentRedFile.open(QIODevice::ReadWrite);
-                            currentRedFile.close();
-                        }
-
-
                     } //end of "file" for
                 } //end of if
             } //end of "date" for

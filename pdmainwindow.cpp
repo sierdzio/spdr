@@ -5,17 +5,21 @@ PDMainWindow::PDMainWindow(QWidget *parent)
     : QMainWindow(parent),
       ui(new Ui::PDMainWindow)
 {
-    appVersion = "alpha1";
+    appVersion = "beta1";
 
     ui->setupUi(this);
     centralWidget()->setLayout(ui->mainLayout);
+
+    // Validation:
+//    QRegExp formatRegExp("([a-z0-9]{3,4}\\s)*", Qt::CaseInsensitive);
+//    ui->lineEditDCustomFormat->setValidator(new QRegExpValidator(formatRegExp, this));
+
 
     ui->tabDownloader->setLayout(ui->downloaderLayout);
     ui->tabRedistributor->setLayout(ui->redistributorLayout);
     ui->progressBar->setValue(0);
     ui->progressBarRedistributor->setValue(0);
     ui->tabWidget->setCurrentWidget(ui->tabDownloader);
-
     ui->actionExit->setShortcut(QKeySequence::Close);
 
     setWindowTitle(tr("sPDar - %1").arg(appVersion));
@@ -38,10 +42,7 @@ void PDMainWindow::loadSettings()
     ui->lineEditImport->setText(settings.value("importPath", "").toString());
     ui->lineEditTo->setText(settings.value("toPath", "").toString());
     ui->lineEditFrom->setText(settings.value("fromPath", "").toString());
-    settingsDialog = new pdSettingsDialog(settings.value("preferences").toMap(), this);
-
-    connect(settingsDialog, SIGNAL(accepted()), this, SLOT(on_settingsDialog_accepted()));
-
+    preferences = settings.value("preferences").toMap();
 }
 
 void PDMainWindow::saveSettings()
@@ -52,7 +53,7 @@ void PDMainWindow::saveSettings()
     settings.setValue("importPath", ui->lineEditImport->text());
     settings.setValue("toPath", ui->lineEditTo->text());
     settings.setValue("fromPath", ui->lineEditFrom->text());
-    settings.setValue("preferences", settingsDialog->preferences());
+    settings.setValue("preferences", preferences);
 }
 
 void PDMainWindow::on_actionExit_triggered()
@@ -110,7 +111,7 @@ void PDMainWindow::on_pushButtonTransfer_clicked()
     //We get paths of import and export folders:
     PDDownloader *downloader;
     downloader = new PDDownloader(this, ui->lineEditImport->text(), ui->lineEditExport->text());
-    downloader->setFormats(settingsDialog->downloadFormatsList());
+    downloader->setFormats(dFormatFilst);
     connect(downloader, SIGNAL(updateProgressBar(int)), this, SLOT(updateDownloaderProgressBar(int)));
     downloader->download(1);
 
@@ -142,7 +143,7 @@ void PDMainWindow::on_pushButtonTransferBack_clicked()
 
     PDRedistributor *redistributor;
     redistributor = new PDRedistributor(this, ui->lineEditFrom->text(), ui->lineEditTo->text());
-    redistributor->setFormats(settingsDialog->redistributeFormatsList());
+    redistributor->setFormats(rFormatList);
     connect(redistributor, SIGNAL(updateProgressBar(int)), this, SLOT(updateRedistributorProgressBar(int)));
     redistributor->redistribute();
 
@@ -164,13 +165,16 @@ void PDMainWindow::updateRedistributorProgressBar(int val)
 
 void PDMainWindow::on_actionPreferences_triggered()
 {
-    settingsDialog->show();
-//    settingsDialog->raise();
+    settingsDialog = new pdSettingsDialog(preferences, this);
+    connect(settingsDialog, SIGNAL(accepted()), this, SLOT(on_settingsDialog_accepted()));
+    settingsDialog->exec();
 }
 
 void PDMainWindow::on_settingsDialog_accepted()
 {
-//    preferences = settingsDialog->preferences();
-//    emit preferencesChanged(settingsDialog->downloadFormatsList(),
-//                            settingsDialog->redistributeFormatsList());
+    preferences = settingsDialog->preferences();
+    dFormatFilst = settingsDialog->downloadFormatsList();
+    rFormatList = settingsDialog->redistributeFormatsList();
+
+    delete settingsDialog;
 }

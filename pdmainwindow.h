@@ -55,7 +55,8 @@ private:
     void saveSettings();
 
     QString appVersion;
-//    QMap<QString, QVariant> preferences;
+    QStringList dFormatFilst, rFormatList;
+    QMap<QString, QVariant> preferences;
 };
 
 #endif // PDMAINWINDOW_H

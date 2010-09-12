@@ -7,9 +7,9 @@ int main(int argc, char *argv[])
 
     // Create translator:
     QString locale = QLocale::system().name();
-    QTranslator sPDaRTranslator;
-    sPDaRTranslator.load("locale/sPDaR_pl");// + locale);
-    a.installTranslator(&sPDaRTranslator);
+//    QTranslator sPDaRTranslator;
+//    sPDaRTranslator.load("locale/sPDaR_pl");// + locale);
+//    a.installTranslator(&sPDaRTranslator);
 
     PDMainWindow w;
     w.show();

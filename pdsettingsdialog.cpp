@@ -8,6 +8,11 @@ pdSettingsDialog::pdSettingsDialog(QMap<QString, QVariant> preferences, QWidget 
     ui->setupUi(this);
     setLayout(ui->mainLayout);
 
+    // Validation:
+    QRegExp formatRegExp("([a-z0-9]{3,4}\\s)*", Qt::CaseInsensitive);
+    ui->lineEditDCustomFormat->setValidator(new QRegExpValidator(formatRegExp, this));
+    ui->lineEditRCustomFormat->setValidator(new QRegExpValidator(formatRegExp, this));
+
     setPreferences(preferences);
 }
 

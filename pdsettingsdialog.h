@@ -32,6 +32,7 @@ private:
 private slots:
     void on_checkBoxRALL_toggled(bool checked);
     void on_checkBoxDALL_toggled(bool checked);
+//    void on_accepted();
 };
 
 #endif // PDSETTINGSDIALOG_H

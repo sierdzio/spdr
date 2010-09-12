@@ -33,7 +33,7 @@
    <enum>QTabWidget::Rounded</enum>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -64,7 +64,7 @@
         <attribute name="title">
          <string>photoDownloader</string>
         </attribute>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
          <property name="geometry">
           <rect>
            <x>10</x>
@@ -223,7 +223,7 @@
         <attribute name="title">
          <string>Redistributor</string>
         </attribute>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
          <property name="geometry">
           <rect>
            <x>10</x>
@@ -513,7 +513,7 @@
      <normaloff>icons/gnome-desktop-config.png</normaloff>icons/gnome-desktop-config.png</iconset>
    </property>
    <property name="text">
-    <string>preferences</string>
+    <string>Preferences</string>
    </property>
    <property name="toolTip">
     <string>Adjust application settings</string>
