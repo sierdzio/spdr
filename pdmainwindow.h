@@ -53,6 +53,7 @@ private:
     pdSettingsDialog *settingsDialog;
     void loadSettings();
     void saveSettings();
+    void initFormatsListsFromSettings();
 
     QString appVersion;
     QStringList dFormatFilst, rFormatList;

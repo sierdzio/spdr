@@ -5,7 +5,7 @@ PDMainWindow::PDMainWindow(QWidget *parent)
     : QMainWindow(parent),
       ui(new Ui::PDMainWindow)
 {
-    appVersion = "beta1";
+    appVersion = "beta1.1";
 
     ui->setupUi(this);
     centralWidget()->setLayout(ui->mainLayout);
@@ -43,6 +43,8 @@ void PDMainWindow::loadSettings()
     ui->lineEditTo->setText(settings.value("toPath", "").toString());
     ui->lineEditFrom->setText(settings.value("fromPath", "").toString());
     preferences = settings.value("preferences").toMap();
+
+    initFormatsListsFromSettings();
 }
 
 void PDMainWindow::saveSettings()
@@ -177,4 +179,85 @@ void PDMainWindow::on_settingsDialog_accepted()
     rFormatList = settingsDialog->redistributeFormatsList();
 
     delete settingsDialog;
+}
+
+void PDMainWindow::initFormatsListsFromSettings()
+{
+    QStringList tempList;
+
+    // Set download preferences:
+    tempList = preferences.value("dFormats", "").toStringList();
+    if (preferences.value("dBmp", FALSE).toBool())
+        tempList.append("*.bmp");
+    if (preferences.value("dCanon", FALSE).toBool())
+        tempList.append("*.cr2");
+    if (preferences.value("dDng", FALSE).toBool())
+        tempList.append("*.dng");
+    if (preferences.value("dJpg", FALSE).toBool())
+    {
+        tempList.append("*.jpg");
+        tempList.append("*.jpeg");
+    }
+    if (preferences.value("dNikon", FALSE).toBool())
+        tempList.append("*.nef");
+    if (preferences.value("dOlympus", FALSE).toBool())
+        tempList.append("*.orf");
+    if (preferences.value("dPentax", FALSE).toBool())
+        tempList.append("*.pef");
+    if (preferences.value("dPng", FALSE).toBool())
+        tempList.append("*.png");
+    if (preferences.value("dSigma", FALSE).toBool())
+        tempList.append("*.x3f");
+    if (preferences.value("dSony", FALSE).toBool())
+    {
+        tempList.append("*.arw");
+        tempList.append("*.sr2");
+        tempList.append("*.srf");
+    }
+    if (preferences.value("dTiff", FALSE).toBool())
+    {
+        tempList.append("*.tif");
+        tempList.append("*.tiff");
+    }
+
+    dFormatFilst = tempList;
+    tempList.clear();
+
+    // Set redistribution preferences:
+    tempList = preferences.value("rFormats", "").toStringList();
+    if (preferences.value("rAll", FALSE).toBool())
+        if (preferences.value("rBmp", FALSE).toBool())
+            tempList.append("*.bmp");
+//    if (preferences.value("rCanon", FALSE).toBool())
+//        tempList.append("*.cr2");
+//    if (preferences.value("rDng", FALSE).toBool())
+//        tempList.append("*.dng");
+    if (preferences.value("rJpg", FALSE).toBool())
+    {
+        tempList.append("*.jpg");
+        tempList.append("*.jpeg");
+    }
+//    if (preferences.value("rNikon", FALSE).toBool())
+//        tempList.append("*.nef");
+//    if (preferencess.value("rOlympus", FALSE).toBool())
+//        tempList.append("*.orf");
+//    if (preferences.value("rPentax", FALSE).toBool())
+//        tempList.append("*.pef");
+    if (preferences.value("rPng", FALSE).toBool())
+        tempList.append("*.png");
+//    if (preferences.value("rSigma", FALSE).toBool())
+//        tempList.append("*.x3f");
+//    if (preferences.value("rSony", FALSE).toBool())
+//    {
+//        tempList.append("*.arw");
+//        tempList.append("*.sr2");
+//        tempList.append("*.srf");
+//    }
+    if (preferences.value("rTiff", FALSE).toBool())
+    {
+        tempList.append("*.tif");
+        tempList.append("*.tiff");
+    }
+
+    rFormatList = tempList;
 }

@@ -43,7 +43,8 @@ void PDRedistributor::redistribute()
     QStringList monthListFrom = monthListFromDir.entryList();
 
 
-    if (monthListFrom.size() > 1) {
+    if (monthListFrom.size() > 1)
+    {
         for (l = 1; l < monthListFrom.size(); l++)
         {
             tempFromDate = tempFrom + "/" + monthListFrom.at(l);
@@ -111,9 +112,10 @@ void PDRedistributor::redistribute()
 
                         foreach (QString suffix, rawFilter)
                         {
-                            QString tempFName = fileListFrom.at(k);
+                            QString tempFName = fileListFrom.at(k), tempSuffix = suffix;
                             tempFName.chop(3);
-                            tempFName.append(suffix);
+                            tempSuffix.remove(0, 2);
+                            tempFName.append(tempSuffix);
 
                             if (checkList.contains(tempFName, Qt::CaseInsensitive))
                             {
@@ -126,6 +128,7 @@ void PDRedistributor::redistribute()
                                 currentRedFile.close();
 
                                 copied = TRUE;
+                                break;
                             }
                         }
 

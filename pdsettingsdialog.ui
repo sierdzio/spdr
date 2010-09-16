@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>549</width>
-    <height>610</height>
+    <width>443</width>
+    <height>512</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -23,13 +23,13 @@
    <iconset>
     <normaloff>icons/gnome-desktop-config.png</normaloff>icons/gnome-desktop-config.png</iconset>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>0</x>
      <y>0</y>
-     <width>491</width>
-     <height>541</height>
+     <width>441</width>
+     <height>511</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="mainLayout">
