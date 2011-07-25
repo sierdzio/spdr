@@ -26,16 +26,24 @@ PDFolderHandlers::PDFolderHandlers(QObject *parent) :
 QString PDFolderHandlers::folderHandlerType1 (QDateTime tempDate, QString tempExport)
 {
      QDir tempDir;
-     QString tempDestination = ".";
+     QString tempDestination = ".", tempDirNameTail = "";
      QDir::setCurrent(tempExport);
 
      if (tempDir.exists(tempDate.toString("yyyy")))
-     { tempDir.cd(tempDate.toString("yyyy"));
+     {
+         tempDir.cd(tempDate.toString("yyyy"));
          if (tempDir.exists(tempDate.toString("MM")))
          {
              tempDir.cd(tempDate.toString("MM"));
-             if (tempDir.exists(tempDate.toString("yyyy_MM_dd")));
-             else tempDir.mkdir(tempDate.toString("yyyy_MM_dd"));
+             QStringList tempList = tempDir.entryList(QStringList(tempDate.toString("yyyy_MM_dd") + "*"), QDir::Dirs);
+
+             if (tempList.isEmpty())
+                 tempDir.mkdir(tempDate.toString("yyyy_MM_dd"));
+             else
+                 tempDirNameTail = tempList.at(0).mid(10);
+
+//             if (tempDir.exists(tempDate.toString("yyyy_MM_dd")));
+//             else tempDir.mkdir(tempDate.toString("yyyy_MM_dd"));
          }
          else
          {
@@ -56,7 +64,7 @@ QString PDFolderHandlers::folderHandlerType1 (QDateTime tempDate, QString tempEx
      tempDestination = tempExport + "/"
                        + tempDate.toString("yyyy") + "/"
                        + tempDate.toString("MM") + "/"
-                       + tempDate.toString("yyyy_MM_dd") + "/";
+                       + tempDate.toString("yyyy_MM_dd") + tempDirNameTail + "/";
 
         return tempDestination;
 }
