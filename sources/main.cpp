@@ -1,5 +1,5 @@
 #include <QtGui/QApplication>
-#include "pdmainwindow.h"
+#include "../headers/pdmainwindow.h"
 
 int main(int argc, char *argv[])
 {

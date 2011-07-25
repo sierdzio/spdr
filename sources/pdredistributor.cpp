@@ -1,4 +1,4 @@
-#include "pdredistributor.h"
+#include "../headers/pdredistributor.h"
 
 PDRedistributor::PDRedistributor(QObject *parent, QString fromDir, QString toDir) :
     QObject(parent),

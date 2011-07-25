@@ -1,10 +1,27 @@
-#include "pdfolderhandlers.h"
+#include "../headers/pdfolderhandlers.h"
 
+/*!
+  \class PDFolderHandlers
+  \brief This class stores all the folder handlers for Downloader.
+
+  The first and default handler follows the <year>/<month>/<day>/ path.
+  */
+
+/*!
+  \fn PDFolderHandlers::PDFolderHandlers(QObject *parent)
+
+  Default constructor. Actually, it should be deleted and all methods should be made static.
+  */
 PDFolderHandlers::PDFolderHandlers(QObject *parent) :
     QObject(parent)
 {
 }
 
+/*!
+  \fn PDFolderHandlers::folderHandlerType1 (QDateTime tempDate, QString tempExport)
+
+  Safely traverses the dir structure, so that photos are always copied safely.
+  */
 QString PDFolderHandlers::folderHandlerType1 (QDateTime tempDate, QString tempExport)
 {
      QDir tempDir;

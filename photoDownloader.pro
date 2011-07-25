@@ -6,21 +6,27 @@
 # http://www.sierdzio.com
 # http://www.sierdzio.deviantart.com
 # -------------------------------------------------
+
 TARGET = photoDownloader
+
 TEMPLATE = app
+
 SOURCES += sources/main.cpp \
     sources/pdmainwindow.cpp \
     sources/pddownloader.cpp \
     sources/pdredistributor.cpp \
     sources/pdfolderhandlers.cpp \
     sources/pdsettingsdialog.cpp
+
 HEADERS += headers/pdmainwindow.h \
     headers/pddownloader.h \
     headers/pdredistributor.h \
     headers/pdfolderhandlers.h \
     headers/pdsettingsdialog.h
+
 FORMS += ui/pdmainwindow.ui \
-    uipdsettingsdialog.ui
+    ui/pdsettingsdialog.ui
+
 TRANSLATIONS += ./locale/sPDaR_pl.ts
 
 OTHER_FILES += \

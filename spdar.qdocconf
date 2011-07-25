@@ -5,7 +5,9 @@
 
  #include(compat.qdocconf)
 
- project = sPDaR
+ project 	= sPDaR
+ version	= beta2
+ description	= sierdzios Photo Downloader and Redistributor - documentation
 
  # The outputdir variable specifies the directory
  # where QDoc will put the generated documentation.

@@ -427,32 +427,6 @@
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QRadioButton" name="radioButton_2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>//not implemented yet</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="radioButton_3">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>//not implemented yet</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </item>
     </layout>
@@ -464,7 +438,7 @@
      <x>0</x>
      <y>0</y>
      <width>404</width>
-     <height>23</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuOpts">

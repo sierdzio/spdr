@@ -1,5 +1,21 @@
-#include "pddownloader.h"
+#include "../headers/pddownloader.h"
 
+/*!
+    \class PDDownloader
+    \brief This is main class responsible for downloading photos from camera/ device.
+
+    PDDownloader does all the heavy lifting when downloading photos.
+
+    All the files matching filter lists (set up in PDSettingsDialog) are copied into
+    a specified folder hierarchy (currently it's <year>/<month>/<day>/) using one of
+    folder handlers PDFolderHandlers
+    */
+
+/*!
+    \fn PDDownloader::PDDownloader(QObject *parent, QString importDir, QString exportDir)
+
+    Constructs the downloader using specified import and export directories.
+  */
 PDDownloader::PDDownloader(QObject *parent, QString importDir, QString exportDir) :
     QObject(parent),
     importFolder(importDir),
@@ -13,6 +29,11 @@ PDDownloader::~PDDownloader()
     delete folderHandlers;
 }
 
+/*!
+    \fn PDDownloader::download(quint8 handlerType)
+
+    Performs file fownload.
+  */
 void PDDownloader::download(quint8 handlerType)
 {
     QString tempImport = importFolder;
@@ -59,7 +80,11 @@ void PDDownloader::download(quint8 handlerType)
     }
 }
 
+/*!
+    \fn PDDownloader::setFormats(QStringList newFormats)
 
+    Resets the list of formats.
+  */
 void PDDownloader::setFormats(QStringList newFormats)
 {
     formats = newFormats;

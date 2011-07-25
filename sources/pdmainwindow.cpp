@@ -1,4 +1,4 @@
-#include "pdmainwindow.h"
+#include "../headers/pdmainwindow.h"
 #include "ui_pdmainwindow.h"
 
 PDMainWindow::PDMainWindow(QWidget *parent)

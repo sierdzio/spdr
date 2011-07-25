@@ -1,4 +1,4 @@
-#include "pdsettingsdialog.h"
+#include "../headers/pdsettingsdialog.h"
 #include "ui_pdsettingsdialog.h"
 
 pdSettingsDialog::pdSettingsDialog(QMap<QString, QVariant> preferences, QWidget *parent) :
