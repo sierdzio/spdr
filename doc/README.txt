@@ -4,6 +4,7 @@ The most up-to-date version of this readme is available here:
 https://docs.google.com/document/edit?id=1M1bWuwXNLq18bMlf5LoDTrLwHJ4IBcisphPVk7mjeD8&hl=en_GB
 
 This is an on-line README for sPDaR (https://sourceforge.net/projects/spdar/).
+Project’s GIT repo: https://gitorious.org/spdar/
 
 1. This a very early version of this file. It will be updated in the future.
 

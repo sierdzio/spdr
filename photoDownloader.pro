@@ -8,25 +8,25 @@
 # -------------------------------------------------
 TARGET = photoDownloader
 TEMPLATE = app
-SOURCES += main.cpp \
-    pdmainwindow.cpp \
-    pddownloader.cpp \
-    pdredistributor.cpp \
-    pdfolderhandlers.cpp \
-    pdsettingsdialog.cpp
-HEADERS += pdmainwindow.h \
-    pddownloader.h \
-    pdredistributor.h \
-    pdfolderhandlers.h \
-    pdsettingsdialog.h
-FORMS += pdmainwindow.ui \
-    pdsettingsdialog.ui
+SOURCES += sources/main.cpp \
+    sources/pdmainwindow.cpp \
+    sources/pddownloader.cpp \
+    sources/pdredistributor.cpp \
+    sources/pdfolderhandlers.cpp \
+    sources/pdsettingsdialog.cpp
+HEADERS += headers/pdmainwindow.h \
+    headers/pddownloader.h \
+    headers/pdredistributor.h \
+    headers/pdfolderhandlers.h \
+    headers/pdsettingsdialog.h
+FORMS += ui/pdmainwindow.ui \
+    uipdsettingsdialog.ui
 TRANSLATIONS += ./locale/sPDaR_pl.ts
 
 OTHER_FILES += \
-    AUTHORS.txt \
-    COPYING.txt \
-    DEVELOPER_README.txt \
-    LICENCE.txt \
-    README.txt \
-    CHANGELOG.txt
+    doc/AUTHORS.txt \
+    doc/COPYING.txt \
+    doc/DEVELOPER_README.txt \
+    doc/LICENCE.txt \
+    doc/README.txt \
+    doc/CHANGELOG.txt
