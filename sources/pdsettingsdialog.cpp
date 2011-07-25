@@ -1,6 +1,18 @@
 #include "../headers/pdsettingsdialog.h"
 #include "ui_pdsettingsdialog.h"
 
+/*!
+    \class pdSettingsDialog
+    \brief Application's settings dialog.
+
+    Class responsible for displaying and handling the settings dialog.
+    */
+
+/*!
+    \fn pdSettingsDialog::pdSettingsDialog(QMap<QString, QVariant> preferences, QWidget *parent)
+
+    Constructs the settings dialog, using \a preferences and optional \a parent.
+    */
 pdSettingsDialog::pdSettingsDialog(QMap<QString, QVariant> preferences, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::pdSettingsDialog)
@@ -16,11 +28,21 @@ pdSettingsDialog::pdSettingsDialog(QMap<QString, QVariant> preferences, QWidget 
     setPreferences(preferences);
 }
 
+/*!
+    \internal
+
+    Destructor. Deletes the UI.
+    */
 pdSettingsDialog::~pdSettingsDialog()
 {
     delete ui;
 }
 
+/*!
+    \fn pdSettingsDialog::preferences()
+
+    Returns all the preferences.
+    */
 QMap<QString, QVariant> pdSettingsDialog::preferences()
 {
     QMap<QString, QVariant> result;
@@ -58,6 +80,11 @@ QMap<QString, QVariant> pdSettingsDialog::preferences()
     return result;
 }
 
+/*!
+    \fn pdSettingsDialog::setPreferences(QMap<QString, QVariant> prefs)
+
+    Sets all the preferences (\a prefs).
+    */
 void pdSettingsDialog::setPreferences(QMap<QString, QVariant> prefs)
 {
     // Set download preferences:
@@ -91,6 +118,11 @@ void pdSettingsDialog::setPreferences(QMap<QString, QVariant> prefs)
     ui->checkBoxRTIFF->setChecked(prefs.value("rTiff", FALSE).toBool());
 }
 
+/*!
+    \fn pdSettingsDialog::downloadFormatsList()
+
+    Returns format list for downloader.
+    */
 QStringList pdSettingsDialog::downloadFormatsList()
 {
     QStringList result = ui->lineEditDCustomFormat->text().split(" ", QString::SkipEmptyParts);
@@ -127,6 +159,11 @@ QStringList pdSettingsDialog::downloadFormatsList()
     return result;
 }
 
+/*!
+    \fn pdSettingsDialog::redistributeFormatsList()
+
+    Returns format list for redistributor.
+    */
 QStringList pdSettingsDialog::redistributeFormatsList()
 {
     QStringList result = ui->lineEditRCustomFormat->text().split(" ", QString::SkipEmptyParts);
@@ -150,6 +187,11 @@ QStringList pdSettingsDialog::redistributeFormatsList()
     return result;
 }
 
+/*!
+    \fn pdSettingsDialog::on_checkBoxDALL_toggled(bool checked)
+
+    Handles the "check all" checkbox (downloader), depending on the state of \a checked.
+    */
 void pdSettingsDialog::on_checkBoxDALL_toggled(bool checked)
 {
     if (checked == TRUE)
@@ -182,6 +224,11 @@ void pdSettingsDialog::on_checkBoxDALL_toggled(bool checked)
     }
 }
 
+/*!
+    \fn pdSettingsDialog::on_checkBoxRALL_toggled(bool checked)
+
+    Handles the "check all" checkbox (redistributor), depending on the state of \a checked.
+    */
 void pdSettingsDialog::on_checkBoxRALL_toggled(bool checked)
 {
     if (checked == TRUE)

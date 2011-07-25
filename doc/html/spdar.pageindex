@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qtPageIndex>
+    <page id="{eb2b4ba2-1aae-4ff4-aaa4-d8d869f765fb}">
+        <pageWords>PDDownloader class reference</pageWords>
+        <pageTitle>PDDownloader Class Reference</pageTitle>
+        <pageUrl>pddownloader.html</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{cf092ec1-2bb3-43d7-99f1-db41e664558c}">
+        <pageWords>PDDownloader function PDDownloader</pageWords>
+        <pageTitle>PDDownloader Function Reference</pageTitle>
+        <pageUrl>pddownloader.html#PDDownloader</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{4b47fe32-91d1-43ef-885c-835533e3e4c7}">
+        <pageWords>updateProgressBar function PDDownloader</pageWords>
+        <pageTitle>updateProgressBar Function Reference</pageTitle>
+        <pageUrl>pddownloader.html#updateProgressBar</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{55f4513f-bc3d-45f4-95f0-e0bdec118151}">
+        <pageWords>download function PDDownloader</pageWords>
+        <pageTitle>download Function Reference</pageTitle>
+        <pageUrl>pddownloader.html#download</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{32a16b95-56f0-43ce-b689-206c2e63f926}">
+        <pageWords>setFormats function PDDownloader</pageWords>
+        <pageTitle>setFormats Function Reference</pageTitle>
+        <pageUrl>pddownloader.html#setFormats</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{f55e75af-826e-4146-8f80-1b2361cc6c14}">
+        <pageWords>pdSettingsDialog class reference</pageWords>
+        <pageTitle>pdSettingsDialog Class Reference</pageTitle>
+        <pageUrl>pdsettingsdialog.html</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{a04bf0a9-bfaf-4504-a0f8-ef2e5820d44c}">
+        <pageWords>pdSettingsDialog function pdSettingsDialog</pageWords>
+        <pageTitle>pdSettingsDialog Function Reference</pageTitle>
+        <pageUrl>pdsettingsdialog.html#pdSettingsDialog</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{4fd38ba4-57eb-46df-a325-45b969ded8bb}">
+        <pageWords>preferences function pdSettingsDialog</pageWords>
+        <pageTitle>preferences Function Reference</pageTitle>
+        <pageUrl>pdsettingsdialog.html#preferences</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{5ee15f18-ef43-4036-b2f2-f37bb374d7b8}">
+        <pageWords>downloadFormatsList function pdSettingsDialog</pageWords>
+        <pageTitle>downloadFormatsList Function Reference</pageTitle>
+        <pageUrl>pdsettingsdialog.html#downloadFormatsList</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{34cabb4a-8caa-4d70-8764-16bd9d2dec13}">
+        <pageWords>redistributeFormatsList function pdSettingsDialog</pageWords>
+        <pageTitle>redistributeFormatsList Function Reference</pageTitle>
+        <pageUrl>pdsettingsdialog.html#redistributeFormatsList</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{b5f5889b-c856-4500-b2e6-46be8fa4e221}">
+        <pageWords>setPreferences function pdSettingsDialog</pageWords>
+        <pageTitle>setPreferences Function Reference</pageTitle>
+        <pageUrl>pdsettingsdialog.html#setPreferences</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{183792a4-8080-4887-b5c1-6cb0e457ef3d}">
+        <pageWords>PDRedistributor class reference</pageWords>
+        <pageTitle>PDRedistributor Class Reference</pageTitle>
+        <pageUrl>pdredistributor.html</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{1f6d932d-4fd8-47f7-a643-6bcd79c0a106}">
+        <pageWords>PDRedistributor function PDRedistributor</pageWords>
+        <pageTitle>PDRedistributor Function Reference</pageTitle>
+        <pageUrl>pdredistributor.html#PDRedistributor</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{bac92a6a-3459-4155-a06c-e6d4c7236005}">
+        <pageWords>updateProgressBar function PDRedistributor</pageWords>
+        <pageTitle>updateProgressBar Function Reference</pageTitle>
+        <pageUrl>pdredistributor.html#updateProgressBar</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{1c58c850-4c4f-47ea-ae31-0641528ab045}">
+        <pageWords>redistribute function PDRedistributor</pageWords>
+        <pageTitle>redistribute Function Reference</pageTitle>
+        <pageUrl>pdredistributor.html#redistribute</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{3c6c068e-b711-4cda-81f6-63e002ad0b1c}">
+        <pageWords>setFormats function PDRedistributor</pageWords>
+        <pageTitle>setFormats Function Reference</pageTitle>
+        <pageUrl>pdredistributor.html#setFormats</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{42e471b2-cb7e-4b6c-9b04-d53041babcae}">
+        <pageWords>PDFolderHandlers class reference</pageWords>
+        <pageTitle>PDFolderHandlers Class Reference</pageTitle>
+        <pageUrl>pdfolderhandlers.html</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{82aea428-f944-4496-8a9d-91d4075be1ea}">
+        <pageWords>PDFolderHandlers function PDFolderHandlers</pageWords>
+        <pageTitle>PDFolderHandlers Function Reference</pageTitle>
+        <pageUrl>pdfolderhandlers.html#PDFolderHandlers</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{aedceeb5-eed1-41dd-82be-1852862480fa}">
+        <pageWords>folderHandlerType1 function PDFolderHandlers</pageWords>
+        <pageTitle>folderHandlerType1 Function Reference</pageTitle>
+        <pageUrl>pdfolderhandlers.html#folderHandlerType1</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{0b526ee5-52dd-472a-8c51-5c34cc9c24ca}">
+        <pageWords>PDMainWindow class reference</pageWords>
+        <pageTitle>PDMainWindow Class Reference</pageTitle>
+        <pageUrl>pdmainwindow.html</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+    <page id="{ead4fe74-8086-4b53-bab4-7c00abc89e93}">
+        <pageWords>PDMainWindow function PDMainWindow</pageWords>
+        <pageTitle>PDMainWindow Function Reference</pageTitle>
+        <pageUrl>pdmainwindow.html#PDMainWindow</pageUrl>
+        <pageType>APIPage</pageType>
+    </page>
+</qtPageIndex>

@@ -10,7 +10,7 @@
 /*!
   \fn PDFolderHandlers::PDFolderHandlers(QObject *parent)
 
-  Default constructor. Actually, it should be deleted and all methods should be made static.
+  Default constructor. Actually, it should be deleted and all methods should be made static. \a parent defaults to 0.
   */
 PDFolderHandlers::PDFolderHandlers(QObject *parent) :
     QObject(parent)
@@ -20,7 +20,8 @@ PDFolderHandlers::PDFolderHandlers(QObject *parent) :
 /*!
   \fn PDFolderHandlers::folderHandlerType1 (QDateTime tempDate, QString tempExport)
 
-  Safely traverses the dir structure, so that photos are always copied safely.
+  Safely traverses the dir structure, so that photos are always copied safely. Needs \a tempDate get through
+  hierarchy and \a tempExport to get the base folder path.
   */
 QString PDFolderHandlers::folderHandlerType1 (QDateTime tempDate, QString tempExport)
 {

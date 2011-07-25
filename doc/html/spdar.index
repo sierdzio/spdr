@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE QDOCINDEX>
+<INDEX url="" title="sierdzios Photo Downloader and Redistributor - documentation" version="beta2">
+    <namespace access="public" threadsafety="unspecified" status="commendable" name="" href="" location="" module="">
+        <class access="public" threadsafety="unspecified" status="commendable" name="PDDownloader" href="pddownloader.html" location="pddownloader.h" bases="" module="">
+            <function access="public" threadsafety="unspecified" status="commendable" name="PDDownloader" fullname="PDDownloader::PDDownloader" href="pddownloader.html#PDDownloader" location="pddownloader.cpp" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="PDDownloader(QObject * parent, QString importDir, QString exportDir)">
+                <parameter left="QObject *" right="" name="parent" default=""/>
+                <parameter left="QString" right="" name="importDir" default=""/>
+                <parameter left="QString" right="" name="exportDir" default=""/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="updateProgressBar" fullname="PDDownloader::updateProgressBar" href="pddownloader.html#updateProgressBar" location="pddownloader.h" virtual="non" meta="signal" const="false" static="false" overload="false" type="void" signature="updateProgressBar(int value)">
+                <parameter left="int" right="" name="value" default=""/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="download" fullname="PDDownloader::download" href="pddownloader.html#download" location="pddownloader.cpp" virtual="non" meta="slot" const="false" static="false" overload="false" type="void" signature="download(quint8 handlerType)">
+                <parameter left="quint8" right="" name="handlerType" default=""/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setFormats" fullname="PDDownloader::setFormats" href="pddownloader.html#setFormats" location="pddownloader.cpp" virtual="non" meta="slot" const="false" static="false" overload="false" type="void" signature="setFormats(QStringList newFormats)">
+                <parameter left="QStringList" right="" name="newFormats" default=""/>
+            </function>
+        </class>
+        <class access="public" threadsafety="unspecified" status="commendable" name="pdSettingsDialog" href="pdsettingsdialog.html" location="pdsettingsdialog.h" bases="" module="">
+            <function access="public" threadsafety="unspecified" status="commendable" name="pdSettingsDialog" fullname="pdSettingsDialog::pdSettingsDialog" href="pdsettingsdialog.html#pdSettingsDialog" location="pdsettingsdialog.cpp" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="pdSettingsDialog(QMap&lt;QString, QVariant&gt; preferences, QWidget * parent)">
+                <parameter left="QMap&lt;QString, QVariant&gt;" right="" name="preferences" default=""/>
+                <parameter left="QWidget *" right="" name="parent" default="0"/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="preferences" fullname="pdSettingsDialog::preferences" href="pdsettingsdialog.html#preferences" location="pdsettingsdialog.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="QMap&lt;QString, QVariant&gt;" signature="preferences()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="downloadFormatsList" fullname="pdSettingsDialog::downloadFormatsList" href="pdsettingsdialog.html#downloadFormatsList" location="pdsettingsdialog.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="QStringList" signature="downloadFormatsList()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="redistributeFormatsList" fullname="pdSettingsDialog::redistributeFormatsList" href="pdsettingsdialog.html#redistributeFormatsList" location="pdsettingsdialog.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="QStringList" signature="redistributeFormatsList()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setPreferences" fullname="pdSettingsDialog::setPreferences" href="pdsettingsdialog.html#setPreferences" location="pdsettingsdialog.cpp" virtual="non" meta="plain" const="false" static="false" overload="false" type="void" signature="setPreferences(QMap&lt;QString, QVariant&gt; prefs)">
+                <parameter left="QMap&lt;QString, QVariant&gt;" right="" name="prefs" default=""/>
+            </function>
+        </class>
+        <class access="public" threadsafety="unspecified" status="commendable" name="PDRedistributor" href="pdredistributor.html" location="pdredistributor.h" bases="" module="">
+            <function access="public" threadsafety="unspecified" status="commendable" name="PDRedistributor" fullname="PDRedistributor::PDRedistributor" href="pdredistributor.html#PDRedistributor" location="pdredistributor.cpp" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="PDRedistributor(QObject * parent, QString fromDir, QString toDir)">
+                <parameter left="QObject *" right="" name="parent" default=""/>
+                <parameter left="QString" right="" name="fromDir" default=""/>
+                <parameter left="QString" right="" name="toDir" default=""/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="updateProgressBar" fullname="PDRedistributor::updateProgressBar" href="pdredistributor.html#updateProgressBar" location="pdredistributor.h" virtual="non" meta="signal" const="false" static="false" overload="false" type="void" signature="updateProgressBar(int value)">
+                <parameter left="int" right="" name="value" default=""/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="redistribute" fullname="PDRedistributor::redistribute" href="pdredistributor.html#redistribute" location="pdredistributor.cpp" virtual="non" meta="slot" const="false" static="false" overload="false" type="void" signature="redistribute()"/>
+            <function access="public" threadsafety="unspecified" status="commendable" name="setFormats" fullname="PDRedistributor::setFormats" href="pdredistributor.html#setFormats" location="pdredistributor.cpp" virtual="non" meta="slot" const="false" static="false" overload="false" type="void" signature="setFormats(QStringList newFormats)">
+                <parameter left="QStringList" right="" name="newFormats" default=""/>
+            </function>
+        </class>
+        <class access="public" threadsafety="unspecified" status="commendable" name="PDFolderHandlers" href="pdfolderhandlers.html" location="pdfolderhandlers.h" bases="" module="">
+            <function access="public" threadsafety="unspecified" status="commendable" name="PDFolderHandlers" fullname="PDFolderHandlers::PDFolderHandlers" href="pdfolderhandlers.html#PDFolderHandlers" location="pdfolderhandlers.cpp" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="PDFolderHandlers(QObject * parent)">
+                <parameter left="QObject *" right="" name="parent" default="0"/>
+            </function>
+            <function access="public" threadsafety="unspecified" status="commendable" name="folderHandlerType1" fullname="PDFolderHandlers::folderHandlerType1" href="pdfolderhandlers.html#folderHandlerType1" location="pdfolderhandlers.cpp" virtual="non" meta="slot" const="false" static="false" overload="false" type="QString" signature="folderHandlerType1(QDateTime tempDate, QString tempExport)">
+                <parameter left="QDateTime" right="" name="tempDate" default=""/>
+                <parameter left="QString" right="" name="tempExport" default=""/>
+            </function>
+        </class>
+        <class access="public" threadsafety="unspecified" status="commendable" name="PDMainWindow" href="pdmainwindow.html" location="pdmainwindow.h" bases="" module="">
+            <function access="public" threadsafety="unspecified" status="commendable" name="PDMainWindow" fullname="PDMainWindow::PDMainWindow" href="pdmainwindow.html#PDMainWindow" location="pdmainwindow.cpp" virtual="non" meta="constructor" const="false" static="false" overload="false" type="" signature="PDMainWindow(QWidget * parent)">
+                <parameter left="QWidget *" right="" name="parent" default="0"/>
+            </function>
+        </class>
+    </namespace>
+</INDEX>

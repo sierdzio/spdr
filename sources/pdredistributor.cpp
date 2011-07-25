@@ -1,5 +1,24 @@
 #include "../headers/pdredistributor.h"
 
+/*!
+    \class PDRedistributor
+    \brief Main clas for the redistribution part of the application.
+
+    Responsible for redistributing developed photos from RAW source dir.
+
+    Redistributor moves (that is copies and deletes from source dir, pastes to destination dir)
+    files that have RAW equivalent, and copies all else. This means that after you develop your RAWs,
+    they are left in source, and only the resulting files (usually JPGs) are being copied to destination.
+    Files that did not have any RAW base file are being copied - so you end up with one copy in source, and another
+    in destination.
+    */
+
+/*!
+    \fn PDRedistributor::PDRedistributor(QObject *parent, QString fromDir, QString toDir)
+
+    Constructs the redistributor, using from (\a fromDir) and to (\a toDir) directory information. Specifying
+    \a parent is compulsory.
+    */
 PDRedistributor::PDRedistributor(QObject *parent, QString fromDir, QString toDir) :
     QObject(parent),
     fromFolder(fromDir),
@@ -8,11 +27,27 @@ PDRedistributor::PDRedistributor(QObject *parent, QString fromDir, QString toDir
     folderHandlers = new PDFolderHandlers(this);
 }
 
+/*!
+    \internal
+
+    Destructor.
+    */
 PDRedistributor::~PDRedistributor()
 {
     delete folderHandlers;
 }
 
+/*!
+  \fn PDRedistributor::updateProgressBar(int value)
+
+  Sends the signal with new \a value for progress bar.
+  */
+
+/*!
+    \fn PDRedistributor::redistribute()
+
+    Central method of redistributor. Does all the work :)
+    */
 void PDRedistributor::redistribute()
 {
     /* Here, we've go to:
@@ -202,6 +237,11 @@ void PDRedistributor::redistribute()
     }
 }
 
+/*!
+    \fn PDRedistributor::setFormats(QStringList newFormats)
+
+    Resets the formats/ filters, using \a newFormats.
+    */
 void PDRedistributor::setFormats(QStringList newFormats)
 {
     formats = newFormats;

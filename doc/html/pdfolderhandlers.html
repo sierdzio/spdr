@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- pdfolderhandlers.cpp -->
+  <title>Qt beta2: PDFolderHandlers Class Reference</title>
+  <link rel="stylesheet" type="text/css" href="style/style.css" />
+  <script src="scripts/jquery.js" type="text/javascript"></script>
+  <script src="scripts/functions.js" type="text/javascript"></script>
+</head>
+<body class="offline narrow creator">
+              <li><a href="modules.html">Modules</a></li>              <li>PDFolderHandlers</li>
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#public-slots">Public Slots</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<h1 class="title">PDFolderHandlers Class Reference</h1>
+<!-- $$$PDFolderHandlers-brief -->
+<p>This class stores all the folder handlers for Downloader. <a href="#details">More...</a></p>
+<!-- @@@PDFolderHandlers -->
+<pre class="highlightedCode brush: cpp">    #include &lt;PDFolderHandlers&gt;</pre><ul>
+<li><a href="pdfolderhandlers-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2>Public Functions</h2>
+<table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="pdfolderhandlers.html#PDFolderHandlers">PDFolderHandlers</a></b> ( QObject * <i>parent</i> = 0 )</td></tr>
+</table>
+<a name="public-slots"></a>
+<h2>Public Slots</h2>
+<table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> QString </td><td class="memItemRight bottomAlign"><b><a href="pdfolderhandlers.html#folderHandlerType1">folderHandlerType1</a></b> ( QDateTime <i>tempDate</i>, QString <i>tempExport</i> )</td></tr>
+</table>
+<a name="details"></a>
+<!-- $$$PDFolderHandlers-description -->
+<div class="descr">
+<h2>Detailed Description</h2>
+<p>This class stores all the folder handlers for Downloader.</p>
+<p>The first and default handler follows the &lt;year&gt;/&lt;month&gt;/&lt;day&gt;/ path.</p>
+</div>
+<!-- @@@PDFolderHandlers -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$PDFolderHandlers[overload1]$$$PDFolderHandlersQObject* -->
+<h3 class="fn"><a name="PDFolderHandlers"></a>PDFolderHandlers::PDFolderHandlers ( QObject * <i>parent</i> = 0 )</h3>
+<p>Default constructor. Actually, it should be deleted and all methods should be made static. <i>parent</i> defaults to 0.</p>
+<!-- @@@PDFolderHandlers -->
+<!-- $$$folderHandlerType1[overload1]$$$folderHandlerType1QDateTimeQString -->
+<h3 class="fn"><a name="folderHandlerType1"></a>QString PDFolderHandlers::folderHandlerType1 ( QDateTime <i>tempDate</i>, QString <i>tempExport</i> )<tt> [slot]</tt></h3>
+<p>Safely traverses the dir structure, so that photos are always copied safely. Needs <i>tempDate</i> get through hierarchy and <i>tempExport</i> to get the base folder path.</p>
+<!-- @@@folderHandlerType1 -->
+</div>
+</body>
+</html>

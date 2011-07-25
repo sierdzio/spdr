@@ -1,6 +1,10 @@
 #include <QtGui/QApplication>
 #include "../headers/pdmainwindow.h"
 
+/*
+    Application's main function. Runs sPDaR dialog, optionally fires
+    the translator.
+  */
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

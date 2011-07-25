@@ -14,7 +14,7 @@
 /*!
     \fn PDDownloader::PDDownloader(QObject *parent, QString importDir, QString exportDir)
 
-    Constructs the downloader using specified import and export directories.
+    Constructs the downloader using specified import (\a importDir) and export (\a exportDir) directories. Needs a \a parent.
   */
 PDDownloader::PDDownloader(QObject *parent, QString importDir, QString exportDir) :
     QObject(parent),
@@ -24,15 +24,27 @@ PDDownloader::PDDownloader(QObject *parent, QString importDir, QString exportDir
     folderHandlers = new PDFolderHandlers(this);
 }
 
+/*!
+    \internal
+
+    PDDownloader's destructor.
+  */
 PDDownloader::~PDDownloader()
 {
     delete folderHandlers;
 }
 
 /*!
+  \fn PDDownloader::updateProgressBar(int value)
+
+  Sends the signal with new \a value for progress bar.
+  */
+
+/*!
     \fn PDDownloader::download(quint8 handlerType)
 
-    Performs file fownload.
+    Performs file fownload. Specifying the \a handlerType is compulsory, even though
+    currently only '1' is valid.
   */
 void PDDownloader::download(quint8 handlerType)
 {
@@ -83,7 +95,7 @@ void PDDownloader::download(quint8 handlerType)
 /*!
     \fn PDDownloader::setFormats(QStringList newFormats)
 
-    Resets the list of formats.
+    Resets the list of formats, using \a newFormats.
   */
 void PDDownloader::setFormats(QStringList newFormats)
 {

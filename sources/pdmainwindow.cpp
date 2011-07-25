@@ -1,6 +1,20 @@
 #include "../headers/pdmainwindow.h"
 #include "ui_pdmainwindow.h"
 
+/*!
+    \class PDMainWindow
+    \brief sPDaR's main window's logic is living here.
+
+    Sets up the UI, manages whole user interaction (save for settings dialog).
+  */
+
+/*!
+    \fn PDMainWindow::PDMainWindow(QWidget *parent)
+
+    Constructs the UI, resets all the vars, loads application settings (using QSettings).
+
+    \a parent defaults to 0.
+  */
 PDMainWindow::PDMainWindow(QWidget *parent)
     : QMainWindow(parent),
       ui(new Ui::PDMainWindow)
@@ -27,12 +41,27 @@ PDMainWindow::PDMainWindow(QWidget *parent)
     loadSettings();  
 }
 
+/*!
+    \internal
+
+    PDMainWindow's destructor.
+  */
 PDMainWindow::~PDMainWindow()
 {
     saveSettings();
     delete ui;
 }
 
+/*!
+    \fn PDMainWindow::loadSettings()
+
+    Loads settings using QSettings. This means that:
+    \list
+    \o on Windows, app settings from system registry are used
+    \o on Linux, app settings from /home/sierdzio/.config/sierdzio/sPDaR.conf are used
+    \o on Mac - I don't know how, but it works
+    \endlist
+  */
 void PDMainWindow::loadSettings()
 {
     QSettings settings("sierdzio", "sPDaR");
@@ -47,6 +76,16 @@ void PDMainWindow::loadSettings()
     initFormatsListsFromSettings();
 }
 
+/*!
+    \fn PDMainWindow::saveSettings()
+
+    Saves settings using QSettings. This means that:
+    \list
+    \o on Windows, app settings are written to system registry
+    \o on Linux, app settings are written to /home/sierdzio/.config/sierdzio/sPDaR.conf
+    \o on Mac - I don't know how, but it works.
+    \endlist
+  */
 void PDMainWindow::saveSettings()
 {
     QSettings settings("sierdzio", "sPDaR");
@@ -58,11 +97,21 @@ void PDMainWindow::saveSettings()
     settings.setValue("preferences", preferences);
 }
 
+/*!
+    \fn PDMainWindow::on_actionExit_triggered()
+
+    Closes the application.
+    */
 void PDMainWindow::on_actionExit_triggered()
 {
     QWidget::close();
 }
 
+/*!
+    \fn PDMainWindow::on_actionAbout_triggered()
+
+    Displays the "About" menu.
+    */
 void PDMainWindow::on_actionAbout_triggered()
 {
     QMessageBox::about(this,
@@ -87,6 +136,11 @@ void PDMainWindow::on_actionAbout_triggered()
                           ).arg(appVersion).arg(qVersion()));
 }
 
+/*!
+    \fn PDMainWindow::on_pushButtonImport_clicked()
+
+    Displays a directory dialog, allowing users to select import dirs.
+    */
 void PDMainWindow::on_pushButtonImport_clicked()
 {
     QString ImportDirPath = QFileDialog::getExistingDirectory(this,
@@ -95,6 +149,11 @@ void PDMainWindow::on_pushButtonImport_clicked()
     ui->lineEditImport->setText(ImportDirPath);
 }
 
+/*!
+    \fn PDMainWindow::on_pushButtonExport_clicked()
+
+    Displays a directory dialog, allowing users to select export dirs.
+    */
 void PDMainWindow::on_pushButtonExport_clicked()
 {
     QString ExportDirPath = QFileDialog::getExistingDirectory(this,
@@ -103,6 +162,12 @@ void PDMainWindow::on_pushButtonExport_clicked()
     ui->lineEditExport->setText(ExportDirPath);
 }
 
+/*!
+    \fn PDMainWindow::on_pushButtonTransfer_clicked()
+
+    This action fires the transfer. Downloader uses specified import
+    and export dirs to properly copy all files matching filters to appropriate folders.
+    */
 void PDMainWindow::on_pushButtonTransfer_clicked()
 {
     ui->progressBar->setValue(0);
@@ -123,6 +188,12 @@ void PDMainWindow::on_pushButtonTransfer_clicked()
     ui->pushButtonTransfer->setEnabled(TRUE);
 }
 
+/*!
+    \fn PDMainWindow::on_pushButtonFrom_clicked()
+
+    Displays a directory dialog, allowing users to select "from" folder
+    in redistributor.
+    */
 void PDMainWindow::on_pushButtonFrom_clicked()
 {
     QString FromDirPath = QFileDialog::getExistingDirectory(this, tr("Redistribute from where: "
@@ -130,12 +201,29 @@ void PDMainWindow::on_pushButtonFrom_clicked()
     ui->lineEditFrom->setText(FromDirPath);
 }
 
+/*!
+    \fn PDMainWindow::on_pushButtonTo_clicked()
+
+    Displays a directory dialog, allowing users to select "to" folder
+    in redistributor.
+    */
 void PDMainWindow::on_pushButtonTo_clicked()
 {
     QString ToDirPath = QFileDialog::getExistingDirectory(this, tr("Destination folder:"), "/media/");
     ui->lineEditTo->setText(ToDirPath);
 }
 
+/*!
+    \fn PDMainWindow::on_pushButtonTransferBack_clicked()
+
+    This function starts the redistribution process. As with downloader, it uses specified directories and filters to copy/ move the data.
+
+    Redistributor moves (that is copies and deletes from source dir, pastes to destination dir)
+    files that have RAW equivalent, and copies all else. This means that after you develop your RAWs,
+    they are left in source, and only the resulting files (usually JPGs) are being copied to destination.
+    Files that did not have any RAW base file are being copied - so you end up with one copy in source, and another
+    in destination.
+    */
 void PDMainWindow::on_pushButtonTransferBack_clicked()
 {
     ui->progressBarRedistributor->setValue(0);
@@ -155,16 +243,31 @@ void PDMainWindow::on_pushButtonTransferBack_clicked()
     ui->pushButtonTransferBack->setEnabled(TRUE);
 }
 
+/*!
+    \fn PDMainWindow::updateDownloaderProgressBar(int val)
+
+    Updates progress bar.
+    */
 void PDMainWindow::updateDownloaderProgressBar(int val)
 {
     ui->progressBar->setValue(val);
 }
 
+/*!
+    \fn PDMainWindow::updateRedistributorProgressBar(int val)
+
+    Updates redistributor's progress bar.
+    */
 void PDMainWindow::updateRedistributorProgressBar(int val)
 {
     ui->progressBarRedistributor->setValue(val);
 }
 
+/*!
+    \fn PDMainWindow::on_actionPreferences_triggered()
+
+    Displays the settings dialog.
+    */
 void PDMainWindow::on_actionPreferences_triggered()
 {
     settingsDialog = new pdSettingsDialog(preferences, this);
@@ -172,6 +275,11 @@ void PDMainWindow::on_actionPreferences_triggered()
     settingsDialog->exec();
 }
 
+/*!
+    \fn PDMainWindow::on_settingsDialog_accepted()
+
+    Fired after setting dialog is accepted.
+    */
 void PDMainWindow::on_settingsDialog_accepted()
 {
     preferences = settingsDialog->preferences();
@@ -181,6 +289,11 @@ void PDMainWindow::on_settingsDialog_accepted()
     delete settingsDialog;
 }
 
+/*!
+    \fn PDMainWindow::initFormatsListsFromSettings()
+
+    Initialises format lists (that is, filters).
+    */
 void PDMainWindow::initFormatsListsFromSettings()
 {
     QStringList tempList;
