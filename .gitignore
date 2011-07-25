@@ -1,0 +1,5 @@
+# .gitignore for sPDaR project
+# Tells git to ignore build-related files.
+*.pro.user
+*.kate-swp
+*~
