@@ -19,7 +19,7 @@ PDMainWindow::PDMainWindow(QWidget *parent)
     : QMainWindow(parent),
       ui(new Ui::PDMainWindow)
 {
-    appVersion = "beta1.1";
+    appVersion = "beta2.1";
 
     ui->setupUi(this);
     centralWidget()->setLayout(ui->mainLayout);
@@ -116,11 +116,11 @@ void PDMainWindow::on_actionAbout_triggered()
 {
     QMessageBox::about(this,
                        tr("About sPDaR"),
-                       tr("sierdzio's photoDownloader and redistributor  - %1<br />"
-                          "distributed under GNU LGPL 2.1 "
-                          "with Qt exception. "
+                       tr("sierdzio's photoDownloader and redistributor  - %1.<br />"
+                          "Distributed under GNU GPL 3.<br/>"
                           "Whole code is available on "
                           "<a href=\"https://sourceforge.net/projects/spdar/\">SourceForge</a>"
+                          " and <a href=\"https://gitorious.org/spdar/\">Gitorious</a>"
                           "<br />Author: Tomasz Siekierda<br />"
                           "<br /><a href=\"http://www.sierdzio.com\">http://www.sierdzio.com</a>"
                           "<br /><a href=\"sierdzio@gmail.com\">sierdzio@gmail.com</a>"
