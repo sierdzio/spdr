@@ -9,6 +9,12 @@
 
 TARGET = photoDownloader
 
+DESTDIR = $$PWD
+OBJECTS_DIR = $$PWD/build/
+MOC_DIR = $$PWD/build/
+RCC_DIR = $$PWD/build/
+UI_DIR = $$PWD/build/
+
 TEMPLATE = app
 
 SOURCES += sources/main.cpp \
