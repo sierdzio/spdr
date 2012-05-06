@@ -1,4 +1,50 @@
-The changelog is available on-line, which ensures that you always read it's most up-to-date version.
+sierdzio’s Photo Downloader and Redistributor
 
-Here's the link:
-https://docs.google.com/document/edit?id=16o4_5bl-EgVweYI3fg-fmf4A9fo-q1elXAMerPOexec&hl=en_GB
+CHANGELOG
+
+This is aCHANGELOG for sPDaR (https://sourceforge.net/projects/spdar/).
+Project’s GIT repo: https://gitorious.org/spdar/
+
+2012-05-06 12:44 CEST:
+ - made project build in source by default (no shadow build or configuration needed
+   to clenly build sPDaR),
+ - some rearrangements in the source code (no changes on the outside),
+ - make local CHANGELOG and README, delete the online one.
+
+2011-07-27 09:58 CEST - beta2.1:
+Fixed:
+ - version number displayed in application,
+ - some small About box adjustments, including fixing licensing info.
+
+2011-07-25 21:36:00 CEST - beta2:
+Added:
+ - QDoc documentation,
+ - git repo at https://gitorious.org/spdar/
+Changed:
+ - license to GPLv3,
+ - reorganised files inside project’s source.
+
+2010-09-16 17:46:00 CEST -  beta1.1:
+Fixes:
+ - Fixed preferences not being set properly in some situations,
+ - Fixed RAW extensions being compared in a wrong way in redistributor.
+
+2010-09-12 11:11:00 CEST -  beta1:
+New features:
+ - added settings dialog and icon,
+ - added support for many new file formats (BMP, PNG, Nikon, Sony, Olympus, Pentax, Sigma and Adobe RAW),
+ - added support for user-specified (custom) formats,
+ - added validation for custom formats.
+Fixes:
+ - changed the UI to be more flexible and error - resistant,
+ - numerous other minor improvements.
+Known issues:
+ - none.
+
+2010-09-09 10:30:00 CEST - alpha1:
+Features:
+ - initial release,
+ - 1 output hierarchy implemented (the one I - sierdzio - use. Very useful for creation of well organized archives),
+ - currently supports only Canon RAW files (+jpg and tiff),
+ - remembers user-made choices (chosen folders, window geometry),
+ - Polish and English translation.

@@ -87,7 +87,6 @@ void PDRedistributor::redistribute()
             QDir dateListFromDir;
             dateListFromDir.setCurrent(tempFromDate);
             dateListFromDir.setFilter(QDir::Dirs);
-            //dateList.setSorting(QDir::Time);
             QStringList dateFilterFrom;
             dateFilterFrom << "????_??_??";
             dateListFromDir.setNameFilters(dateFilterFrom);
@@ -104,7 +103,6 @@ void PDRedistributor::redistribute()
                 fileListFromDir.setSorting(QDir::Time);
 
                 QStringList extFilter = formats;
-//                extFilter << "*.jpg" << "*.JPG" << "*.tif" << "*.tiff";
 
                 fileListFromDir.setNameFilters(extFilter);
                 QStringList fileListFrom = fileListFromDir.entryList();
@@ -127,23 +125,21 @@ void PDRedistributor::redistribute()
                     for(k = 0; k < fileListFrom.size(); k++)
                     {
                         //We prepare the file to copy:
-                        bool sta = TRUE;
                         QDir::setCurrent(tempFromDate);
                         QFile currentRedFile;
 
                         redTempDate.setDate(QDate::fromString(dateListFrom.at(j),"yyyy_MM_dd"));
                         currentRedFile.setFileName(fileListFrom.at(k).toLocal8Bit().constData());
-                        sta = currentRedFile.open(QIODevice::ReadWrite);
-                        //file sorting:
-                        //QFileInfo curInfo(currentRedFile);
-                        //tempDate = curInfo.created();
+                        if (!currentRedFile.open(QIODevice::ReadWrite)) {
+                            // TODO: handle error
+                        }
 
                         //Folder handling method should be determined here (based on what user chooses):
                         redDestination = folderHandlers->folderHandlerType1(redTempDate, tempTo);
 
                         QDir::setCurrent(tempFromDate);
 
-                        bool copied = FALSE;
+                        bool copied = false;
 
                         foreach (QString suffix, rawFilter)
                         {
@@ -154,23 +150,29 @@ void PDRedistributor::redistribute()
 
                             if (checkList.contains(tempFName, Qt::CaseInsensitive))
                             {
-                                sta = currentRedFile.copy(redDestination
-                                                          + fileListFrom.at(k).toLocal8Bit().constData());
+                                if (!currentRedFile.copy(redDestination
+                                                          + fileListFrom.at(k).toLocal8Bit().constData())) {
+                                    // TODO: handle error
+                                }
+
                                 emit updateProgressBar(((k + 1) * 100) / (fileListFrom.size()));
 
                                 currentRedFile.open(QIODevice::ReadWrite);
                                 currentRedFile.remove();
                                 currentRedFile.close();
 
-                                copied = TRUE;
+                                copied = true;
                                 break;
                             }
                         }
 
                         if (copied == FALSE)
                         {
-                            sta = currentRedFile.copy(redDestination
-                                                      + fileListFrom.at(k).toLocal8Bit().constData());
+                            if (!currentRedFile.copy(redDestination
+                                                      + fileListFrom.at(k).toLocal8Bit().constData())) {
+                                // TODO: handle error
+                            }
+
                             emit updateProgressBar(((k + 1) * 100) / (fileListFrom.size()));
 
                             currentRedFile.open(QIODevice::ReadWrite);
@@ -200,7 +202,6 @@ void PDRedistributor::redistribute()
             fileListFromDir.setFilter(QDir::Files);
             fileListFromDir.setSorting(QDir::Time);
             QStringList extFilter = formats;
-//            extFilter << "*.jpg" << "*.JPG" << "*.tif" << "*.tiff";
             fileListFromDir.setNameFilters(extFilter);
             QStringList fileListFrom = fileListFromDir.entryList();
 
@@ -209,23 +210,24 @@ void PDRedistributor::redistribute()
                 for(k = 0; k < fileListFrom.size(); k++)
                 {
                     //We prepare the file to copy:
-                    bool sta=TRUE;
                     QDir::setCurrent(tempFromDate);
                     QFile currentRedFile;
 
                     redTempDate.setDate(QDate::fromString(dateListFrom.at(j),"yyyy_MM_dd"));
                     currentRedFile.setFileName(fileListFrom.at(k).toLocal8Bit().constData());
-                    sta = currentRedFile.open(QIODevice::ReadWrite);
-                    //file sorting:
-                    //QFileInfo curInfo(currentRedFile);
-                    //tempDate = curInfo.created();
+                    if (!currentRedFile.open(QIODevice::ReadWrite)) {
+                        // TODO: handle error
+                    }
 
                     //Folder handling method should be determined here (based on what user chooses):
                     redDestination = folderHandlers->folderHandlerType1(redTempDate, tempTo);
 
                     QDir::setCurrent(tempFromDate);
                     //And copy it, with basic error detection:
-                    sta = currentRedFile.copy(redDestination+fileListFrom.at(k).toLocal8Bit().constData());
+                    if (!currentRedFile.copy(redDestination+fileListFrom.at(k).toLocal8Bit().constData())) {
+                        // TODO: handle error
+                    }
+
                     emit updateProgressBar(((k+1)*100)/(fileListFrom.size()));
 
                     currentRedFile.open(QIODevice::ReadWrite);

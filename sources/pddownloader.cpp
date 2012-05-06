@@ -60,7 +60,6 @@ void PDDownloader::download(quint8 handlerType)
     importDir.setSorting(QDir::Time);
 
     QStringList extensionFilter = formats;
-//    extensionFilter << "*.jpg" << "*.JPG" << "*.CR2" << "*.cr2";
 
     importDir.setNameFilters(extensionFilter);
     QStringList fileList = importDir.entryList();
@@ -69,12 +68,14 @@ void PDDownloader::download(quint8 handlerType)
     for (int i = 0; i < fileList.size(); i++)
     {
         //We prepare the file to copy:
-        bool sta = TRUE;
         QDir::setCurrent(tempImport);
         QFile currentCopyFile;
 
         currentCopyFile.setFileName(fileList.at(i).toLocal8Bit().constData());
-        sta = currentCopyFile.open(QIODevice::ReadWrite);
+        if (!currentCopyFile.open(QIODevice::ReadWrite)) {
+            // TODO: handle error
+        }
+
         //file sorting:
         QFileInfo curInfo(currentCopyFile);
         tempDate = curInfo.created();
@@ -85,7 +86,10 @@ void PDDownloader::download(quint8 handlerType)
 
         QDir::setCurrent(tempImport);
         //And copy it, with basic error detection:
-        sta = currentCopyFile.copy(destination + fileList.at(i).toLocal8Bit().constData());
+        if (!currentCopyFile.copy(destination + fileList.at(i).toLocal8Bit().constData())) {
+            // TODO: handle error
+        }
+
         emit updateProgressBar(((i + 1) * 100) / (fileList.size()));
 
         currentCopyFile.close();

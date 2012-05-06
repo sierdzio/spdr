@@ -28,7 +28,6 @@ PDMainWindow::PDMainWindow(QWidget *parent)
 //    QRegExp formatRegExp("([a-z0-9]{3,4}\\s)*", Qt::CaseInsensitive);
 //    ui->lineEditDCustomFormat->setValidator(new QRegExpValidator(formatRegExp, this));
 
-
     ui->tabDownloader->setLayout(ui->downloaderLayout);
     ui->tabRedistributor->setLayout(ui->redistributorLayout);
     ui->progressBar->setValue(0);
