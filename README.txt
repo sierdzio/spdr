@@ -1,11 +1,11 @@
 sierdzio's Photo Downloader and Redistributor
+Copyright (C) 2014  Tomasz Siekierda
 
 README
 
-This is an on-line README for sPDaR (https://sourceforge.net/projects/spdar/).
-Project’s GIT repo: https://gitorious.org/spdar/
+This is an on-line README for sPDaR.
+Project’s GIT repo: https://github.com/sierdzio/spdar
 
-This a very early version of this file. It will be updated in the future.
 To download photos:
  - connect media containing photos (if you have them somewhere remote),
  - click "Select folder to import from" and browse

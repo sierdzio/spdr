@@ -1,8 +1,3 @@
-/*
- This class downloads photos from a device.
- */
-
-
 #ifndef PDDOWNLOADER_H
 #define PDDOWNLOADER_H
 
@@ -11,6 +6,9 @@
 
 #include "pdfolderhandlers.h"
 
+/*
+ This class downloads photos from a device.
+ */
 class PDDownloader : public QObject
 {
     Q_OBJECT

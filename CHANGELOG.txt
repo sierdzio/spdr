@@ -1,13 +1,20 @@
-sierdzio’s Photo Downloader and Redistributor
+sierdzio’s Photo Downloader and Redistributor (sPDaR)
 
 CHANGELOG
 
-This is aCHANGELOG for sPDaR (https://sourceforge.net/projects/spdar/).
-Project’s GIT repo: https://gitorious.org/spdar/
+This is aCHANGELOG for sPDaR.
+Project’s GIT repo: https://github.com/sierdzio/spdar
+
+2014-01-11:
+ - fully rename the project to sPDaR
+ - clean up
+ - update various descriptions
+ - migrate to doxygen documentation
+ - change the license to WTFPL (yeah!). See http://www.wtfpl.net/about/
 
 2012-05-06 12:44 CEST:
- - made project build in source by default (no shadow build or configuration needed
-   to clenly build sPDaR),
+ - made project build in source by default (no shadow build or configuration
+   needed to cleanly build sPDaR),
  - some rearrangements in the source code (no changes on the outside),
  - make local CHANGELOG and README, delete the online one.
 
@@ -44,7 +51,8 @@ Known issues:
 2010-09-09 10:30:00 CEST - alpha1:
 Features:
  - initial release,
- - 1 output hierarchy implemented (the one I - sierdzio - use. Very useful for creation of well organized archives),
+ - 1 output hierarchy implemented (the one I - sierdzio - use. Very useful for
+   creation of well organized archives),
  - currently supports only Canon RAW files (+jpg and tiff),
  - remembers user-made choices (chosen folders, window geometry),
  - Polish and English translation.

@@ -1,4 +1,4 @@
-#include "../headers/pdmainwindow.h"
+#include "../include/pdmainwindow.h"
 #include "ui_pdmainwindow.h"
 
 /*!
@@ -37,7 +37,7 @@ PDMainWindow::PDMainWindow(QWidget *parent)
 
     setWindowTitle(tr("sPDar - %1").arg(appVersion));
 
-    loadSettings();  
+    loadSettings();
 }
 
 /*!

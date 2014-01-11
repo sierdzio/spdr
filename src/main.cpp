@@ -1,5 +1,5 @@
 #include <QtGui/QApplication>
-#include "../headers/pdmainwindow.h"
+#include "../include/pdmainwindow.h"
 
 /*
     Application's main function. Runs sPDaR dialog, optionally fires

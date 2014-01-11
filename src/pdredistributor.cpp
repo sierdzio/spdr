@@ -1,4 +1,4 @@
-#include "../headers/pdredistributor.h"
+#include "../include/pdredistributor.h"
 
 /*!
     \class PDRedistributor

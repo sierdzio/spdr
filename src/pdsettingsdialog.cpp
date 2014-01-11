@@ -1,4 +1,4 @@
-#include "../headers/pdsettingsdialog.h"
+#include "../include/pdsettingsdialog.h"
 #include "ui_pdsettingsdialog.h"
 
 /*!

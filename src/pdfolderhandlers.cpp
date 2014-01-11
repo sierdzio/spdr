@@ -1,4 +1,4 @@
-#include "../headers/pdfolderhandlers.h"
+#include "../include/pdfolderhandlers.h"
 
 /*!
   \class PDFolderHandlers

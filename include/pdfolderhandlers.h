@@ -1,8 +1,9 @@
 #ifndef PDFOLDERHANDLERS_H
 #define PDFOLDERHANDLERS_H
 
-#include <QtCore>
+#include <QString>
 #include <QObject>
+#include <QDateTime>
 
 class PDFolderHandlers : public QObject
 {

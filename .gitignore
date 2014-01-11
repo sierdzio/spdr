@@ -4,5 +4,5 @@
 *.kate-swp
 *~
 build/
+doc/
 Makefile
-photoDownloader

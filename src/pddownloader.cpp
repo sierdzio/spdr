@@ -1,4 +1,4 @@
-#include "../headers/pddownloader.h"
+#include "../include/pddownloader.h"
 
 /*!
     \class PDDownloader

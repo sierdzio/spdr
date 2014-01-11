@@ -1,13 +1,3 @@
-/*
- GUI backing class.
- Currently also responsible for redistributing (to be changed).
- TODO:
- - move redistributor to a separate class,
- - add QSettings functionality,
- - add translation support,
- - (maybe) write QML GUI.
- */
-
 #ifndef PDMAINWINDOW_H
 #define PDMAINWINDOW_H
 
@@ -23,6 +13,15 @@ namespace Ui
     class PDMainWindow;
 }
 
+/*
+ GUI backing class.
+ Currently also responsible for redistributing (to be changed).
+ TODO:
+ - move redistributor to a separate class,
+ - add QSettings functionality,
+ - add translation support,
+ - (maybe) write QML GUI.
+ */
 class PDMainWindow : public QMainWindow
 {
     Q_OBJECT
