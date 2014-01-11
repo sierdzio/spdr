@@ -8,14 +8,12 @@
 class PDFolderHandlers : public QObject
 {
     Q_OBJECT
+
 public:
     explicit PDFolderHandlers(QObject *parent = 0);
 
-signals:
-
 public slots:
-    QString folderHandlerType1 (QDateTime tempDate, QString tempExport);
-
+    QString folderHandlerType1(const QDateTime &tempDate, const QString &tempExport);
 };
 
 #endif // PDFOLDERHANDLERS_H

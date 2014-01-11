@@ -1,20 +1,22 @@
-/*
- This class redistributes developed photos.
- */
-
 #ifndef PDREDISTRIBUTOR_H
 #define PDREDISTRIBUTOR_H
 
-#include <QtCore>
+#include <QString>
+#include <QStringList>
 #include <QObject>
 
-#include "pdfolderhandlers.h"
+class PDFolderHandlers;
 
+/*
+ This class redistributes developed photos.
+ */
 class PDRedistributor : public QObject
 {
     Q_OBJECT
+
 public:
-    explicit PDRedistributor(QObject *parent, QString fromDir, QString toDir);
+    explicit PDRedistributor(const QString &fromDir, const QString &toDir,
+                             QObject *parent = 0);
     ~PDRedistributor();
 
 signals:
@@ -22,7 +24,7 @@ signals:
 
 public slots:
     void redistribute();
-    void setFormats(QStringList newFormats);
+    void setFormats(const QStringList &newFormats);
 
 private:
     QString fromFolder;

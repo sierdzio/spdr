@@ -1,7 +1,11 @@
 #ifndef PDSETTINGSDIALOG_H
 #define PDSETTINGSDIALOG_H
 
-#include <QtGui>
+#include <QString>
+#include <QVariant>
+#include <QMap>
+
+#include <QWidget>
 #include <QDialog>
 
 namespace Ui {
@@ -13,7 +17,7 @@ class pdSettingsDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit pdSettingsDialog(QMap<QString, QVariant> preferences,
+    explicit pdSettingsDialog(const QMap<QString, QVariant> &preferences,
                               QWidget *parent = 0);
     ~pdSettingsDialog();
 
@@ -23,7 +27,7 @@ public:
     QStringList redistributeFormatsList();
 
     // Setters:
-    void setPreferences(QMap<QString, QVariant> prefs);
+    void setPreferences(const QMap<QString, QVariant> &prefs);
 
 private:
     Ui::pdSettingsDialog *ui;

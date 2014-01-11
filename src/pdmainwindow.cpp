@@ -1,5 +1,12 @@
-#include "../include/pdmainwindow.h"
+#include "pdmainwindow.h"
 #include "ui_pdmainwindow.h"
+#include "pddownloader.h"
+#include "pdredistributor.h"
+#include "pdsettingsdialog.h"
+
+#include <QSettings>
+#include <QMessageBox>
+#include <QFileDialog>
 
 /*!
     \class PDMainWindow
@@ -15,9 +22,8 @@
 
     \a parent defaults to 0.
   */
-PDMainWindow::PDMainWindow(QWidget *parent)
-    : QMainWindow(parent),
-      ui(new Ui::PDMainWindow)
+PDMainWindow::PDMainWindow(QWidget *parent) : QMainWindow(parent),
+    ui(new Ui::PDMainWindow)
 {
     appVersion = "beta2.1";
 
@@ -175,8 +181,7 @@ void PDMainWindow::on_pushButtonTransfer_clicked()
     ui->pushButtonTransfer->setEnabled(FALSE);
 
     //We get paths of import and export folders:
-    PDDownloader *downloader;
-    downloader = new PDDownloader(this, ui->lineEditImport->text(), ui->lineEditExport->text());
+    PDDownloader *downloader = new PDDownloader(ui->lineEditImport->text(), ui->lineEditExport->text(), this);
     downloader->setFormats(dFormatFilst);
     connect(downloader, SIGNAL(updateProgressBar(int)), this, SLOT(updateDownloaderProgressBar(int)));
     downloader->download(1);
@@ -230,8 +235,7 @@ void PDMainWindow::on_pushButtonTransferBack_clicked()
     //Time to disable the controls for the duration of redistributing:
     ui->pushButtonTransferBack->setEnabled(FALSE);
 
-    PDRedistributor *redistributor;
-    redistributor = new PDRedistributor(this, ui->lineEditFrom->text(), ui->lineEditTo->text());
+    PDRedistributor *redistributor = new PDRedistributor(ui->lineEditFrom->text(), ui->lineEditTo->text(), this);
     redistributor->setFormats(rFormatList);
     connect(redistributor, SIGNAL(updateProgressBar(int)), this, SLOT(updateRedistributorProgressBar(int)));
     redistributor->redistribute();

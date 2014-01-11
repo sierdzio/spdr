@@ -9,6 +9,10 @@
 
 QT = core gui
 
+greaterThan(QT_MAJOR_VERSION, 4) {
+    QT += widgets
+}
+
 TARGET = spdar
 
 BUILDDIR = $$PWD/build/
@@ -20,6 +24,8 @@ RCC_DIR = $${BUILDDIR}
 UI_DIR = $${BUILDDIR}
 
 TEMPLATE = app
+
+INCLUDEPATH += include
 
 SOURCES += src/main.cpp \
     src/pdmainwindow.cpp \

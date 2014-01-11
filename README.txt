@@ -6,6 +6,9 @@ README
 This is an on-line README for sPDaR.
 Project’s GIT repo: https://github.com/sierdzio/spdar
 
+WARNING: sPDaR is in the process of being rewritten with different functionality
+in mind!
+
 To download photos:
  - connect media containing photos (if you have them somewhere remote),
  - click "Select folder to import from" and browse

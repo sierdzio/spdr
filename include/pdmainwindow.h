@@ -1,17 +1,20 @@
 #ifndef PDMAINWINDOW_H
 #define PDMAINWINDOW_H
 
-#include <QtGui>
-#include <QtCore>
+#include <QString>
+#include <QStringList>
+#include <QVariant>
+#include <QMap>
 
-#include "pddownloader.h"
-#include "pdredistributor.h"
-#include "pdsettingsdialog.h"
+#include <QWidget>
+#include <QMainWindow>
 
 namespace Ui
 {
     class PDMainWindow;
 }
+
+class pdSettingsDialog;
 
 /*
  GUI backing class.

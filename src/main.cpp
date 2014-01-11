@@ -1,6 +1,8 @@
-#include <QtGui/QApplication>
-#include "../include/pdmainwindow.h"
+#include "pdmainwindow.h"
 
+#include <QString>
+#include <QLocale>
+#include <QApplication>
 /*
     Application's main function. Runs sPDaR dialog, optionally fires
     the translator.

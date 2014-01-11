@@ -1,4 +1,7 @@
-#include "../include/pdfolderhandlers.h"
+#include "pdfolderhandlers.h"
+
+#include <QStringList>
+#include <QDir>
 
 /*!
   \class PDFolderHandlers
@@ -23,7 +26,7 @@ PDFolderHandlers::PDFolderHandlers(QObject *parent) :
   Safely traverses the dir structure, so that photos are always copied safely. Needs \a tempDate get through
   hierarchy and \a tempExport to get the base folder path.
   */
-QString PDFolderHandlers::folderHandlerType1 (QDateTime tempDate, QString tempExport)
+QString PDFolderHandlers::folderHandlerType1 (const QDateTime &tempDate, const QString &tempExport)
 {
      QDir tempDir;
      QString tempDestination = ".", tempDirNameTail = "";

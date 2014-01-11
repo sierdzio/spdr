@@ -1,4 +1,4 @@
-#include "../include/pdsettingsdialog.h"
+#include "pdsettingsdialog.h"
 #include "ui_pdsettingsdialog.h"
 
 /*!
@@ -13,7 +13,7 @@
 
     Constructs the settings dialog, using \a preferences and optional \a parent.
     */
-pdSettingsDialog::pdSettingsDialog(QMap<QString, QVariant> preferences, QWidget *parent) :
+pdSettingsDialog::pdSettingsDialog(const QMap<QString, QVariant> &preferences, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::pdSettingsDialog)
 {
@@ -85,7 +85,7 @@ QMap<QString, QVariant> pdSettingsDialog::preferences()
 
     Sets all the preferences (\a prefs).
     */
-void pdSettingsDialog::setPreferences(QMap<QString, QVariant> prefs)
+void pdSettingsDialog::setPreferences(const QMap<QString, QVariant> &prefs)
 {
     // Set download preferences:
     ui->lineEditDCustomFormat->setText(prefs.value("dFormats", "").toStringList().join(" "));

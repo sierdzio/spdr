@@ -1,4 +1,8 @@
-#include "../include/pdredistributor.h"
+#include "pdredistributor.h"
+#include "pdfolderhandlers.h"
+
+#include <QDir>
+#include <QFile>
 
 /*!
     \class PDRedistributor
@@ -19,7 +23,7 @@
     Constructs the redistributor, using from (\a fromDir) and to (\a toDir) directory information. Specifying
     \a parent is compulsory.
     */
-PDRedistributor::PDRedistributor(QObject *parent, QString fromDir, QString toDir) :
+PDRedistributor::PDRedistributor(const QString &fromDir, const QString &toDir, QObject *parent) :
     QObject(parent),
     fromFolder(fromDir),
     toFolder(toDir)
@@ -244,7 +248,7 @@ void PDRedistributor::redistribute()
 
     Resets the formats/ filters, using \a newFormats.
     */
-void PDRedistributor::setFormats(QStringList newFormats)
+void PDRedistributor::setFormats(const QStringList &newFormats)
 {
     formats = newFormats;
 }

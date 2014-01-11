@@ -1,4 +1,9 @@
-#include "../include/pddownloader.h"
+#include "pddownloader.h"
+#include "pdfolderhandlers.h"
+
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
 
 /*!
     \class PDDownloader
@@ -16,7 +21,7 @@
 
     Constructs the downloader using specified import (\a importDir) and export (\a exportDir) directories. Needs a \a parent.
   */
-PDDownloader::PDDownloader(QObject *parent, QString importDir, QString exportDir) :
+PDDownloader::PDDownloader(const QString &importDir, const QString &exportDir, QObject *parent) :
     QObject(parent),
     importFolder(importDir),
     exportFolder(exportDir)
@@ -101,7 +106,7 @@ void PDDownloader::download(quint8 handlerType)
 
     Resets the list of formats, using \a newFormats.
   */
-void PDDownloader::setFormats(QStringList newFormats)
+void PDDownloader::setFormats(const QStringList &newFormats)
 {
     formats = newFormats;
 }
