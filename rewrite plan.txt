@@ -1,0 +1,19 @@
+sPDaR - rewrite plan.
+
+As of  12.01.2014, the plan is to completely rewrite sPDaR. Project will change
+it's name to spdr, license will from now on be WTFPL. Spdr will be a tool for
+merging (intelligent syncing) of folders, for example when copying large
+collection of files between computers. It will detect what changes have been
+made and try to bring the output directory up to date.
+
+Core functionality will be moved into a library: libspdr. On top of that library,
+a Command Line application will be written, as well as a GUI (using Qt Widgets,
+and possibly also another one using Qt Quick 2).
+
+Current sPDaR functionality will be renamed to "Import directory" and be just
+a small part of the whole project. The code will be analysed and reviewed, as
+currently it's rather old and rusty.
+
+All new code will be (hopefully) unit tested. Also, benchmarks will be implemented
+to test how well spdr fares under certain conditions. The whole project must
+have a comprehensive logging capabilities.
