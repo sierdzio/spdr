@@ -16,4 +16,66 @@ currently it's rather old and rusty.
 
 All new code will be (hopefully) unit tested. Also, benchmarks will be implemented
 to test how well spdr fares under certain conditions. The whole project must
-have a comprehensive logging capabilities.
+have a comprehensive logging capabilities, be easy to install (configure file),
+etc.
+
+Support for Qt4 will be dropped, because the new spdr will use some of the new
+features present in Qt 5.2 (QCommandLine, maybe qCDebug and friends).
+As an additional experiment, spdr might also include QBS and CMake build
+configuration.
+
+Overview of the algorithm:
+ - scan output, put it into local cache (comprising of data hash and file path)
+ - for every file in input, see if MD5/ SHA can be matched. If not, try matching
+   by file path and file name. The last resort is to try and find the file by
+   content (that would be very CPU-consuming, though!)
+
+Directory renames will be part of standard file copying logic. Logging should
+be extensive, support various output levels, and every message should be timed.
+
+The GUI will support Drag & Drop for getting input and output folders.
+
+### Functionality:
+###
+
+Every entry has this syntax:
+ + Example function | -e *--example-switch | Description
+Where "+" means this flag/ functionality is used by default (as opposed to "-").
+A "*" means that flag has a negation (--no-example-switch, in this case).
+
+### Proposed flags for Import functionality are:
+ - import directory | -i --import | use the import functionality
+ + format | *--format=xxx/xxx/xxx  | format to use as the basis for generation of
+             output directory structure
+
+### Proposed flags for Synchronize functionality are:
+ + cache | *--cache | uses output caching, greatly improving the performance
+             and memory consumption
+ + log file  | -l=x *--log=x | specifies where to put the log messages. If not
+             specified, will use stdout
+ + log level | --log-level=x | specifies how much data needs to be logged
+ + remove empty directories | -r *--remove-empty-directories | if during sync,
+             a directory (in OUTPUT) becomes empty, it will be deleted
+ + remove missing files | *--remove-missing-files | if a file is present in
+             OUTPUT, but missing in INPUT, it will be deleted
+ - bidirectional | -b *--bidirectional | perform a 2-way sync. So, after a normal
+             sync, INPUT and OUTPUT will be reversed and synced again. This will
+             take a long time and might introduce weird results
+ - simulate | *--simulate | Run only a simulation: do all the operations, but
+             don't actually change anything on the physical disk. This is best
+             combined with --log and a high --log-level
+ - split | -s=x *--split=x | split the OUTPUT cache into x parts and traverse
+             them in parallel (TODO: also introduce sequential mode for better
+             memory management)
+ - deep search | -d *--deep-search | also compare files by contents (slower!)
+ + update | -u=x --update={overwrite, ignore, ask} | Default: ask. When spdr
+             will think that the file has been updated in INPUT, it will perform
+             the selected action: ask what to do, ignore (do nothing) or simply
+             overwrite the destination file (in OUTPUT)
+ + copy operation | -c --copy -m --move --always-move | depending on the choice
+             here (default: copy), the data will be copied (leaving INPUT intact)
+             or spdr will try to move it (possibly removing files from INPUT, if
+             both directories are on the same partition), or force move of data
+             (always removing files from INPUT)
+
+

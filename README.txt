@@ -1,12 +1,12 @@
-sierdzio's Photo Downloader and Redistributor
+spdr
 Copyright (C) 2014  Tomasz Siekierda
 
 README
 
-This is an on-line README for sPDaR.
-Project’s GIT repo: https://github.com/sierdzio/spdar
+This is an on-line README for spdr.
+Project’s GIT repo: https://github.com/sierdzio/spdr
 
-WARNING: sPDaR is in the process of being rewritten with different functionality
+WARNING: spdr is in the process of being rewritten with different functionality
 in mind!
 
 To download photos:
