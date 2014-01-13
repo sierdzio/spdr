@@ -1,0 +1,6 @@
+#ifndef SPDRIMPORT_CLEAN_H
+#define SPDRIMPORT_CLEAN_H
+
+#include "spdrimport.h"
+
+#endif // SPDRIMPORT_CLEAN_H

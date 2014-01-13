@@ -1,0 +1,6 @@
+#ifndef SPDRSYNCHRONIZE_CLEAN_H
+#define SPDRSYNCHRONIZE_CLEAN_H
+
+#include "spdrsynchronize.h"
+
+#endif // SPDRSYNCHRONIZE_CLEAN_H

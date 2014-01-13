@@ -1,0 +1,7 @@
+#ifndef SPDR_CLEAN_H
+#define SPDR_CLEAN_H
+
+#include "SpdrImport"
+#include "SpdrSynchronize"
+
+#endif // SPDR_CLEAN_H
