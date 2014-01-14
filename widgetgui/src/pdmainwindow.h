@@ -1,3 +1,5 @@
+#ifdef TEMP_REMOVE
+
 #ifndef PDMAINWINDOW_H
 #define PDMAINWINDOW_H
 
@@ -63,3 +65,5 @@ private:
 };
 
 #endif // PDMAINWINDOW_H
+
+#endif

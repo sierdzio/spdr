@@ -1,3 +1,5 @@
+#ifdef TEMP_REMOVE
+
 #include "pdmainwindow.h"
 #include "ui_pdmainwindow.h"
 #include "pddownloader.h"
@@ -377,3 +379,5 @@ void PDMainWindow::initFormatsListsFromSettings()
 
     rFormatList = tempList;
 }
+
+#endif

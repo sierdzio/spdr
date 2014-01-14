@@ -1,3 +1,5 @@
+#ifdef TEMP_REMOVE
+
 #ifndef PDSETTINGSDIALOG_H
 #define PDSETTINGSDIALOG_H
 
@@ -40,3 +42,5 @@ private slots:
 };
 
 #endif // PDSETTINGSDIALOG_H
+
+#endif

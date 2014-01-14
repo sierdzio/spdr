@@ -1,3 +1,5 @@
+#ifdef TEMP_REMOVE
+
 #include "pdsettingsdialog.h"
 #include "ui_pdsettingsdialog.h"
 
@@ -260,3 +262,5 @@ void pdSettingsDialog::on_checkBoxRALL_toggled(bool checked)
         ui->checkBoxRTIFF->setChecked(FALSE);
     }
 }
+
+#endif
