@@ -12,7 +12,7 @@ public:
     SpdrSynchronizePrivate(SpdrSynchronize *q) : q_ptr(q) {}
     SpdrSynchronize *q_ptr;
 
-    int mSplit;
+    uint mSplit;
 };
 
 #endif // SPDRSYNCHRONIZE_P_H

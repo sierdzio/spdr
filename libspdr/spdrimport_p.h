@@ -3,6 +3,8 @@
 
 #include "spdrimport.h"
 
+#include <QString>
+
 class SpdrImportPrivate
 {
     Q_DECLARE_PUBLIC(SpdrImport)
@@ -12,7 +14,7 @@ public:
     SpdrImportPrivate(SpdrImport *q) : q_ptr(q) {}
     SpdrImport *q_ptr;
 
-    int mSplit;
+    QString mFormat;
 };
 
 #endif // SPDRIMPORT_P_H

@@ -5,6 +5,18 @@ SpdrImport::SpdrImport(QObject *parent) : QObject(parent), d_ptr(new SpdrImportP
     Q_D(SpdrImport);
 }
 
+QString SpdrImport::format() const
+{
+    Q_D(const SpdrImport);
+    return d->mFormat;
+}
+
+void SpdrImport::setFormat(const QString &format)
+{
+    Q_D(SpdrImport);
+    d->mFormat = format;
+}
+
 bool SpdrImport::import()
 {
     Q_D(const SpdrImport);
@@ -12,15 +24,12 @@ bool SpdrImport::import()
 
 bool SpdrImport::import(const QString &format)
 {
-    Q_D(SpdrImport);
-
     SpdrImport object;
-    object.format = format;
-
+    object.setFormat(format);
     return object.import();
 }
 
-SpdrImport::SpdrImport(SpdrImportPrivate &d, QObject *parent) : QObject(parent), d_ptr(&d)
+SpdrImport::SpdrImport(SpdrImportPrivate &dd, QObject *parent) : QObject(parent), d_ptr(&dd)
 {
     Q_D(SpdrImport);
 }

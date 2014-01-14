@@ -10,7 +10,7 @@ class SpdrSynchronizePrivate;
 class SPDR_DLLSPEC SpdrSynchronize : public QObject {
 
     Q_OBJECT
-    Q_PROPERTY(int split MEMBER mSplit NOTIFY splitChanged)
+    Q_PROPERTY(int split READ split WRITE setSplit NOTIFY splitChanged)
     Q_FLAGS(SynchronizationOptions)
 
 public:
@@ -20,12 +20,14 @@ public:
     };
     Q_DECLARE_FLAGS(SynchronizationOptions, SynchronizationOption)
 
+    Q_INVOKABLE int split() const;
+    Q_INVOKABLE void setSplit(uint split);
 
 signals:
     void splitChanged(int newSplit);
 
 protected:
-    SpdrSynchronize(SpdrSynchronizePrivate &d, QObject *parent = 0);
+    SpdrSynchronize(SpdrSynchronizePrivate &dd, QObject *parent = 0);
     SpdrSynchronizePrivate *d_ptr;
 
 private:
