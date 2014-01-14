@@ -25,7 +25,7 @@ signals:
     void splitChanged(int newSplit);
 
 protected:
-    SpdrSynchronize(SpdrSynchronizePrivate &d);
+    SpdrSynchronize(SpdrSynchronizePrivate &d, QObject *parent = 0);
     SpdrSynchronizePrivate *d_ptr;
 
 private:

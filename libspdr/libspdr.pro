@@ -20,6 +20,8 @@ static {
 INCLUDEPATH += src
 
 SOURCES += \
+    spdrimport.cpp \
+    spdrsynchronize.cpp
 
 HEADERS += \
     Spdr \
@@ -27,6 +29,6 @@ HEADERS += \
     SpdrSynchronize \
     spdrglobal.h \
     spdrimport.h \
+    spdrimport_p.h \
     spdrsynchronize.h \
-    spdrsynchronize_p.h \
-    spdrimport_p.h
+    spdrsynchronize_p.h

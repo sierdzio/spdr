@@ -6,28 +6,28 @@
 #include <QString>
 #include <QObject>
 
-// TODO: migrate to PIMPL
+class SpdrImportPrivate;
+
 class SPDR_DLLSPEC SpdrImport : public QObject {
 
     Q_OBJECT
+    Q_PROPERTY(QString format MEMBER mFormat NOTIFY formatChanged)
 
 public:
     SpdrImport(QObject *parent = 0);
 
-    Q_PROPERTY(QString format MEMBER mFormat NOTIFY formatChanged)
-
     Q_INVOKABLE bool import();
-    Q_INVOKABLE bool import(const QString &format);
+    Q_INVOKABLE static bool import(const QString &format);
 
 signals:
     void formatChanged(const QString &newFormat);
 
 protected:
-    SpdrSynchronize(SpdrSynchronizePrivate &d);
-    SpdrSynchronizePrivate *d_ptr;
+    SpdrImport(SpdrImportPrivate &d, QObject *parent = 0);
+    SpdrImportPrivate *d_ptr;
 
 private:
-    Q_DECLARE_PRIVATE(SpdrSynchronize)
+    Q_DECLARE_PRIVATE(SpdrImport)
 };
 
 #endif // SPDRIMPORT_H
