@@ -14,6 +14,8 @@ public:
     SpdrImportPrivate(SpdrImport *q) : q_ptr(q) {}
     SpdrImport *q_ptr;
 
+    Spdr::CopyMode mCopyMode;
+    Spdr::UpdateMode mUpdateMode;
     QString mFormat;
 };
 

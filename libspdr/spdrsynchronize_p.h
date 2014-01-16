@@ -12,6 +12,9 @@ public:
     SpdrSynchronizePrivate(SpdrSynchronize *q) : q_ptr(q) {}
     SpdrSynchronize *q_ptr;
 
+    Spdr::CopyMode mCopyMode;
+    Spdr::UpdateMode mUpdateMode;
+    SpdrSynchronize::SynchronizationOptions mOptions;
     uint mSplit;
 };
 
