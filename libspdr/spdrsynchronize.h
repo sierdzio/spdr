@@ -35,6 +35,10 @@ public:
     Q_INVOKABLE Spdr::UpdateMode updateMode() const;
     Q_INVOKABLE void setUpdateMode(Spdr::UpdateMode newUpdateMode);
 
+    Q_INVOKABLE Spdr::LogLevel logLevel() const;
+    Q_INVOKABLE void setLogLevel(Spdr::LogLevel newLevel);
+    Q_INVOKABLE void setLogFile(const QString &logFilePath);
+
     Q_INVOKABLE SynchronizationOptions options() const;
     Q_INVOKABLE void setOptions(SynchronizationOptions options);
 

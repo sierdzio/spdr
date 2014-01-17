@@ -3,7 +3,12 @@
 SpdrImport::SpdrImport(QObject *parent) : QObject(parent), d_ptr(new SpdrImportPrivate)
 {
     Q_D(SpdrImport);
-    Q_UNUSED(d);
+
+    d->mCopyMode = Spdr::Copy;
+    d->mUpdateMode = Spdr::Ask;
+    d->mIsLogFileSet = false;
+
+    d->mLog = new SpdrLog(this);
 }
 
 Spdr::CopyMode SpdrImport::copyMode() const
@@ -36,6 +41,24 @@ void SpdrImport::setUpdateMode(Spdr::UpdateMode newUpdateMode)
         d->mUpdateMode = newUpdateMode;
         emit updateModeChanged(newUpdateMode);
     }
+}
+
+Spdr::LogLevel SpdrImport::logLevel() const
+{
+    Q_D(const SpdrImport);
+    return (Spdr::LogLevel) d->mLog->logLevel();
+}
+
+void SpdrImport::setLogLevel(Spdr::LogLevel newLevel)
+{
+    Q_D(SpdrImport);
+    d->mLog->setLogLevel((uint) newLevel);
+}
+
+void SpdrImport::setLogFile(const QString &logFilePath)
+{
+    Q_D(SpdrImport);
+    d->mLog->setLogFilePath(logFilePath);
 }
 
 QString SpdrImport::format() const
