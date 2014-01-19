@@ -22,7 +22,8 @@ INCLUDEPATH += src
 SOURCES += \
     spdrimport.cpp \
     spdrsynchronize.cpp \
-    spdrlog.cpp
+    spdrlog.cpp \
+    spdrbase.cpp
 
 HEADERS += \
     Spdr \
@@ -33,4 +34,6 @@ HEADERS += \
     spdrimport_p.h \
     spdrsynchronize.h \
     spdrsynchronize_p.h \
-    spdrlog.h
+    spdrlog.h \
+    spdrbase.h \
+    spdrbase_p.h
