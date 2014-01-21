@@ -28,6 +28,7 @@ public:
 
     Q_INVOKABLE bool isUsingLogFile() const;
     Q_INVOKABLE void setLogFile(const QString &logFilePath);
+    Q_INVOKABLE QString logFile() const;
 
 signals:
     void copyModeChanged(Spdr::CopyMode newCopyMode);

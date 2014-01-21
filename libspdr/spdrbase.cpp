@@ -66,6 +66,12 @@ void SpdrBase::setLogFile(const QString &logFilePath)
     d->mLog->setLogFilePath(logFilePath);
 }
 
+QString SpdrBase::logFile() const
+{
+    Q_D(const SpdrBase);
+    return d->mLog->logFilePath();
+}
+
 SpdrBase::SpdrBase(SpdrBasePrivate &dd, QObject *parent) : QObject(parent), d_ptr(&dd)
 {
     Q_D(SpdrBase);
