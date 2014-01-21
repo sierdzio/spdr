@@ -25,6 +25,8 @@ public:
 
     Q_INVOKABLE Spdr::LogLevel logLevel() const;
     Q_INVOKABLE void setLogLevel(Spdr::LogLevel newLevel);
+
+    Q_INVOKABLE bool isUsingLogFile() const;
     Q_INVOKABLE void setLogFile(const QString &logFilePath);
 
 signals:

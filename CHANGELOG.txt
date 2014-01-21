@@ -5,6 +5,12 @@ CHANGELOG
 This is a CHANGELOG for spdr.
 Project’s GIT repo: https://github.com/sierdzio/spdar
 
+2014-01:
+ - start a general rewrite of the codebase
+ - spdr is divided into a core library, a GUI, a CLI, and a set of tests
+   and benchmarks
+ - make Qt 5 a hard dependency (drop Qt 4 support, at least from CLI and GUI)
+
 2014-01-12:
  - fully rename the project to spdr
  - clean up

@@ -54,6 +54,12 @@ void SpdrBase::setLogLevel(Spdr::LogLevel newLevel)
     d->mLog->setLogLevel((uint) newLevel);
 }
 
+bool SpdrBase::isUsingLogFile() const
+{
+    Q_D(const SpdrBase);
+    return d->mLog->isUsingLogFile();
+}
+
 void SpdrBase::setLogFile(const QString &logFilePath)
 {
     Q_D(SpdrBase);

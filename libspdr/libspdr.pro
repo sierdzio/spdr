@@ -27,6 +27,7 @@ SOURCES += \
 
 HEADERS += \
     Spdr \
+    SpdrBase \
     SpdrImport \
     SpdrSynchronize \
     spdrglobal.h \

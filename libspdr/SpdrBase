@@ -1,0 +1,7 @@
+#ifndef SPDRBASE_CLEAN_H
+#define SPDRBASE_CLEAN_H
+
+#include "spdrbase.h"
+
+#endif // SPDRBASE_CLEAN_H
+

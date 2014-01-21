@@ -4,6 +4,8 @@
 
 SpdrLog::SpdrLog(QObject *parent) : QObject(parent)
 {
+    mLogLevel = 2;
+    mIsLogFileSet = false;
 }
 
 bool SpdrLog::isUsingLogFile() const
