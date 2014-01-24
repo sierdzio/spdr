@@ -3,7 +3,8 @@
 
 #include <QObject>
 #include <QDebug>
-#include <QtTest/QtTest>
+#include <QTest>
+#include <QSignalSpy>
 
 class TstSpdrBase : public QObject
 {
@@ -12,6 +13,7 @@ class TstSpdrBase : public QObject
 private slots:
     void testDefaults();
     void testSetters();
+    void testSignals();
 };
 
 void TstSpdrBase::testDefaults()
@@ -41,6 +43,20 @@ void TstSpdrBase::testSetters()
     testObject.setLogFile(randomPath);
     QCOMPARE(testObject.isUsingLogFile(), true);
     QCOMPARE(testObject.logFile(), randomPath);
+}
+
+void TstSpdrBase::testSignals()
+{
+    Spdr::registerMetatypes();
+    SpdrBase testObject;
+    QSignalSpy spyCopyMode(&testObject, SIGNAL(copyModeChanged(Spdr::CopyMode)));
+    QSignalSpy spyUpdateMode(&testObject, SIGNAL(updateModeChanged(Spdr::UpdateMode)));
+
+    testObject.setCopyMode(Spdr::Move);
+    testObject.setUpdateMode(Spdr::Ignore);
+
+    QCOMPARE(spyCopyMode.count(), 1);
+    QCOMPARE(spyUpdateMode.count(), 1);
 }
 
 QTEST_MAIN(TstSpdrBase)

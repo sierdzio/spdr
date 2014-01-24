@@ -1,9 +1,12 @@
 #include "spdrglobal.h"
 #include "SpdrSynchronize"
 
+#include <QList>
+#include <QVariant>
 #include <QObject>
 #include <QDebug>
-#include <QtTest/QtTest>
+#include <QTest>
+#include <QSignalSpy>
 
 class TstSpdrSynchronize : public QObject
 {
@@ -12,6 +15,7 @@ class TstSpdrSynchronize : public QObject
 private slots:
     void testDefaults();
     void testSetters();
+    void testSignals();
 };
 
 void TstSpdrSynchronize::testDefaults()
@@ -38,6 +42,23 @@ void TstSpdrSynchronize::testSetters()
     testObject.setProperty("split", propertyTestValue);
     QCOMPARE(testObject.split(), propertyTestValue);
     QCOMPARE(testObject.property("split").toInt(), propertyTestValue);
+}
+
+void TstSpdrSynchronize::testSignals()
+{
+    SpdrSynchronize::registerMetatypes();
+    SpdrSynchronize testObject;
+    QSignalSpy spyOptions(&testObject, SIGNAL(optionsChanged(SpdrSynchronize::SynchronizationOptions)));
+    QSignalSpy spySplit(&testObject, SIGNAL(splitChanged(int)));
+
+    testObject.setOptions(SpdrSynchronize::Bidirectional);
+    QCOMPARE(spyOptions.count(), 1);
+
+    testObject.setSplit(5);
+    testObject.setProperty("split", 7);
+    QCOMPARE(spySplit.count(), 2);
+    QList<QVariant> arguments = spySplit.takeLast();
+    QCOMPARE(arguments.at(0).toInt(), 7);
 }
 
 QTEST_MAIN(TstSpdrSynchronize)

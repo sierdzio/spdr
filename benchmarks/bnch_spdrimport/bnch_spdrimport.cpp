@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QDebug>
-#include <QtTest/QtTest>
+#include <QTest>
 
 class BnchSpdrImport : public QObject
 {

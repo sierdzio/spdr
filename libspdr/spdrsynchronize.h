@@ -35,8 +35,14 @@ public:
 
     Q_INVOKABLE bool synchronize();
 
+    static void registerMetatypes()
+    {
+        Spdr::registerMetatypes();
+        qRegisterMetaType<SpdrSynchronize::SynchronizationOptions>("SpdrSynchronize::SynchronizationOptions");
+    }
+
 signals:
-    void optionsChanged(SynchronizationOptions newOptions);
+    void optionsChanged(SpdrSynchronize::SynchronizationOptions newOptions);
     void splitChanged(int newSplit);
 
 protected:

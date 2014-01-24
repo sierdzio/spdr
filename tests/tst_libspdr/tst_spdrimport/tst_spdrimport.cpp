@@ -3,7 +3,8 @@
 
 #include <QObject>
 #include <QDebug>
-#include <QtTest/QtTest>
+#include <QTest>
+#include <QSignalSpy>
 
 class TstSpdrImport : public QObject
 {
@@ -12,11 +13,11 @@ class TstSpdrImport : public QObject
 private slots:
     void testDefaults();
     void testSetters();
+    void testSignals();
 };
 
 void TstSpdrImport::testDefaults()
 {
-    //qDebug() << "Testing defaults for SpdrBase";
     SpdrImport testObject;
     QCOMPARE(testObject.format(), QString());
 }
@@ -32,6 +33,18 @@ void TstSpdrImport::testSetters()
     testObject.setProperty("format", propertyTestValue);
     QCOMPARE(testObject.format(), propertyTestValue);
     QCOMPARE(testObject.property("format").toString(), propertyTestValue);
+}
+
+void TstSpdrImport::testSignals()
+{
+    Spdr::registerMetatypes();
+    SpdrImport testObject;
+    QSignalSpy spy(&testObject, SIGNAL(formatChanged(QString)));
+
+    testObject.setFormat("aaa");
+    testObject.setProperty("format", "bbb");
+
+    QCOMPARE(spy.count(), 2);
 }
 
 QTEST_MAIN(TstSpdrImport)

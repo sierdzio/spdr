@@ -3,41 +3,52 @@
 
 #include <QObject>
 #include <QDebug>
-#include <QtTest/QtTest>
+#include <QTest>
 
 class BnchSpdrSynchronize : public QObject
 {
     Q_OBJECT
 
 private slots:
-    void testDefaults();
     void testSetters();
+    void benchmarkSplit_data();
+    void benchmarkSplit();
 };
-
-void BnchSpdrSynchronize::testDefaults()
-{
-    SpdrSynchronize testObject;
-    QCOMPARE(testObject.options(), SpdrSynchronize::None);
-    QCOMPARE(testObject.split(), 0);
-}
 
 void BnchSpdrSynchronize::testSetters()
 {
     SpdrSynchronize testObject;
-    SpdrSynchronize::SynchronizationOptions options = SpdrSynchronize::Cache
-            | SpdrSynchronize::DeepSearch;
 
-    testObject.setOptions(options);
-    QCOMPARE(testObject.options(), options);
+    int propertyTestValue = 3;
+    QBENCHMARK {
+        testObject.setProperty("split", propertyTestValue);
+    }
 
-    int propertyTestValue = 8;
-    testObject.setSplit(propertyTestValue);
-    QCOMPARE(testObject.split(), propertyTestValue);
-
-    propertyTestValue = 3;
-    testObject.setProperty("split", propertyTestValue);
     QCOMPARE(testObject.split(), propertyTestValue);
     QCOMPARE(testObject.property("split").toInt(), propertyTestValue);
+}
+
+void BnchSpdrSynchronize::benchmarkSplit_data()
+{
+    QTest::addColumn<bool>("splitCompare");
+    QTest::newRow("compare using Q_PROPERTY") << true;
+    QTest::newRow("compare using C++") << false;
+}
+
+void BnchSpdrSynchronize::benchmarkSplit()
+{
+    QFETCH(bool, splitCompare);
+    SpdrSynchronize testObject;
+
+    if (splitCompare) {
+        QBENCHMARK {
+            testObject.setProperty("split", 5);
+        }
+    } else {
+        QBENCHMARK {
+            testObject.setSplit(5);
+        }
+    }
 }
 
 QTEST_MAIN(BnchSpdrSynchronize)
