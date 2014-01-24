@@ -46,6 +46,12 @@ bool SpdrSynchronize::synchronize()
     return true;
 }
 
+void SpdrSynchronize::registerMetatypes()
+{
+    Spdr::registerMetatypes();
+    qRegisterMetaType<SpdrSynchronize::SynchronizationOptions>("SpdrSynchronize::SynchronizationOptions");
+}
+
 SpdrSynchronize::SpdrSynchronize(SpdrSynchronizePrivate &dd, QObject *parent) : QObject(parent), d_ptr(&dd)
 {
     Q_D(SpdrSynchronize);
