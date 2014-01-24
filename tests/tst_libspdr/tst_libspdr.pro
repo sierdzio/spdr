@@ -1,8 +1,8 @@
-include(../../libraryIncludes.pri)
-include(../../definitions.pri)
+TEMPLATE = subdirs
 
-QT = core testlib
+# Use "make check" to run the test suite!
 
-CONFIG += testcase
-
-SOURCES += tst_spdrbase.cpp
+SUBDIRS = \
+    tst_spdrbase \
+    tst_spdrimport \
+    tst_spdrsynchronize
