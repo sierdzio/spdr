@@ -1,6 +1,6 @@
 #include "spdrsynchronize_p.h"
 
-SpdrSynchronize::SpdrSynchronize(QObject *parent) : QObject(parent), d_ptr(new SpdrSynchronizePrivate)
+SpdrSynchronize::SpdrSynchronize(QObject *parent) : SpdrBase(parent), d_ptr(new SpdrSynchronizePrivate)
 {
     Q_D(SpdrSynchronize);
     Q_UNUSED(d);
@@ -52,7 +52,7 @@ void SpdrSynchronize::registerMetatypes()
     qRegisterMetaType<SpdrSynchronize::SynchronizationOptions>("SpdrSynchronize::SynchronizationOptions");
 }
 
-SpdrSynchronize::SpdrSynchronize(SpdrSynchronizePrivate &dd, QObject *parent) : QObject(parent), d_ptr(&dd)
+SpdrSynchronize::SpdrSynchronize(SpdrSynchronizePrivate &dd, QObject *parent) : SpdrBase(parent), d_ptr(&dd)
 {
     Q_D(SpdrSynchronize);
     Q_UNUSED(d);

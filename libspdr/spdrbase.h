@@ -38,6 +38,8 @@ protected:
     SpdrBase(SpdrBasePrivate &dd, QObject *parent = 0);
     SpdrBasePrivate *d_ptr;
 
+    void log(const QString &message, int logLevel);
+
 private:
     Q_DECLARE_PRIVATE(SpdrBase)
 };

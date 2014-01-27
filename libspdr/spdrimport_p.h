@@ -15,6 +15,8 @@ public:
     SpdrImportPrivate(SpdrImport *q) : q_ptr(q) {}
     SpdrImport *q_ptr;
 
+    bool checkFormat(const QString &format);
+
     QString mFormat;
 };
 

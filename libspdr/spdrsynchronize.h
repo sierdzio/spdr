@@ -1,13 +1,13 @@
 #ifndef SPDRSYNCHRONIZE_H
 #define SPDRSYNCHRONIZE_H
 
-#include "spdrglobal.h"
+#include "SpdrBase"
 
 #include <QObject>
 
 class SpdrSynchronizePrivate;
 
-class SPDR_DLLSPEC SpdrSynchronize : public QObject {
+class SPDR_DLLSPEC SpdrSynchronize : public SpdrBase {
 
     Q_OBJECT
     Q_FLAGS(SynchronizationOptions)
