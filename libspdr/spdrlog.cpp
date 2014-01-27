@@ -34,8 +34,12 @@ void SpdrLog::setLogFilePath(const QString &filePath)
     mIsLogFileSet = !mLogFilePath.isEmpty();
 }
 
-void SpdrLog::log(const QString &message)
+void SpdrLog::log(const QString &message, uint logLevelToUse)
 {
+    if (logLevelToUse > logLevel()) {
+        return;
+    }
+
     if (mIsLogFileSet) {
         QFile file(mLogFilePath);
         if (!file.open(QFile::Text | QFile::WriteOnly | QFile::Append)) {

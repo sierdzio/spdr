@@ -1,5 +1,6 @@
 #include "spdrimport_p.h"
 
+#include <QStringList>
 #include <QDateTime>
 
 SpdrImport::SpdrImport(QObject *parent) : SpdrBase(parent), d_ptr(new SpdrImportPrivate)
@@ -35,8 +36,11 @@ bool SpdrImport::setFormat(const QString &format)
         if (d->checkFormat(format)) {
             d->mFormat = format;
             emit formatChanged(format);
+            return true;
         }
     }
+
+    return false;
 }
 
 bool SpdrImport::import()
@@ -44,7 +48,9 @@ bool SpdrImport::import()
     Q_D(const SpdrImport);
     Q_UNUSED(d);
 
-    return true;
+    bool result = true;
+
+    return result;
 }
 
 bool SpdrImport::import(const QString &format)
@@ -79,11 +85,15 @@ bool SpdrImportPrivate::checkFormat(const QString &format)
         if (lessThanIndex == -1 && greaterThanIndex == -1) {
             // No template here
             continue;
-        } else if (lessThanIndex > -1 && (lessThanIndex < greaterThanIndex)) {
-            // Read the format string
+        } else if (lessThanIndex == -1 || greaterThanIndex == -1) {
+            result = false;
+            mLog->log(q->tr("Missing tag enclosure: < or >"), Spdr::OnlyCritical);
+        } else if (lessThanIndex > -1 && (lessThanIndex >= greaterThanIndex)) {
+            result = false;
+            mLog->log(q->tr("Date format tag is closed before it is opened"), Spdr::OnlyCritical);
         } else {
             result = false;
-            // TODO: add logging
+            mLog->log(q->tr("Import format is invalid"), Spdr::OnlyCritical);
         }
     }
 

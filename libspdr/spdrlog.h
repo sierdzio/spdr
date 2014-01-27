@@ -20,7 +20,7 @@ public:
     void setLogFilePath(const QString &filePath);
 
 public slots:
-    void log(const QString &message);
+    void log(const QString &message, uint logLevelToUse = 5);
 
 private:
     bool mIsLogFileSet;

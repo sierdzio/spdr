@@ -2,11 +2,11 @@
 #define SPDRIMPORT_P_H
 
 #include "spdrimport.h"
-#include "spdrlog.h"
+#include "spdrbase_p.h"
 
 #include <QString>
 
-class SpdrImportPrivate
+class SpdrImportPrivate : public SpdrBasePrivate
 {
     Q_DECLARE_PUBLIC(SpdrImport)
 

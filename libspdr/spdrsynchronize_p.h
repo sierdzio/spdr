@@ -2,7 +2,6 @@
 #define SPDRSYNCHRONIZE_P_H
 
 #include "spdrsynchronize.h"
-#include "spdrlog.h"
 
 class SpdrSynchronizePrivate
 {
