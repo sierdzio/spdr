@@ -59,7 +59,7 @@ void SpdrBase::setSimulate(bool simulationEnabled)
 
     if (simulationEnabled != d->mSimulate) {
         d->mSimulate = simulationEnabled;
-        emit simulationChanged(simulationEnabled);
+        emit simulateChanged(simulationEnabled);
     }
 }
 
