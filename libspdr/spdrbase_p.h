@@ -17,6 +17,7 @@ public:
     SpdrLog mLog;
     QString mInputPath;
     QString mOutputPath;
+    bool mSimulate;
     Spdr::CopyMode mCopyMode;
     Spdr::UpdateMode mUpdateMode;
 };

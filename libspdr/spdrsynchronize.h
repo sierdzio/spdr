@@ -20,10 +20,9 @@ public:
         None                   = 0x0000,
         Bidirectional          = 0x0001,
         Cache                  = 0x0002,
-        Simulate               = 0x0004,
-        RemoveEmptyDirectories = 0x0008,
-        RemoveMissingFiles     = 0x0010,
-        DeepSearch             = 0x0020
+        RemoveEmptyDirectories = 0x0004,
+        RemoveMissingFiles     = 0x0008,
+        DeepSearch             = 0x0010
     };
     Q_DECLARE_FLAGS(SynchronizationOptions, SynchronizationOption)
 

@@ -13,6 +13,7 @@ class SPDR_DLLSPEC SpdrBase : public QObject
     Q_OBJECT
     Q_PROPERTY(QString inputPath READ inputPath WRITE setInputPath NOTIFY inputPathChanged)
     Q_PROPERTY(QString outputPath READ outputPath WRITE setOutputPath NOTIFY outputPathChanged)
+    Q_PROPERTY(bool simulate READ simulate WRITE setSimulate NOTIFY simulateChanged)
 
     //Q_PROPERTY(Spdr::CopyMode copyMode READ copyMode WRITE setCopyMode NOTIFY copyModeChanged)
     //Q_PROPERTY(Spdr::UpdateMode updateMode READ updateMode WRITE setUpdateMode NOTIFY updateModeChanged)
@@ -25,6 +26,9 @@ public:
 
     Q_INVOKABLE QString outputPath() const;
     Q_INVOKABLE virtual bool setOutputPath(const QString &newOutputPath);
+
+    Q_INVOKABLE bool simulate() const;
+    Q_INVOKABLE void setSimulate(bool simulationEnabled);
 
     Q_INVOKABLE Spdr::CopyMode copyMode() const;
     Q_INVOKABLE void setCopyMode(Spdr::CopyMode newCopyMode);
@@ -45,6 +49,7 @@ public slots:
 signals:
     void inputPathChanged(const QString &newInputPath);
     void outputPathChanged(const QString &newOutputPath);
+    void simulateChanged(bool simulationEnabled);
     void copyModeChanged(Spdr::CopyMode newCopyMode);
     void updateModeChanged(Spdr::UpdateMode newUpdateMode);
 

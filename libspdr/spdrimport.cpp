@@ -10,7 +10,8 @@
 SpdrImport::SpdrImport(QObject *parent) : SpdrBase(parent), d_ptr(new SpdrImportPrivate(this))
 {
     Q_D(SpdrImport);
-    Q_UNUSED(d);
+
+    d->mPathSeparatorRegularExpression = "[\\\\]|[/]";
 }
 
 /*!
@@ -106,7 +107,7 @@ bool SpdrImportPrivate::importFile(const QString &filePath)
     QString outputPath(getOutputFilePath(filePath));
 
     // TODO: implement file moving, copying and always moving. Possibly in SpdrBase
-    bool result = QFile::copy(filePath, outputPath);
+    bool result = q->simulate()? true : QFile::copy(filePath, outputPath);
     q->log(q->tr("COPY: Copying %1 to %2 has: %3").arg(filePath).arg(outputPath)
            .arg(getOperationStatusFromBool(result)), Spdr::MediumLogging);
     return result;

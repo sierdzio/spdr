@@ -4,6 +4,7 @@ SpdrBase::SpdrBase(QObject *parent) : QObject(parent), d_ptr(new SpdrBasePrivate
 {
     Q_D(SpdrBase);
 
+    d->mSimulate = false;
     d->mCopyMode = Spdr::Copy;
     d->mUpdateMode = Spdr::Ask;
 }
@@ -44,6 +45,22 @@ bool SpdrBase::setOutputPath(const QString &newOutputPath)
     }
 
     return true;
+}
+
+bool SpdrBase::simulate() const
+{
+    Q_D(const SpdrBase);
+    return d->mSimulate;
+}
+
+void SpdrBase::setSimulate(bool simulationEnabled)
+{
+    Q_D(SpdrBase);
+
+    if (simulationEnabled != d->mSimulate) {
+        d->mSimulate = simulationEnabled;
+        emit simulationChanged(simulationEnabled);
+    }
 }
 
 Spdr::CopyMode SpdrBase::copyMode() const
