@@ -76,7 +76,6 @@ void TstSpdrImport::testFormatSetting()
     QCOMPARE(result, true);
 
     // Setting the format should fail here: tag is opened twice but closed once
-    testObject.setFormat(QString());
     testFormat = "./<<MM>/";
     result = true;
     result = testObject.setFormat(testFormat);
