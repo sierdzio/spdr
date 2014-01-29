@@ -3,6 +3,8 @@
 #include <QStringList>
 #include <QRegularExpression>
 #include <QDateTime>
+#include <QFileInfo>
+#include <QDir>
 
 SpdrImport::SpdrImport(QObject *parent) : SpdrBase(parent), d_ptr(new SpdrImportPrivate(this))
 {
@@ -51,9 +53,17 @@ bool SpdrImport::setFormat(const QString &format)
 bool SpdrImport::import()
 {
     Q_D(const SpdrImport);
-    Q_UNUSED(d);
 
     bool result = true;
+
+    // TODO: add input file filters!
+    /*
+      Algorithm plan:
+       - iterate over input path, and for every file:
+       - get file info (creation date and time, mostly)
+       - construct output path based on file info
+       - perform file operation (copy, move, etc.)
+      */
 
     return result;
 }

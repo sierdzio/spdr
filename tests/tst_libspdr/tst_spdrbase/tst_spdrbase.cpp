@@ -14,6 +14,8 @@ private slots:
     void testDefaults();
     void testSetters();
     void testSignals();
+
+    // TODO: add input and output path tests!
 };
 
 void TstSpdrBase::testDefaults()

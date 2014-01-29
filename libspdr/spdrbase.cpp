@@ -8,6 +8,38 @@ SpdrBase::SpdrBase(QObject *parent) : QObject(parent), d_ptr(new SpdrBasePrivate
     d->mUpdateMode = Spdr::Ask;
 }
 
+QString SpdrBase::inputPath() const
+{
+    Q_D(const SpdrBase);
+    return d->mInputPath;
+}
+
+void SpdrBase::setInputPath(const QString &newInputPath)
+{
+    Q_D(SpdrBase);
+
+    if (newInputPath != d->mInputPath) {
+        d->mInputPath = newInputPath;
+        emit inputPathChanged(newInputPath);
+    }
+}
+
+QString SpdrBase::outputPath() const
+{
+    Q_D(const SpdrBase);
+    return d->mOutputPath;
+}
+
+void SpdrBase::setOutputPath(const QString &newOutputPath)
+{
+    Q_D(SpdrBase);
+
+    if (newOutputPath != d->mOutputPath) {
+        d->mOutputPath = newOutputPath;
+        emit outputPathChanged(newOutputPath);
+    }
+}
+
 Spdr::CopyMode SpdrBase::copyMode() const
 {
     Q_D(const SpdrBase);

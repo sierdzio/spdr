@@ -15,6 +15,8 @@ public:
     SpdrBase *q_ptr;
 
     SpdrLog mLog;
+    QString mInputPath;
+    QString mOutputPath;
     Spdr::CopyMode mCopyMode;
     Spdr::UpdateMode mUpdateMode;
 };
