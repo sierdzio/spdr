@@ -61,7 +61,11 @@ bool SpdrImport::import()
 bool SpdrImport::import(const QString &format)
 {
     SpdrImport object;
-    object.setFormat(format);
+
+    if (!object.setFormat(format)) {
+        return false;
+    }
+
     return object.import();
 }
 
