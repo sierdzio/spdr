@@ -41,7 +41,7 @@ bool SpdrImport::setFormat(const QString &format)
         } else if (!d->mFormat.isEmpty()) {
             d->mFormat = QString::null;
             emit formatChanged(d->mFormat);
-            return true;
+            return false;
         }
     }
 

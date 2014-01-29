@@ -11,7 +11,6 @@ class SpdrImportPrivate
     Q_DECLARE_PUBLIC(SpdrImport)
 
 public:
-//    SpdrImportPrivate() {}
     SpdrImportPrivate(SpdrImport *q) : q_ptr(q) {}
     SpdrImport *q_ptr;
 

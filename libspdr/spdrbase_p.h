@@ -11,7 +11,6 @@ class SpdrBasePrivate
     Q_DECLARE_PUBLIC(SpdrBase)
 
 public:
-//    SpdrBasePrivate() {}
     SpdrBasePrivate(SpdrBase *q) : q_ptr(q) {}
     SpdrBase *q_ptr;
 

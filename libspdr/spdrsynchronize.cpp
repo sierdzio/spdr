@@ -3,7 +3,9 @@
 SpdrSynchronize::SpdrSynchronize(QObject *parent) : SpdrBase(parent), d_ptr(new SpdrSynchronizePrivate(this))
 {
     Q_D(SpdrSynchronize);
-    Q_UNUSED(d);
+
+    d->mSplit = 0;
+    d->mOptions = SpdrSynchronize::None;
 }
 
 SpdrSynchronize::SynchronizationOptions SpdrSynchronize::options() const
