@@ -106,8 +106,34 @@ bool SpdrImportPrivate::importFile(const QString &filePath)
 
     QString outputPath(getOutputFilePath(filePath));
 
-    // TODO: implement file moving, copying and always moving. Possibly in SpdrBase
-    bool result = q->simulate()? true : QFile::copy(filePath, outputPath);
+    bool result = true;
+
+    if (!q->simulate()) {
+        bool skip = false;
+        if (QFile(outputPath).exists()) {
+            if (q->updateMode() == Spdr::Overwrite) {
+                result = QFile::remove(outputPath);
+            } else if (q->updateMode() == Spdr::Ignore) {
+                skip = true;
+            } else if (q->updateMode() == Spdr::Ask) { // TODO: implement Spdr::Ask
+                q->log(q->tr("This feature has not been implemented yet: Spdr::Ask"));
+            }
+        }
+
+        if (!skip && result) {
+            QFileInfo outputFile(outputPath);
+            QDir().mkdir(outputFile.absolutePath());
+            result = QFile::copy(filePath, outputPath);
+
+            if (q->copyMode() == Spdr::Move) {
+                bool movingSuccessful = QFile::remove(filePath);
+                if (!movingSuccessful) {
+                    q->log(q->tr("MOVE: Could not remove the input file: ").arg(filePath));
+                }
+            }
+        }
+    }
+
     q->log(q->tr("COPY: Copying %1 to %2 has: %3").arg(filePath).arg(outputPath)
            .arg(getOperationStatusFromBool(result)), Spdr::MediumLogging);
     return result;
@@ -116,6 +142,8 @@ bool SpdrImportPrivate::importFile(const QString &filePath)
 QString SpdrImportPrivate::getOutputFilePath(const QString &inputFilePath) const
 {
     Q_Q(const SpdrImport);
+
+    // TODO: allow to change the input file name, too!
 
     QString result(q->outputPath());
     QFileInfo fileInfo(inputFilePath);

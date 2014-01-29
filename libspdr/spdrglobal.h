@@ -29,8 +29,7 @@ public:
      */
     enum CopyMode {
         Copy       = 0, //! Files will be copied (no changes in input paths)
-        Move       = 1, //! Files will be moved (file may be deleted from input path, if the move operation is succesful)
-        AlwaysMove = 2 //! Files will be forcefully moved (file will be deleted from input path)
+        Move       = 1 //! Files will be moved (file may be deleted from input path, if the move operation is succesful)
     };
 
     /*!

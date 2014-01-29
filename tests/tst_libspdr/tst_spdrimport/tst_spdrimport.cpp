@@ -1,10 +1,13 @@
 #include "spdrglobal.h"
 #include "SpdrImport"
 
+#include <QString>
+#include <QStringList>
 #include <QObject>
 #include <QDebug>
 #include <QTest>
 #include <QSignalSpy>
+#include <QFile>
 
 class TstSpdrImport : public QObject
 {
@@ -15,6 +18,7 @@ private slots:
     void testSetters();
     void testSignals();
     void testFormatSetting();
+    void testBasicImporting();
 };
 
 void TstSpdrImport::testDefaults()
@@ -84,6 +88,32 @@ void TstSpdrImport::testFormatSetting()
     result = testObject.setOutputPath(testFormat);
     QCOMPARE(testObject.outputPath(), QString());
     QCOMPARE(result, false);
+}
+
+void TstSpdrImport::testBasicImporting()
+{
+    int numberOfFiles = 15;
+    for (int i = 0; i < numberOfFiles; i++) {
+        QFile file(QString("file%1.txt").arg(QString::number(i)));
+
+        if (!file.open(QFile::Text | QFile::WriteOnly)) {
+            continue;
+        }
+
+        QString fileContent("Content of file number: ");
+        fileContent += QString::number(i);
+        fileContent += ". Random data: ";
+        fileContent += QString::number(qrand());
+        file.write(fileContent.toUtf8());
+        file.close();
+    }
+
+    SpdrImport testObject;
+    testObject.setLogLevel(Spdr::Debug);
+    testObject.setSimulate(true);
+    testObject.setInputPath(".");
+    testObject.setOutputPath("testOutput/<yyyy>/<MM>/");
+    testObject.import();
 }
 
 QTEST_MAIN(TstSpdrImport)
