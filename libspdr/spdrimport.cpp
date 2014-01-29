@@ -1,9 +1,10 @@
 #include "spdrimport_p.h"
 
 #include <QStringList>
+#include <QRegularExpression>
 #include <QDateTime>
 
-SpdrImport::SpdrImport(QObject *parent) : SpdrBase(parent), d_ptr(new SpdrImportPrivate)
+SpdrImport::SpdrImport(QObject *parent) : SpdrBase(parent), d_ptr(new SpdrImportPrivate(this))
 {
     Q_D(SpdrImport);
     Q_UNUSED(d);
@@ -75,29 +76,44 @@ bool SpdrImportPrivate::checkFormat(const QString &format)
 
     bool result = true;
 
-    // TODO: make sure to check both Unix and Windows path separators! (:/
-    // yeah, this is boring)
-    QStringList pathSegments(format.split("/"));
+    // Reads both Unix and Windows paths
+    QStringList pathSegments(format.split(QRegularExpression("[\\\\]|[/]"), QString::SkipEmptyParts));
 
     foreach (const QString &segment, pathSegments) {
         int lessThanIndex = segment.indexOf("<");
         int greaterThanIndex = segment.indexOf(">");
+
         if (lessThanIndex == -1 && greaterThanIndex == -1) {
             // No template here
             continue;
         } else if (lessThanIndex == -1 || greaterThanIndex == -1) {
             result = false;
-            mLog->log(q->tr("Missing tag enclosure: < or >"), Spdr::OnlyCritical);
+            q->log(q->tr("Missing tag enclosure: < or >: %1").arg(segment), Spdr::OnlyCritical);
+            break;
         } else if (lessThanIndex > -1 && (lessThanIndex >= greaterThanIndex)) {
             result = false;
-            mLog->log(q->tr("Date format tag is closed before it is opened"), Spdr::OnlyCritical);
-        } else {
+            q->log(q->tr("Date format tag is closed before it is opened: %1").arg(segment), Spdr::OnlyCritical);
+            break;
+        } else if (countOccurences(segment, '<') != countOccurences(segment, '>')) {
             result = false;
-            mLog->log(q->tr("Import format is invalid"), Spdr::OnlyCritical);
+            q->log(q->tr("Too many date formatting tags: %1").arg(segment), Spdr::OnlyCritical);
+            break;
         }
     }
 
     // TODO: check validity of the whole path
+
+    return result;
+}
+
+int SpdrImportPrivate::countOccurences(const QString &stringToSearchThrough, const QChar &characterToCount)
+{
+    int result = 0;
+    for (int i = 0; i < stringToSearchThrough.length(); i++) {
+        if (stringToSearchThrough.at(i) == characterToCount) {
+            result++;
+        }
+    }
 
     return result;
 }

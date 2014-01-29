@@ -1,30 +1,27 @@
 #ifndef SPDRLOG_H
 #define SPDRLOG_H
 
+#include "spdrglobal.h"
+
 #include <QString>
-#include <QObject>
 
-class SpdrLog : public QObject
+class SpdrLog
 {
-    Q_OBJECT
-
 public:
-    explicit SpdrLog(QObject *parent = 0);
+    explicit SpdrLog();
 
     bool isUsingLogFile() const;
 
-    uint logLevel() const;
-    void setLogLevel(uint newLevel);
+    Spdr::LogLevel logLevel() const;
+    void setLogLevel(Spdr::LogLevel newLevel);
 
     QString logFilePath() const;
     void setLogFilePath(const QString &filePath);
-
-public slots:
-    void log(const QString &message, uint logLevelToUse = 5);
+    void log(const QString &message, Spdr::LogLevel logLevelToUse = Spdr::LogEverything);
 
 private:
     bool mIsLogFileSet;
-    uint mLogLevel;
+    Spdr::LogLevel mLogLevel;
     QString mLogFilePath;
 };
 

@@ -1,6 +1,6 @@
 #include "spdrsynchronize_p.h"
 
-SpdrSynchronize::SpdrSynchronize(QObject *parent) : SpdrBase(parent), d_ptr(new SpdrSynchronizePrivate)
+SpdrSynchronize::SpdrSynchronize(QObject *parent) : SpdrBase(parent), d_ptr(new SpdrSynchronizePrivate(this))
 {
     Q_D(SpdrSynchronize);
     Q_UNUSED(d);

@@ -2,9 +2,9 @@
 
 #include <QFile>
 
-SpdrLog::SpdrLog(QObject *parent) : QObject(parent)
+SpdrLog::SpdrLog()
 {
-    mLogLevel = 2;
+    mLogLevel = Spdr::OnlyErrors;
     mIsLogFileSet = false;
 }
 
@@ -13,12 +13,12 @@ bool SpdrLog::isUsingLogFile() const
     return mIsLogFileSet;
 }
 
-uint SpdrLog::logLevel() const
+Spdr::LogLevel SpdrLog::logLevel() const
 {
     return mLogLevel;
 }
 
-void SpdrLog::setLogLevel(uint newLevel)
+void SpdrLog::setLogLevel(Spdr::LogLevel newLevel)
 {
     mLogLevel = newLevel;
 }
@@ -34,9 +34,9 @@ void SpdrLog::setLogFilePath(const QString &filePath)
     mIsLogFileSet = !mLogFilePath.isEmpty();
 }
 
-void SpdrLog::log(const QString &message, uint logLevelToUse)
+void SpdrLog::log(const QString &message, Spdr::LogLevel logLevelToUse)
 {
-    if (logLevelToUse > logLevel()) {
+    if (((int) logLevelToUse) > ((int) logLevel())) {
         return;
     }
 

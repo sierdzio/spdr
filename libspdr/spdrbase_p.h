@@ -11,15 +11,13 @@ class SpdrBasePrivate
     Q_DECLARE_PUBLIC(SpdrBase)
 
 public:
-    SpdrBasePrivate() {}
+//    SpdrBasePrivate() {}
     SpdrBasePrivate(SpdrBase *q) : q_ptr(q) {}
     SpdrBase *q_ptr;
 
-    SpdrLog *mLog;
-
+    SpdrLog mLog;
     Spdr::CopyMode mCopyMode;
     Spdr::UpdateMode mUpdateMode;
-    bool mIsLogFileSet;
 };
 
 #endif // SPDRBASE_P_H

@@ -8,7 +8,7 @@ class SpdrSynchronizePrivate
     Q_DECLARE_PUBLIC(SpdrSynchronize)
 
 public:
-    SpdrSynchronizePrivate() {}
+//    SpdrSynchronizePrivate() {}
     SpdrSynchronizePrivate(SpdrSynchronize *q) : q_ptr(q) {}
     SpdrSynchronize *q_ptr;
 

@@ -30,6 +30,9 @@ public:
     Q_INVOKABLE void setLogFile(const QString &logFilePath);
     Q_INVOKABLE QString logFile() const;
 
+public slots:
+    void log(const QString &message, Spdr::LogLevel logLevelToUse = Spdr::LogEverything);
+
 signals:
     void copyModeChanged(Spdr::CopyMode newCopyMode);
     void updateModeChanged(Spdr::UpdateMode newUpdateMode);
