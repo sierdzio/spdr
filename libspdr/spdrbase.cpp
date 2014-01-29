@@ -18,6 +18,8 @@ void SpdrBase::setInputPath(const QString &newInputPath)
 {
     Q_D(SpdrBase);
 
+    // TODO: add path validation!
+
     if (newInputPath != d->mInputPath) {
         d->mInputPath = newInputPath;
         emit inputPathChanged(newInputPath);
@@ -30,14 +32,18 @@ QString SpdrBase::outputPath() const
     return d->mOutputPath;
 }
 
-void SpdrBase::setOutputPath(const QString &newOutputPath)
+bool SpdrBase::setOutputPath(const QString &newOutputPath)
 {
     Q_D(SpdrBase);
+
+    // TODO: add path validation!
 
     if (newOutputPath != d->mOutputPath) {
         d->mOutputPath = newOutputPath;
         emit outputPathChanged(newOutputPath);
     }
+
+    return true;
 }
 
 Spdr::CopyMode SpdrBase::copyMode() const

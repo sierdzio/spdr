@@ -1,6 +1,7 @@
 #include "spdrglobal.h"
 #include "SpdrBase"
 
+#include <QString>
 #include <QObject>
 #include <QDebug>
 #include <QTest>
@@ -14,14 +15,14 @@ private slots:
     void testDefaults();
     void testSetters();
     void testSignals();
-
-    // TODO: add input and output path tests!
 };
 
 void TstSpdrBase::testDefaults()
 {
     //qDebug() << "Testing defaults for SpdrBase";
     SpdrBase testObject;
+    QCOMPARE(testObject.inputPath(), QString());
+    QCOMPARE(testObject.outputPath(), QString());
     QCOMPARE(testObject.copyMode(), Spdr::Copy);
     QCOMPARE(testObject.updateMode(), Spdr::Ask);
     QCOMPARE(testObject.logLevel(), Spdr::OnlyErrors);
@@ -31,6 +32,13 @@ void TstSpdrBase::testDefaults()
 void TstSpdrBase::testSetters()
 {
     SpdrBase testObject;
+
+    QString pathTester("/some/path");
+    testObject.setInputPath(pathTester);
+    QCOMPARE(testObject.inputPath(), pathTester);
+
+    testObject.setOutputPath(pathTester);
+    QCOMPARE(testObject.outputPath(), pathTester);
 
     testObject.setCopyMode(Spdr::Move);
     QCOMPARE(testObject.copyMode(), Spdr::Move);
@@ -51,12 +59,19 @@ void TstSpdrBase::testSignals()
 {
     Spdr::registerMetatypes();
     SpdrBase testObject;
+    QSignalSpy spyInputPath(&testObject, SIGNAL(inputPathChanged(QString)));
+    QSignalSpy spyOutputPath(&testObject, SIGNAL(outputPathChanged(QString)));
     QSignalSpy spyCopyMode(&testObject, SIGNAL(copyModeChanged(Spdr::CopyMode)));
     QSignalSpy spyUpdateMode(&testObject, SIGNAL(updateModeChanged(Spdr::UpdateMode)));
 
+    QString pathTester("/some/path");
+    testObject.setInputPath(pathTester);
+    testObject.setOutputPath(pathTester);
     testObject.setCopyMode(Spdr::Move);
     testObject.setUpdateMode(Spdr::Ignore);
 
+    QCOMPARE(spyInputPath.count(), 1);
+    QCOMPARE(spyOutputPath.count(), 1);
     QCOMPARE(spyCopyMode.count(), 1);
     QCOMPARE(spyUpdateMode.count(), 1);
 }

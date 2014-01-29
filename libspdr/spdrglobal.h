@@ -42,7 +42,8 @@ public:
         OnlyErrors = 2, //! All errors will be printed
         MildLogging = 3, //! Some important log information will be printed
         MediumLogging = 4, //! Most interesting pieces of information will be printed
-        LogEverything = 5 //! All log messages will be printed
+        LogEverything = 5, //! All log messages will be printed
+        Debug = LogEverything //! Synonym for LogEverything
     };
 
     /*!

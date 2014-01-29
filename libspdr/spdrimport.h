@@ -17,22 +17,17 @@ class SpdrImportPrivate;
   copy all files to "myPhotos", and also make sure they are all put into separate
   directories based on the date they were taken.
  */
-class SPDR_DLLSPEC SpdrImport : public SpdrBase {
-
+class SPDR_DLLSPEC SpdrImport : public SpdrBase
+{
     Q_OBJECT
-    Q_PROPERTY(QString format READ format WRITE setFormat NOTIFY formatChanged)
 
 public:
     SpdrImport(QObject *parent = 0);
 
-    Q_INVOKABLE QString format() const;
-    Q_INVOKABLE bool setFormat(const QString &format);
+    Q_INVOKABLE bool setOutputPath(const QString &newOutputPath);
 
     Q_INVOKABLE bool import();
-    Q_INVOKABLE static bool import(const QString &format);
-
-signals:
-    void formatChanged(const QString &newFormat);
+    Q_INVOKABLE static bool import(const QString &inputPath, const QString &outputPath);
 
 protected:
     SpdrImport(SpdrImportPrivate &dd, QObject *parent = 0);

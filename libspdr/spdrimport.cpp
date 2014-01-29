@@ -4,6 +4,7 @@
 #include <QRegularExpression>
 #include <QDateTime>
 #include <QFileInfo>
+#include <QFileInfoList>
 #include <QDir>
 
 SpdrImport::SpdrImport(QObject *parent) : SpdrBase(parent), d_ptr(new SpdrImportPrivate(this))
@@ -12,37 +13,29 @@ SpdrImport::SpdrImport(QObject *parent) : SpdrBase(parent), d_ptr(new SpdrImport
     Q_UNUSED(d);
 }
 
-QString SpdrImport::format() const
-{
-    Q_D(const SpdrImport);
-    return d->mFormat;
-}
-
 /*!
   Can be used to set the format for the import dir, along with the path.
 
-  Example format: ../myPhotos/<yyyy>/<MM>/<yyyy-MM-dd*>
+  Example format: ../myPhotos/<yyyy>/<MM>/<yyyy-MM-dd>*
 
   A star is being read as "anything goes" and can be used to import into some
   preexisting, named folders like "2014-01-27 Pics from today" with the following
-  format "<yyyy-MM-dd*>".
+  format "<yyyy-MM-dd>*".
 
   Accepted date formatting strings are the same as for QDateTime class and have
   to be put between "<" and ">" (otherwise they will be treated as part of the
   path).
  */
-bool SpdrImport::setFormat(const QString &format)
+bool SpdrImport::setOutputPath(const QString &newOutputPath)
 {
     Q_D(SpdrImport);
 
-    if (format != d->mFormat) {
-        if (d->checkFormat(format)) {
-            d->mFormat = format;
-            emit formatChanged(format);
+    if (newOutputPath != outputPath()) {
+        if (d->checkFormat(newOutputPath)) {
+            SpdrBase::setOutputPath(newOutputPath);
             return true;
-        } else if (!d->mFormat.isEmpty()) {
-            d->mFormat = QString::null;
-            emit formatChanged(d->mFormat);
+        } else if (!outputPath().isEmpty()) {
+            SpdrBase::setOutputPath(QString::null);
             return false;
         }
     }
@@ -52,27 +45,26 @@ bool SpdrImport::setFormat(const QString &format)
 
 bool SpdrImport::import()
 {
-    Q_D(const SpdrImport);
+    Q_D(SpdrImport);
 
     bool result = true;
 
-    // TODO: add input file filters!
-    /*
-      Algorithm plan:
-       - iterate over input path, and for every file:
-       - get file info (creation date and time, mostly)
-       - construct output path based on file info
-       - perform file operation (copy, move, etc.)
-      */
+    if (inputPath().isEmpty() || outputPath().isEmpty()) {
+        return false;
+    }
+
+    result = d->importDirectory(inputPath());
 
     return result;
 }
 
-bool SpdrImport::import(const QString &format)
+bool SpdrImport::import(const QString &inputPath, const QString &outputPath)
 {
     SpdrImport object;
 
-    if (!object.setFormat(format)) {
+    object.setInputPath(inputPath);
+
+    if (!object.setOutputPath(outputPath)) {
         return false;
     }
 
@@ -85,6 +77,84 @@ SpdrImport::SpdrImport(SpdrImportPrivate &dd, QObject *parent) : SpdrBase(parent
     Q_UNUSED(d);
 }
 
+bool SpdrImportPrivate::importDirectory(const QString &directoryPath)
+{
+    QDir inputDirectory(directoryPath);
+
+    QFileInfoList fileList(inputDirectory.entryInfoList(QDir::Files | QDir::NoDotAndDotDot));
+    QFileInfoList dirList(inputDirectory.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot));
+
+    foreach (const QFileInfo &file, fileList) {
+        if (!importFile(file.absoluteFilePath())) {
+            return false;
+        }
+    }
+
+    foreach (const QFileInfo &dir, dirList) {
+        if (!importDirectory(dir.absolutePath())) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool SpdrImportPrivate::importFile(const QString &filePath)
+{
+    Q_Q(SpdrImport);
+
+    QString outputPath(getOutputFilePath(filePath));
+
+    // TODO: implement file moving, copying and always moving. Possibly in SpdrBase
+    bool result = QFile::copy(filePath, outputPath);
+    q->log(q->tr("COPY: Copying %1 to %2 has: %3").arg(filePath).arg(outputPath)
+           .arg(getOperationStatusFromBool(result)), Spdr::MediumLogging);
+    return result;
+}
+
+QString SpdrImportPrivate::getOutputFilePath(const QString &inputFilePath) const
+{
+    Q_Q(const SpdrImport);
+
+    QString result(q->outputPath());
+    QFileInfo fileInfo(inputFilePath);
+    QDateTime creationDate(fileInfo.created());
+
+    // Reads both Unix and Windows paths
+    QStringList pathSegments(result.split(QRegularExpression(mPathSeparatorRegularExpression),
+                                          QString::SkipEmptyParts));
+    QStringList outputPathSegments;
+
+    foreach (const QString &segment, pathSegments) {
+        if (!segment.contains("<") && !segment.contains(">")) {
+            outputPathSegments.append(segment);
+            continue;
+        }
+
+        int lessThanIndex = segment.indexOf("<");
+        int greaterThanIndex = segment.indexOf(">", lessThanIndex);
+        QString dateFormat(segment.mid(lessThanIndex, greaterThanIndex - lessThanIndex));
+        QString resultSegment(creationDate.toString(dateFormat));
+
+        // TODO: add handling for '*' character
+
+        outputPathSegments.append(resultSegment);
+    }
+
+    return outputPathSegments.join("/");
+}
+
+QString SpdrImportPrivate::getOperationStatusFromBool(bool status) const
+{
+    Q_Q(const SpdrImport);
+
+    if (status) {
+        return q->tr("succeeded");
+    } else {
+        return q->tr("failed");
+    }
+}
+
 /*!
   Returns true if both the format and the file path are valid.
  */
@@ -95,7 +165,8 @@ bool SpdrImportPrivate::checkFormat(const QString &format)
     bool result = true;
 
     // Reads both Unix and Windows paths
-    QStringList pathSegments(format.split(QRegularExpression("[\\\\]|[/]"), QString::SkipEmptyParts));
+    QStringList pathSegments(format.split(QRegularExpression(mPathSeparatorRegularExpression),
+                                          QString::SkipEmptyParts));
 
     foreach (const QString &segment, pathSegments) {
         int lessThanIndex = segment.indexOf("<");

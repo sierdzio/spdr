@@ -24,7 +24,7 @@ public:
     Q_INVOKABLE void setInputPath(const QString &newInputPath);
 
     Q_INVOKABLE QString outputPath() const;
-    Q_INVOKABLE void setOutputPath(const QString &newOutputPath);
+    Q_INVOKABLE virtual bool setOutputPath(const QString &newOutputPath);
 
     Q_INVOKABLE Spdr::CopyMode copyMode() const;
     Q_INVOKABLE void setCopyMode(Spdr::CopyMode newCopyMode);

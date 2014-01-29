@@ -20,32 +20,35 @@ private slots:
 void TstSpdrImport::testDefaults()
 {
     SpdrImport testObject;
-    QCOMPARE(testObject.format(), QString());
+    QCOMPARE(testObject.outputPath(), QString());
 }
 
 void TstSpdrImport::testSetters()
 {
     SpdrImport testObject;
 
-    testObject.setFormat("./");
-    QCOMPARE(testObject.format(), QString("./"));
+    testObject.setOutputPath("./");
+    QCOMPARE(testObject.outputPath(), QString("./"));
 
+    // TODO: test for property manipulation of output path
+    /*
     QString propertyTestValue("./MM/");
     testObject.setProperty("format", propertyTestValue);
     QCOMPARE(testObject.format(), propertyTestValue);
     QCOMPARE(testObject.property("format").toString(), propertyTestValue);
+    */
 }
 
 void TstSpdrImport::testSignals()
 {
     Spdr::registerMetatypes();
     SpdrImport testObject;
-    QSignalSpy spy(&testObject, SIGNAL(formatChanged(QString)));
+    QSignalSpy spy(&testObject, SIGNAL(outputPathChanged(QString)));
 
-    testObject.setFormat("aaa");
-    testObject.setProperty("format", "bbb");
+    testObject.setOutputPath("aaa");
+    //testObject.setProperty("format", "bbb");
 
-    QCOMPARE(spy.count(), 2);
+    QCOMPARE(spy.count(), 1);
 }
 
 void TstSpdrImport::testFormatSetting()
@@ -56,30 +59,30 @@ void TstSpdrImport::testFormatSetting()
     bool result = true;
 
     // Setting the format should fail here: date tag is not closed
-    result = testObject.setFormat(testFormat);
-    QCOMPARE(testObject.format(), QString());
+    result = testObject.setOutputPath(testFormat);
+    QCOMPARE(testObject.outputPath(), QString());
     QCOMPARE(result, false);
 
     // Setting the format should fail here: tag is closed before opening
     testFormat = "./>MM</";
     result = true;
-    result = testObject.setFormat(testFormat);
-    QCOMPARE(testObject.format(), QString());
+    result = testObject.setOutputPath(testFormat);
+    QCOMPARE(testObject.outputPath(), QString());
     QCOMPARE(result, false);
 
     // Setting the format should be successful: mixing Windows and Unix style
     // path is allowed
     testFormat = "./<yyyy>\\<MM>/";
     result = false;
-    result = testObject.setFormat(testFormat);
-    QCOMPARE(testObject.format(), testFormat);
+    result = testObject.setOutputPath(testFormat);
+    QCOMPARE(testObject.outputPath(), testFormat);
     QCOMPARE(result, true);
 
     // Setting the format should fail here: tag is opened twice but closed once
     testFormat = "./<<MM>/";
     result = true;
-    result = testObject.setFormat(testFormat);
-    QCOMPARE(testObject.format(), QString());
+    result = testObject.setOutputPath(testFormat);
+    QCOMPARE(testObject.outputPath(), QString());
     QCOMPARE(result, false);
 }
 

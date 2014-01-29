@@ -5,6 +5,8 @@
 
 #include <QString>
 
+// TODO: make thread-friendly!
+// TODO: implement log categories
 class SpdrLog
 {
 public:
