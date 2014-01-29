@@ -8,17 +8,27 @@ include(../definitions.pri)
 
 INCLUDEPATH += src
 
-SOURCES += \
+#SOURCES += \
+#    src/main.cpp \
+#    src/pdmainwindow.cpp \
+#    src/pdsettingsdialog.cpp
+
+#HEADERS += \
+#    src/pdmainwindow.h \
+#    src/pdsettingsdialog.h
+
+#FORMS += \
+#    src/pdmainwindow.ui \
+#    src/pdsettingsdialog.ui
+
+OTHER_FILES += \
     src/main.cpp \
     src/pdmainwindow.cpp \
-    src/pdsettingsdialog.cpp
-
-HEADERS += \
+    src/pdsettingsdialog.cpp \
     src/pdmainwindow.h \
-    src/pdsettingsdialog.h
-
-FORMS += \
+    src/pdsettingsdialog.h \
     src/pdmainwindow.ui \
     src/pdsettingsdialog.ui
+
 
 TRANSLATIONS += locale/spdr_pl.ts
