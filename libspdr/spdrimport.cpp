@@ -122,7 +122,7 @@ bool SpdrImportPrivate::importFile(const QString &filePath) const
 
         if (!skip && result) {
             QFileInfo outputFile(outputPath);
-            QDir().mkdir(outputFile.absolutePath());
+            QDir().mkpath(outputFile.absolutePath());
             result = QFile::copy(filePath, outputPath);
 
             if (q->copyMode() == Spdr::Move) {

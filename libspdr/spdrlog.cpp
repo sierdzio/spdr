@@ -59,7 +59,7 @@ void SpdrLog::log(const QString &message, Spdr::LogLevel logLevelToUse) const
             //QString logFile(mLogFilePath);
             //setLogFilePath(QString::null);
             //log(QString("Log file %1 could not be opened for writing! Reverting to stdout").arg(logFile));
-            qDebug("Log file could not be opened for writing!", NULL);
+            qDebug("Log file could not be opened for writing!");
         }
     } else {
         qDebug(message.toLocal8Bit().constData(), NULL);

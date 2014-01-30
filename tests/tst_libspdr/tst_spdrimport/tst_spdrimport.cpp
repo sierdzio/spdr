@@ -9,6 +9,7 @@
 #include <QSignalSpy>
 #include <QFile>
 #include <QDir>
+#include <QDate>
 
 class TstSpdrImport : public QObject
 {
@@ -91,10 +92,16 @@ void TstSpdrImport::testFormatSetting()
     QCOMPARE(result, false);
 }
 
+/*!
+  WARNING! This test will fail if it so happens, that the date (year or month)
+  changes during it's execution. This is extremely unlikely, so don't worry.
+ */
 void TstSpdrImport::testBasicImporting()
 {
+    QString testDataPath("testData");
+    QDir(testDataPath).removeRecursively();
     int numberOfFiles = 15;
-    QDir().mkpath("testData/subdir");
+    QDir().mkpath(testDataPath + QLatin1String("/subdir"));
     for (int i = 0; i < numberOfFiles; i++) {
         QString filename(QString("file%1.txt").arg(QString::number(i)));
 
@@ -102,7 +109,7 @@ void TstSpdrImport::testBasicImporting()
             filename = "subdir/" + filename;
         }
 
-        filename = "testData/" + filename;
+        filename = testDataPath + "/" + filename;
 
         QFile file(filename);
 
@@ -119,13 +126,26 @@ void TstSpdrImport::testBasicImporting()
     }
 
     SpdrImport testObject;
-    testObject.setLogLevel(Spdr::NoLogging);
+    testObject.setLogLevel(Spdr::OnlyErrors);
     testObject.setSimulate(true);
-    testObject.setInputPath("testData");
-    testObject.setOutputPath("testOutput/<yyyy>/<MM>/");
-    testObject.import();
+    testObject.setInputPath(testDataPath);
+    testObject.setOutputPath(testDataPath + "/testOutput/<yyyy>/<MM>/");
+    QCOMPARE(testObject.import(), true);
 
-    QDir("testData").removeRecursively();
+    // After simulation: no actual data should be copied
+    QDir testOutputDir(testDataPath + QLatin1String("/testOutput"));
+    QCOMPARE(testOutputDir.exists(), false);
+
+    testObject.setSimulate(false);
+    QCOMPARE(testObject.import(), true);
+    QCOMPARE(testOutputDir.exists(), true);
+
+    QDate currentDate(QDate::currentDate());
+    QCOMPARE(testOutputDir.cd(currentDate.toString("yyyy")), true);
+    QCOMPARE(testOutputDir.cd(currentDate.toString("MM")), true);
+    QCOMPARE(testOutputDir.entryList(QDir::Files | QDir::NoDotAndDotDot).count(), numberOfFiles);
+
+    QDir(testDataPath).removeRecursively();
 }
 
 QTEST_MAIN(TstSpdrImport)
