@@ -41,7 +41,12 @@ bool SpdrBase::setOutputPath(const QString &newOutputPath)
 
     if (newOutputPath != d->mOutputPath) {
         d->mOutputPath = newOutputPath;
-        emit outputPathChanged(newOutputPath);
+
+        if (d->mOutputPath.endsWith(QChar('/')) || d->mOutputPath.endsWith(QChar('\\'))) {
+            d->mOutputPath.chop(1);
+        }
+
+        emit outputPathChanged(d->mOutputPath);
     }
 
     return true;

@@ -144,14 +144,13 @@ QString SpdrImportPrivate::getOutputFilePath(const QString &inputFilePath) const
     Q_Q(const SpdrImport);
 
     // TODO: allow to change the input file name, too!
-
-    QString result(q->outputPath());
     QFileInfo fileInfo(inputFilePath);
     QDateTime creationDate(fileInfo.created());
 
     // Reads both Unix and Windows paths
-    QStringList pathSegments(result.split(QRegularExpression(mPathSeparatorRegularExpression),
-                                          QString::SkipEmptyParts));
+    QStringList pathSegments(q->outputPath().split(QRegularExpression(mPathSeparatorRegularExpression),
+                                          QString::KeepEmptyParts));
+    pathSegments.append(fileInfo.fileName());
     QStringList outputPathSegments;
 
     foreach (const QString &segment, pathSegments) {
@@ -160,10 +159,11 @@ QString SpdrImportPrivate::getOutputFilePath(const QString &inputFilePath) const
             continue;
         }
 
-        int lessThanIndex = segment.indexOf("<");
+        int lessThanIndex = segment.indexOf("<") + 1;
         int greaterThanIndex = segment.indexOf(">", lessThanIndex);
         QString dateFormat(segment.mid(lessThanIndex, greaterThanIndex - lessThanIndex));
-        QString resultSegment(creationDate.toString(dateFormat));
+        QString resultSegment(segment);
+        resultSegment.replace(QLatin1String("<") + dateFormat + QLatin1String(">"), creationDate.toString(dateFormat));
 
         // TODO: add handling for '*' character
 
