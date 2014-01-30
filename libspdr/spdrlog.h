@@ -19,7 +19,7 @@ public:
 
     QString logFilePath() const;
     void setLogFilePath(const QString &filePath);
-    void log(const QString &message, Spdr::LogLevel logLevelToUse = Spdr::LogEverything);
+    void log(const QString &message, Spdr::LogLevel logLevelToUse = Spdr::LogEverything) const;
 
 private:
     bool mIsLogFileSet;

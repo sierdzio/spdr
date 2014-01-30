@@ -26,7 +26,7 @@ public:
 
     Q_INVOKABLE bool setOutputPath(const QString &newOutputPath);
 
-    Q_INVOKABLE bool import();
+    Q_INVOKABLE bool import() const;
     Q_INVOKABLE static bool import(const QString &inputPath, const QString &outputPath);
 
 protected:

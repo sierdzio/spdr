@@ -51,8 +51,8 @@ void TstSpdrBase::testSetters()
 
     QString randomPath("some/random/path");
     testObject.setLogFile(randomPath);
-    QCOMPARE(testObject.isUsingLogFile(), true);
-    QCOMPARE(testObject.logFile(), randomPath);
+    QCOMPARE(testObject.isUsingLogFile(), false);
+    QCOMPARE(testObject.logFile(), QString(""));
 }
 
 void TstSpdrBase::testSignals()

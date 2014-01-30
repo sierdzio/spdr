@@ -44,7 +44,7 @@ public:
     Q_INVOKABLE QString logFile() const;
 
 public slots:
-    void log(const QString &message, Spdr::LogLevel logLevelToUse = Spdr::LogEverything);
+    void log(const QString &message, Spdr::LogLevel logLevelToUse = Spdr::LogEverything) const;
 
 signals:
     void inputPathChanged(const QString &newInputPath);

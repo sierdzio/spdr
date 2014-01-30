@@ -44,9 +44,9 @@ bool SpdrImport::setOutputPath(const QString &newOutputPath)
     return false;
 }
 
-bool SpdrImport::import()
+bool SpdrImport::import() const
 {
-    Q_D(SpdrImport);
+    Q_D(const SpdrImport);
 
     bool result = true;
 
@@ -78,7 +78,7 @@ SpdrImport::SpdrImport(SpdrImportPrivate &dd, QObject *parent) : SpdrBase(parent
     Q_UNUSED(d);
 }
 
-bool SpdrImportPrivate::importDirectory(const QString &directoryPath)
+bool SpdrImportPrivate::importDirectory(const QString &directoryPath) const
 {
     QDir inputDirectory(directoryPath);
 
@@ -100,9 +100,9 @@ bool SpdrImportPrivate::importDirectory(const QString &directoryPath)
     return true;
 }
 
-bool SpdrImportPrivate::importFile(const QString &filePath)
+bool SpdrImportPrivate::importFile(const QString &filePath) const
 {
-    Q_Q(SpdrImport);
+    Q_Q(const SpdrImport);
 
     QString outputPath(getOutputFilePath(filePath));
 
@@ -187,9 +187,9 @@ QString SpdrImportPrivate::getOperationStatusFromBool(bool status) const
 /*!
   Returns true if both the format and the file path are valid.
  */
-bool SpdrImportPrivate::checkFormat(const QString &format)
+bool SpdrImportPrivate::checkFormat(const QString &format) const
 {
-    Q_Q(SpdrImport);
+    Q_Q(const SpdrImport);
 
     bool result = true;
 
@@ -224,7 +224,7 @@ bool SpdrImportPrivate::checkFormat(const QString &format)
     return result;
 }
 
-int SpdrImportPrivate::countOccurences(const QString &stringToSearchThrough, const QChar &characterToCount)
+int SpdrImportPrivate::countOccurences(const QString &stringToSearchThrough, const QChar &characterToCount) const
 {
     int result = 0;
     for (int i = 0; i < stringToSearchThrough.length(); i++) {

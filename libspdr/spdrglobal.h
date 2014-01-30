@@ -15,6 +15,8 @@ class Spdr : public QObject {
     Q_ENUMS(UpdateMode CopyMode LogLevel)
 
 public:
+    // TODO: add toString() method for all enums!
+
     /*!
       Determines what Spdr should do when the output file already exists.
      */

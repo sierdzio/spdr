@@ -14,13 +14,13 @@ public:
     SpdrImportPrivate(SpdrImport *q) : q_ptr(q) {}
     SpdrImport *q_ptr;
 
-    bool importDirectory(const QString &inputDirectoryPath);
-    bool importFile(const QString &filePath);
+    bool importDirectory(const QString &inputDirectoryPath) const;
+    bool importFile(const QString &filePath) const;
     QString getOutputFilePath(const QString &inputFilePath) const;
     QString getOperationStatusFromBool(bool status) const;
 
-    bool checkFormat(const QString &format);
-    int countOccurences(const QString &stringToSearchThrough, const QChar &characterToCount);
+    bool checkFormat(const QString &format) const;
+    int countOccurences(const QString &stringToSearchThrough, const QChar &characterToCount) const;
 
     QString mPathSeparatorRegularExpression;
 };

@@ -20,6 +20,9 @@ void SpdrSynchronize::setOptions(SynchronizationOptions options)
 
     if (options != d->mOptions) {
         d->mOptions = options;
+
+        log(tr("Synchronization options changed to: %1").arg(QString::number((int) options, 16)), Spdr::Debug);
+
         emit optionsChanged(options);
     }
 }
@@ -36,13 +39,16 @@ void SpdrSynchronize::setSplit(uint split)
 
     if (split != d->mSplit) {
         d->mSplit = split;
+
+        log(tr("Split changed to: %1").arg(split), Spdr::Debug);
+
         emit splitChanged(split);
     }
 }
 
-bool SpdrSynchronize::synchronize()
+bool SpdrSynchronize::synchronize() const
 {
-    Q_D(SpdrSynchronize);
+    Q_D(const SpdrSynchronize);
     Q_UNUSED(d);
 
     return true;

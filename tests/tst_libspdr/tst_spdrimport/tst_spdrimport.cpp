@@ -32,7 +32,7 @@ void TstSpdrImport::testSetters()
     SpdrImport testObject;
 
     testObject.setOutputPath("./");
-    QCOMPARE(testObject.outputPath(), QString("./"));
+    QCOMPARE(testObject.outputPath(), QString("."));
 
     // TODO: test for property manipulation of output path
     /*
@@ -68,7 +68,7 @@ void TstSpdrImport::testFormatSetting()
     QCOMPARE(result, false);
 
     // Setting the format should fail here: tag is closed before opening
-    testFormat = "./>MM</";
+    testFormat = "./>MM<";
     result = true;
     result = testObject.setOutputPath(testFormat);
     QCOMPARE(testObject.outputPath(), QString());
@@ -76,14 +76,14 @@ void TstSpdrImport::testFormatSetting()
 
     // Setting the format should be successful: mixing Windows and Unix style
     // path is allowed
-    testFormat = "./<yyyy>\\<MM>/";
+    testFormat = "./<yyyy>\\<MM>";
     result = false;
     result = testObject.setOutputPath(testFormat);
     QCOMPARE(testObject.outputPath(), testFormat);
     QCOMPARE(result, true);
 
     // Setting the format should fail here: tag is opened twice but closed once
-    testFormat = "./<<MM>/";
+    testFormat = "./<<MM>";
     result = true;
     result = testObject.setOutputPath(testFormat);
     QCOMPARE(testObject.outputPath(), QString());

@@ -23,6 +23,7 @@ void SpdrBase::setInputPath(const QString &newInputPath)
 
     if (newInputPath != d->mInputPath) {
         d->mInputPath = newInputPath;
+        log(tr("Input path changed to: %1").arg(newInputPath), Spdr::Debug);
         emit inputPathChanged(newInputPath);
     }
 }
@@ -46,6 +47,8 @@ bool SpdrBase::setOutputPath(const QString &newOutputPath)
             d->mOutputPath.chop(1);
         }
 
+        log(tr("Output path changed to: %1").arg(d->mOutputPath), Spdr::Debug);
+
         emit outputPathChanged(d->mOutputPath);
     }
 
@@ -64,6 +67,7 @@ void SpdrBase::setSimulate(bool simulationEnabled)
 
     if (simulationEnabled != d->mSimulate) {
         d->mSimulate = simulationEnabled;
+        log(tr("Simulation is now: %1").arg(simulationEnabled? "on" : "off"), Spdr::Debug);
         emit simulateChanged(simulationEnabled);
     }
 }
@@ -80,6 +84,9 @@ void SpdrBase::setCopyMode(Spdr::CopyMode newCopyMode)
 
     if (newCopyMode != d->mCopyMode) {
         d->mCopyMode = newCopyMode;
+
+        log(tr("Copy mode changed to: %1").arg((int) newCopyMode), Spdr::Debug);
+
         emit copyModeChanged(newCopyMode);
     }
 }
@@ -96,6 +103,9 @@ void SpdrBase::setUpdateMode(Spdr::UpdateMode newUpdateMode)
 
     if (newUpdateMode != d->mUpdateMode) {
         d->mUpdateMode = newUpdateMode;
+
+        log(tr("Update mode changed to: %1").arg((int) newUpdateMode), Spdr::Debug);
+
         emit updateModeChanged(newUpdateMode);
     }
 }
@@ -109,6 +119,7 @@ Spdr::LogLevel SpdrBase::logLevel() const
 void SpdrBase::setLogLevel(Spdr::LogLevel newLevel)
 {
     Q_D(SpdrBase);
+    log(tr("Log level changed to: %1").arg((int) newLevel), Spdr::Debug);
     d->mLog.setLogLevel(newLevel);
 }
 
@@ -122,6 +133,7 @@ void SpdrBase::setLogFile(const QString &logFilePath)
 {
     Q_D(SpdrBase);
     d->mLog.setLogFilePath(logFilePath);
+    log(tr("Now using log file: %1").arg(d->mLog.isUsingLogFile()? d->mLog.logFilePath() : "stdout"), Spdr::Debug);
 }
 
 QString SpdrBase::logFile() const
@@ -130,9 +142,9 @@ QString SpdrBase::logFile() const
     return d->mLog.logFilePath();
 }
 
-void SpdrBase::log(const QString &message, Spdr::LogLevel logLevelToUse)
+void SpdrBase::log(const QString &message, Spdr::LogLevel logLevelToUse) const
 {
-    Q_D(SpdrBase);
+    Q_D(const SpdrBase);
     d->mLog.log(message, logLevelToUse);
 }
 

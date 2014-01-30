@@ -32,13 +32,6 @@ void SpdrLog::setLogFilePath(const QString &filePath)
 {
     mLogFilePath = filePath;
     mIsLogFileSet = !mLogFilePath.isEmpty();
-}
-
-void SpdrLog::log(const QString &message, Spdr::LogLevel logLevelToUse)
-{
-    if (((int) logLevelToUse) > ((int) logLevel())) {
-        return;
-    }
 
     if (mIsLogFileSet) {
         QFile file(mLogFilePath);
@@ -48,7 +41,26 @@ void SpdrLog::log(const QString &message, Spdr::LogLevel logLevelToUse)
             log(QString("Log file %1 could not be opened for writing! Reverting to stdout").arg(logFile));
         }
 
-        file.write(message.toUtf8());
+        file.close();
+    }
+}
+
+void SpdrLog::log(const QString &message, Spdr::LogLevel logLevelToUse) const
+{
+    if (((int) logLevelToUse) > ((int) logLevel())) {
+        return;
+    }
+
+    if (mIsLogFileSet) {
+        QFile file(mLogFilePath);
+        if (file.open(QFile::Text | QFile::WriteOnly | QFile::Append)) {
+            file.write(message.toUtf8());
+        } else {
+            //QString logFile(mLogFilePath);
+            //setLogFilePath(QString::null);
+            //log(QString("Log file %1 could not be opened for writing! Reverting to stdout").arg(logFile));
+            qDebug("Log file could not be opened for writing!", NULL);
+        }
     } else {
         qDebug(message.toLocal8Bit().constData(), NULL);
     }

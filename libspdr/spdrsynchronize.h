@@ -16,6 +16,7 @@ class SPDR_DLLSPEC SpdrSynchronize : public SpdrBase {
 public:
     SpdrSynchronize(QObject *parent = 0);
 
+    // TODO: add toString() method for Options enum
     enum SynchronizationOption {
         None                   = 0x0000,
         Bidirectional          = 0x0001,
@@ -32,7 +33,7 @@ public:
     Q_INVOKABLE int split() const;
     Q_INVOKABLE void setSplit(uint split);
 
-    Q_INVOKABLE bool synchronize();
+    Q_INVOKABLE bool synchronize() const;
 
     static void registerMetatypes();
 
