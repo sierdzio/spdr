@@ -92,7 +92,7 @@ bool SpdrImportPrivate::importDirectory(const QString &directoryPath) const
     }
 
     foreach (const QFileInfo &dir, dirList) {
-        if (!importDirectory(dir.absolutePath())) {
+        if (!importDirectory(dir.absoluteFilePath())) {
             return false;
         }
     }

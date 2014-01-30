@@ -8,6 +8,7 @@
 #include <QTest>
 #include <QSignalSpy>
 #include <QFile>
+#include <QDir>
 
 class TstSpdrImport : public QObject
 {
@@ -93,8 +94,17 @@ void TstSpdrImport::testFormatSetting()
 void TstSpdrImport::testBasicImporting()
 {
     int numberOfFiles = 15;
+    QDir().mkpath("testData/subdir");
     for (int i = 0; i < numberOfFiles; i++) {
-        QFile file(QString("file%1.txt").arg(QString::number(i)));
+        QString filename(QString("file%1.txt").arg(QString::number(i)));
+
+        if (i % 2) {
+            filename = "subdir/" + filename;
+        }
+
+        filename = "testData/" + filename;
+
+        QFile file(filename);
 
         if (!file.open(QFile::Text | QFile::WriteOnly)) {
             continue;
@@ -109,11 +119,13 @@ void TstSpdrImport::testBasicImporting()
     }
 
     SpdrImport testObject;
-    testObject.setLogLevel(Spdr::Debug);
+    testObject.setLogLevel(Spdr::NoLogging);
     testObject.setSimulate(true);
-    testObject.setInputPath(".");
+    testObject.setInputPath("testData");
     testObject.setOutputPath("testOutput/<yyyy>/<MM>/");
     testObject.import();
+
+    QDir("testData").removeRecursively();
 }
 
 QTEST_MAIN(TstSpdrImport)
