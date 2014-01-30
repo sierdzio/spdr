@@ -116,11 +116,14 @@ bool SpdrImportPrivate::importFile(const QString &filePath) const
             } else if (q->updateMode() == Spdr::Ignore) {
                 skip = true;
             } else if (q->updateMode() == Spdr::Ask) { // TODO: implement Spdr::Ask
-                q->log(q->tr("This feature has not been implemented yet: Spdr::Ask"));
+                q->log(q->tr("This feature has not been implemented yet: Spdr::Ask"), Spdr::OnlyCritical);
+                return false;
             }
         }
 
         if (!skip && result) {
+            // TODO: add handling for '*' character
+
             QFileInfo outputFile(outputPath);
             QDir().mkpath(outputFile.absolutePath());
             result = QFile::copy(filePath, outputPath);
@@ -128,7 +131,7 @@ bool SpdrImportPrivate::importFile(const QString &filePath) const
             if (q->copyMode() == Spdr::Move) {
                 bool movingSuccessful = QFile::remove(filePath);
                 if (!movingSuccessful) {
-                    q->log(q->tr("MOVE: Could not remove the input file: ").arg(filePath));
+                    q->log(q->tr("MOVE: Could not remove the input file: ").arg(filePath), Spdr::MildLogging);
                 }
             }
         }
@@ -165,12 +168,53 @@ QString SpdrImportPrivate::getOutputFilePath(const QString &inputFilePath) const
         QString resultSegment(segment);
         resultSegment.replace(QLatin1String("<") + dateFormat + QLatin1String(">"), creationDate.toString(dateFormat));
 
-        // TODO: add handling for '*' character
-
         outputPathSegments.append(resultSegment);
     }
 
     return outputPathSegments.join("/");
+}
+/*!
+  Use this to replace all occurences of '*' with directory candidates (if applicable).
+
+  This method will not work correctly when date tags are still present in path.
+  You should run getOutputFilePath() first.
+
+  \sa getOutputFilePath
+ */
+QString SpdrImportPrivate::substituteStarsInPath(const QString &outputFilePath) const
+{
+    QChar star('*');
+    if (!outputFilePath.contains(star)) {
+        return outputFilePath;
+    }
+
+    QStringList outputPathSegments(outputFilePath.split(QRegularExpression(mPathSeparatorRegularExpression),
+                                          QString::KeepEmptyParts));
+
+    // Go through every segment, see if dir exists, see if there is a name match,
+    // fix the segment.
+    QString pathBuilder;
+    foreach(const QString &segment, outputPathSegments) { // (int i = 0; i < outputPathSegments.length(); ++i) {
+        if (!pathBuilder.isEmpty()) {
+            pathBuilder.append("/");
+        }
+
+        // Get existing directory names, look for a candidate
+        if (segment.contains(star)) {
+            QDir currentDirectory(pathBuilder);
+            QFileInfoList dirs(currentDirectory.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot));
+
+            foreach (const QFileInfo &dirInfo, dirs) {
+                QString dirName(dirInfo.fileName());
+                // TODO: finish
+                QRegularExpression regExp();
+            }
+        } else {
+            pathBuilder.append(segment);
+        }
+    }
+
+    return pathBuilder;
 }
 
 QString SpdrImportPrivate::getOperationStatusFromBool(bool status) const

@@ -17,6 +17,7 @@ public:
     bool importDirectory(const QString &inputDirectoryPath) const;
     bool importFile(const QString &filePath) const;
     QString getOutputFilePath(const QString &inputFilePath) const;
+    QString substituteStarsInPath(const QString &outputFilePath) const;
     QString getOperationStatusFromBool(bool status) const;
 
     bool checkFormat(const QString &format) const;
