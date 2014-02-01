@@ -22,6 +22,9 @@ private slots:
     void testFormatSetting();
     void testBasicImporting();
     void testStarSubstitutionImporting();
+
+private:
+    void createTestFiles(const QString &filePath, bool includeSubdir = false, int numberOfFiles = 5);
 };
 
 void TstSpdrImport::testDefaults()
@@ -101,16 +104,91 @@ void TstSpdrImport::testBasicImporting()
 {
     QString testDataPath("testData");
     QDir(testDataPath).removeRecursively();
+
+    QString testInputPath(testDataPath + QLatin1String("/testInput"));
+    QString testOutputPath(testDataPath + QLatin1String("/testOutput"));
+    QDir().mkpath(testInputPath);
+    QDir().mkpath(testOutputPath);
+
     int numberOfFiles = 15;
-    QDir().mkpath(testDataPath + QLatin1String("/subdir"));
+    createTestFiles(testInputPath, true,  15);
+
+    SpdrImport testObject;
+    testObject.setLogLevel(Spdr::OnlyErrors);
+    testObject.setSimulate(true);
+    testObject.setInputPath(testInputPath);
+    testObject.setOutputPath(testOutputPath + "/<yyyy>/<MM>/");
+    QCOMPARE(testObject.import(), true);
+
+    // After simulation: no actual data should be copied
+    QDir testOutputDir(testOutputPath);
+    QCOMPARE(testOutputDir.entryList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot).isEmpty(), true);
+
+    testObject.setSimulate(false);
+    QCOMPARE(testObject.import(), true);
+    QCOMPARE(testOutputDir.entryList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot).isEmpty(), false);
+
+    QDate currentDate(QDate::currentDate());
+    QCOMPARE(testOutputDir.cd(currentDate.toString("yyyy")), true);
+    QCOMPARE(testOutputDir.cd(currentDate.toString("MM")), true);
+    QCOMPARE(testOutputDir.entryList(QDir::Files | QDir::NoDotAndDotDot).count(), numberOfFiles);
+
+    QDir(testDataPath).removeRecursively();
+}
+
+void TstSpdrImport::testStarSubstitutionImporting()
+{
+    QString testDataPath("testData");
+    QDir(testDataPath).removeRecursively();
+
+    QString testInputPath(testDataPath + QLatin1String("/testInput"));
+    QString testOutputPath(testDataPath + QLatin1String("/testOutput"));
+    QDir().mkpath(testInputPath);
+    QDir().mkpath(testOutputPath);
+
+    // Populate output path with folders that should match star expressions
+    QDate currentDate(QDate::currentDate());
+    QDir().mkpath(testOutputPath + QLatin1String("/") + currentDate.toString("yyyy")
+                  + QLatin1String("/") + currentDate.toString("MM")
+                  + QLatin1String(" - test text"));
+
+    int numberOfFiles = 5;
+    createTestFiles(testInputPath, true, numberOfFiles);
+
+    SpdrImport testObject;
+    testObject.setLogLevel(Spdr::OnlyErrors);
+    testObject.setSimulate(true);
+    testObject.setInputPath(testInputPath);
+    testObject.setOutputPath(testOutputPath + "/<yyyy>/<MM>*/");
+    QCOMPARE(testObject.import(), true);
+
+    // After simulation: no actual data should be copied
+    QDir testOutputDir(testOutputPath);
+    QCOMPARE(testOutputDir.entryList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot).count(), 1);
+
+    testObject.setSimulate(false);
+    QCOMPARE(testObject.import(), true);
+    QCOMPARE(testOutputDir.exists(), true);
+
+    QCOMPARE(testOutputDir.cd(currentDate.toString("yyyy")), true);
+    QCOMPARE(testOutputDir.cd(currentDate.toString("MM") + " - test text"), true);
+    QCOMPARE(testOutputDir.entryList(QDir::Files | QDir::NoDotAndDotDot).count(), numberOfFiles);
+
+    QDir(testDataPath).removeRecursively();
+}
+
+void TstSpdrImport::createTestFiles(const QString &filePath, bool includeSubdir, int numberOfFiles)
+{
+    QDir().mkpath(filePath + "/subdir");
+
     for (int i = 0; i < numberOfFiles; i++) {
         QString filename(QString("file%1.txt").arg(QString::number(i)));
 
-        if (i % 2) {
-            filename = "subdir/" + filename;
+        if (includeSubdir && (i % 2)) {
+            filename = filePath + "/subdir/" + filename;
+        } else {
+            filename = filePath + "/" + filename;
         }
-
-        filename = testDataPath + "/" + filename;
 
         QFile file(filename);
 
@@ -125,33 +203,6 @@ void TstSpdrImport::testBasicImporting()
         file.write(fileContent.toUtf8());
         file.close();
     }
-
-    SpdrImport testObject;
-    testObject.setLogLevel(Spdr::OnlyErrors);
-    testObject.setSimulate(true);
-    testObject.setInputPath(testDataPath);
-    testObject.setOutputPath(testDataPath + "/testOutput/<yyyy>/<MM>/");
-    QCOMPARE(testObject.import(), true);
-
-    // After simulation: no actual data should be copied
-    QDir testOutputDir(testDataPath + QLatin1String("/testOutput"));
-    QCOMPARE(testOutputDir.exists(), false);
-
-    testObject.setSimulate(false);
-    QCOMPARE(testObject.import(), true);
-    QCOMPARE(testOutputDir.exists(), true);
-
-    QDate currentDate(QDate::currentDate());
-    QCOMPARE(testOutputDir.cd(currentDate.toString("yyyy")), true);
-    QCOMPARE(testOutputDir.cd(currentDate.toString("MM")), true);
-    QCOMPARE(testOutputDir.entryList(QDir::Files | QDir::NoDotAndDotDot).count(), numberOfFiles);
-
-    QDir(testDataPath).removeRecursively();
-}
-
-void TstSpdrImport::testStarSubstitutionImporting()
-{
-
 }
 
 QTEST_MAIN(TstSpdrImport)

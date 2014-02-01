@@ -8,8 +8,9 @@ include(../definitions.pri)
 
 INCLUDEPATH += src
 
-#SOURCES += \
-#    src/main.cpp \
+SOURCES += \
+    src/main.cpp
+# \
 #    src/pdmainwindow.cpp \
 #    src/pdsettingsdialog.cpp
 
@@ -31,4 +32,4 @@ OTHER_FILES += \
     src/pdsettingsdialog.ui
 
 
-TRANSLATIONS += locale/spdr_pl.ts
+#TRANSLATIONS += locale/spdr_pl.ts
