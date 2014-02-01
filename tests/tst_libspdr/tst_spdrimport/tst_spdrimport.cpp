@@ -114,7 +114,7 @@ void TstSpdrImport::testBasicImporting()
     createTestFiles(testInputPath, true,  15);
 
     SpdrImport testObject;
-    testObject.setLogLevel(Spdr::OnlyErrors);
+    testObject.setLogLevel(Spdr::Error);
     testObject.setSimulate(true);
     testObject.setInputPath(testInputPath);
     testObject.setOutputPath(testOutputPath + "/<yyyy>/<MM>/");
@@ -156,7 +156,7 @@ void TstSpdrImport::testStarSubstitutionImporting()
     createTestFiles(testInputPath, true, numberOfFiles);
 
     SpdrImport testObject;
-    testObject.setLogLevel(Spdr::OnlyErrors);
+    testObject.setLogLevel(Spdr::Error);
     testObject.setSimulate(true);
     testObject.setInputPath(testInputPath);
     testObject.setOutputPath(testOutputPath + "/<yyyy>/<MM>*/");

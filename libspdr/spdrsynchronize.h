@@ -3,6 +3,7 @@
 
 #include "SpdrBase"
 
+#include <QString>
 #include <QObject>
 
 class SpdrSynchronizePrivate;

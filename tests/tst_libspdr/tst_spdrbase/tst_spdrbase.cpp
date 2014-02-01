@@ -25,7 +25,7 @@ void TstSpdrBase::testDefaults()
     QCOMPARE(testObject.outputPath(), QString());
     QCOMPARE(testObject.copyMode(), Spdr::Copy);
     QCOMPARE(testObject.updateMode(), Spdr::Ask);
-    QCOMPARE(testObject.logLevel(), Spdr::OnlyErrors);
+    QCOMPARE(testObject.logLevel(), Spdr::Error);
     QCOMPARE(testObject.isUsingLogFile(), false);
 }
 

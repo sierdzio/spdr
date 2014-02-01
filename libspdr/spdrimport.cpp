@@ -1,5 +1,6 @@
 #include "spdrimport_p.h"
 
+#include <QChar>
 #include <QStringList>
 #include <QRegularExpression>
 #include <QDateTime>
@@ -119,7 +120,7 @@ bool SpdrImportPrivate::importFile(const QString &filePath) const
                 skip = true;
             } else if (q->updateMode() == Spdr::Ask) { // TODO: implement Spdr::Ask
                 q->log(q->tr("This feature has not been implemented yet: Spdr::%1")
-                       .arg(Spdr::updateModeToString(Spdr::Ask)), Spdr::OnlyCritical);
+                       .arg(Spdr::updateModeToString(Spdr::Ask)), Spdr::Critical);
                 return false;
             }
         }
@@ -264,15 +265,15 @@ bool SpdrImportPrivate::checkFormat(const QString &format) const
             continue;
         } else if (lessThanIndex == -1 || greaterThanIndex == -1) {
             result = false;
-            q->log(q->tr("Missing tag enclosure: < or >: %1").arg(segment), Spdr::OnlyCritical);
+            q->log(q->tr("Missing tag enclosure: < or >: %1").arg(segment), Spdr::Critical);
             break;
         } else if (lessThanIndex > -1 && (lessThanIndex >= greaterThanIndex)) {
             result = false;
-            q->log(q->tr("Date format tag is closed before it is opened: %1").arg(segment), Spdr::OnlyCritical);
+            q->log(q->tr("Date format tag is closed before it is opened: %1").arg(segment), Spdr::Critical);
             break;
         } else if (countOccurences(segment, '<') != countOccurences(segment, '>')) {
             result = false;
-            q->log(q->tr("Too many date formatting tags: %1").arg(segment), Spdr::OnlyCritical);
+            q->log(q->tr("Too many date formatting tags: %1").arg(segment), Spdr::Critical);
             break;
         }
     }

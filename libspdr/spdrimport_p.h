@@ -3,8 +3,9 @@
 
 #include "spdrimport.h"
 
-#include <QChar>
 #include <QString>
+
+class QChar;
 
 class SpdrImportPrivate
 {

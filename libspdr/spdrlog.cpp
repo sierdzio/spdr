@@ -4,7 +4,7 @@
 
 SpdrLog::SpdrLog()
 {
-    mLogLevel = Spdr::OnlyErrors;
+    mLogLevel = Spdr::Error;
     mIsLogFileSet = false;
 }
 

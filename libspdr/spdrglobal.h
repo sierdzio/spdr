@@ -43,8 +43,8 @@ public:
      */
     enum LogLevel {
         NoLogging = 0, //!< No logging information will be printed
-        OnlyCritical = 1, //!< Only critical errors will be printed
-        OnlyErrors = 2, //!< All errors will be printed
+        Critical = 1, //!< Only critical errors will be printed
+        Error = 2, //!< All errors will be printed
         MildLogging = 3, //!< Some important log information will be printed
         MediumLogging = 4, //!< Most interesting pieces of information will be printed
         ExcessiveLogging = 5, //! Use this only when you need to be flooded with messages
@@ -83,9 +83,9 @@ public:
         QString result;
         if (level == NoLogging) {
             result = "NoLogging";
-        } else if (level == OnlyCritical) {
+        } else if (level == Critical) {
             result = "OnlyCritical";
-        } else if (level == OnlyErrors) {
+        } else if (level == Error) {
             result = "OnlyErrors";
         } else if (level == MildLogging) {
             result = "MildLogging";
