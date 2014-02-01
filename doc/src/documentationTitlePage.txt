@@ -1,0 +1,11 @@
+/*! \mainpage
+Temp main page.
+
+\section readme Readme
+
+\include README.txt
+
+\section plan Rewrite plan
+
+\include "rewrite plan.txt"
+*/

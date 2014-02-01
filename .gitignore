@@ -4,6 +4,6 @@
 *.kate-swp
 *~
 build/
-doc/
+doc/html
 Makefile
 .qmake.stash
