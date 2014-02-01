@@ -24,7 +24,7 @@ private slots:
     void testStarSubstitutionImporting();
 
 private:
-    void createTestFiles(const QString &filePath, bool includeSubdir = false, int numberOfFiles = 5);
+    int createTestFiles(const QString &basePath, bool includeSubdir = false);
 };
 
 void TstSpdrImport::testDefaults()
@@ -110,8 +110,7 @@ void TstSpdrImport::testBasicImporting()
     QDir().mkpath(testInputPath);
     QDir().mkpath(testOutputPath);
 
-    int numberOfFiles = 15;
-    createTestFiles(testInputPath, true,  15);
+    int numberOfFiles = createTestFiles(testInputPath, true);
 
     SpdrImport testObject;
     testObject.setLogLevel(Spdr::Error);
@@ -152,8 +151,7 @@ void TstSpdrImport::testStarSubstitutionImporting()
                   + QLatin1String("/") + currentDate.toString("MM")
                   + QLatin1String(" - test text"));
 
-    int numberOfFiles = 5;
-    createTestFiles(testInputPath, true, numberOfFiles);
+    int numberOfFiles = createTestFiles(testInputPath, true);
 
     SpdrImport testObject;
     testObject.setLogLevel(Spdr::Error);
@@ -177,17 +175,18 @@ void TstSpdrImport::testStarSubstitutionImporting()
     QDir(testDataPath).removeRecursively();
 }
 
-void TstSpdrImport::createTestFiles(const QString &filePath, bool includeSubdir, int numberOfFiles)
+int TstSpdrImport::createTestFiles(const QString &basePath, bool includeSubdir)
 {
-    QDir().mkpath(filePath + "/subdir");
+    QDir().mkpath(basePath + "/subdir");
+    int numberOfFiles = 15;
 
     for (int i = 0; i < numberOfFiles; i++) {
         QString filename(QString("file%1.txt").arg(QString::number(i)));
 
         if (includeSubdir && (i % 2)) {
-            filename = filePath + "/subdir/" + filename;
+            filename = basePath + "/subdir/" + filename;
         } else {
-            filename = filePath + "/" + filename;
+            filename = basePath + "/" + filename;
         }
 
         QFile file(filename);
@@ -203,6 +202,8 @@ void TstSpdrImport::createTestFiles(const QString &filePath, bool includeSubdir,
         file.write(fileContent.toUtf8());
         file.close();
     }
+
+    return numberOfFiles;
 }
 
 QTEST_MAIN(TstSpdrImport)

@@ -1,5 +1,10 @@
 #include "spdrbase_p.h"
 
+#include <QDateTime>
+#include <QFile>
+#include <QFileInfo>
+#include <QDir>
+
 SpdrBase::SpdrBase(QObject *parent) : QObject(parent), d_ptr(new SpdrBasePrivate(this))
 {
     Q_D(SpdrBase);
@@ -142,6 +147,50 @@ QString SpdrBase::logFile() const
     return d->mLog.logFilePath();
 }
 
+bool SpdrBase::performFileOperation(const QString &inputFile, const QString &outputFile) const
+{
+    Q_D(const SpdrBase);
+
+    bool result = true;
+
+    if (d->areFilesTheSame(inputFile, outputFile)) {
+        log(tr("COPY: Skipping copying %1 to %2: files are identical")
+            .arg(inputFile).arg(outputFile), Spdr::MediumLogging);
+    } else {
+        if (!simulate()) {
+            bool skip = false;
+
+            if (QFile(outputFile).exists()) {
+                if (updateMode() == Spdr::Overwrite) {
+                    result = QFile::remove(outputFile);
+                } else if (updateMode() == Spdr::Ignore) {
+                    skip = true;
+                } else if (updateMode() == Spdr::Ask) { // TODO: implement Spdr::Ask
+                    log(tr("This feature has not been implemented yet: Spdr::%1")
+                        .arg(Spdr::updateModeToString(Spdr::Ask)), Spdr::Critical);
+                    return false;
+                }
+            }
+
+            if (!skip && result) {
+                QFileInfo outputFileInfo(outputFile);
+                QDir().mkpath(outputFileInfo.absolutePath());
+
+                if (copyMode() == Spdr::Move) {
+                    result = QFile::rename(inputFile, outputFile);
+                } else {
+                    result = QFile::copy(inputFile, outputFile);
+                }
+            }
+        }
+
+        log(tr("COPY: Copying %1 to %2 has: %3").arg(inputFile).arg(outputFile)
+            .arg(d->getOperationStatusFromBool(result)), Spdr::MediumLogging);
+    }
+
+    return result;
+}
+
 void SpdrBase::log(const QString &message, Spdr::LogLevel logLevelToUse) const
 {
     Q_D(const SpdrBase);
@@ -152,4 +201,30 @@ SpdrBase::SpdrBase(SpdrBasePrivate &dd, QObject *parent) : QObject(parent), d_pt
 {
     Q_D(SpdrBase);
     Q_UNUSED(d);
+}
+
+QString SpdrBasePrivate::getOperationStatusFromBool(bool status) const
+{
+    Q_Q(const SpdrBase);
+
+    if (status) {
+        return q->tr("succeeded");
+    } else {
+        return q->tr("failed");
+    }
+}
+
+bool SpdrBasePrivate::areFilesTheSame(const QString &input, const QString &output) const
+{
+    QFileInfo inputInfo(input);
+    QFileInfo outputInfo(output);
+
+    if (inputInfo.fileName() == outputInfo.fileName()
+            && inputInfo.size() == outputInfo.size()
+            && inputInfo.created() == outputInfo.created())
+    {
+        return true;
+    }
+
+    return false;
 }

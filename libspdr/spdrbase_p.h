@@ -14,6 +14,9 @@ public:
     SpdrBasePrivate(SpdrBase *q) : q_ptr(q) {}
     SpdrBase *q_ptr;
 
+    QString getOperationStatusFromBool(bool status) const;
+    bool areFilesTheSame(const QString &input, const QString &output) const;
+
     SpdrLog mLog;
     QString mInputPath;
     QString mOutputPath;

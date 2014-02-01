@@ -49,6 +49,8 @@ public:
     Q_INVOKABLE void setLogFile(const QString &logFilePath);
     Q_INVOKABLE QString logFile() const;
 
+    Q_INVOKABLE bool performFileOperation(const QString &inputFile, const QString &outputFile) const;
+
 public slots:
     void log(const QString &message, Spdr::LogLevel logLevelToUse = Spdr::LogEverything) const;
 

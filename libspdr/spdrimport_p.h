@@ -19,7 +19,6 @@ public:
     bool importFile(const QString &filePath) const;
     QString getOutputFilePath(const QString &inputFilePath) const;
     QString substituteStarsInPath(const QString &outputFilePath) const;
-    QString getOperationStatusFromBool(bool status) const;
 
     bool checkFormat(const QString &format) const;
     int countOccurences(const QString &stringToSearchThrough, const QChar &characterToCount) const;

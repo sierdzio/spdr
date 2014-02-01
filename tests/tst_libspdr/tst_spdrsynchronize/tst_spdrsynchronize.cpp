@@ -7,6 +7,8 @@
 #include <QDebug>
 #include <QTest>
 #include <QSignalSpy>
+#include <QDir>
+#include <QFile>
 
 class TstSpdrSynchronize : public QObject
 {
@@ -16,6 +18,11 @@ private slots:
     void testDefaults();
     void testSetters();
     void testSignals();
+    void testSimpleSynchronization();
+    void testAdvancedSynchronization();
+
+private:
+    int createTestFiles(const QString &basePath, bool simplified);
 };
 
 void TstSpdrSynchronize::testDefaults()
@@ -59,6 +66,83 @@ void TstSpdrSynchronize::testSignals()
     QCOMPARE(spySplit.count(), 2);
     QList<QVariant> arguments = spySplit.takeLast();
     QCOMPARE(arguments.at(0).toInt(), 7);
+}
+
+void TstSpdrSynchronize::testSimpleSynchronization()
+{
+    QString testDataPath("testData");
+    QDir(testDataPath).removeRecursively();
+
+    QString testInputPath(testDataPath + QLatin1String("/input"));
+    QString testOutputPath(testDataPath + QLatin1String("/output"));
+
+    /*int numberOfFiles =*/ createTestFiles(testDataPath, true);
+
+    SpdrSynchronize testObject;
+    testObject.setLogLevel(Spdr::Error);
+    testObject.setSimulate(true);
+    testObject.setInputPath(testInputPath);
+    testObject.setOutputPath(testOutputPath);
+    QCOMPARE(testObject.synchronize(), true);
+
+    QDir(testDataPath).removeRecursively();
+}
+
+void TstSpdrSynchronize::testAdvancedSynchronization()
+{
+    QString testDataPath("testData");
+    QDir(testDataPath).removeRecursively();
+
+    QString testInputPath(testDataPath + QLatin1String("/input"));
+    QString testOutputPath(testDataPath + QLatin1String("/output"));
+
+    /*int numberOfFiles =*/ createTestFiles(testDataPath, false);
+
+    SpdrSynchronize testObject;
+    testObject.setLogLevel(Spdr::Debug); // Error);
+    testObject.setOptions(SpdrSynchronize::RemoveMissingFiles);
+    testObject.setSimulate(true);
+    testObject.setInputPath(testInputPath);
+    testObject.setOutputPath(testOutputPath);
+    QCOMPARE(testObject.synchronize(), true);
+
+    QDir(testDataPath).removeRecursively();
+}
+
+int TstSpdrSynchronize::createTestFiles(const QString &basePath, bool simplified)
+{
+    Q_UNUSED(simplified);
+
+    QString inputPath(basePath + "/input");
+    QString outputPath(basePath + "/output");
+    QDir().mkpath(inputPath);
+    QDir().mkpath(outputPath);
+
+    int numberOfFiles = 10;
+
+    for (int i = 0; i < numberOfFiles; i++) {
+        QString filename(QString("file%1.txt").arg(QString::number(i)));
+        QString inputFilePath = inputPath + "/" + filename;
+
+        QFile file(inputFilePath);
+
+        if (!file.open(QFile::Text | QFile::WriteOnly)) {
+            continue;
+        }
+
+        QString fileContent("Content of file number: ");
+        fileContent += QString::number(i);
+        fileContent += ". Random data: ";
+        fileContent += QString::number(qrand());
+        file.write(fileContent.toUtf8());
+        file.close();
+
+        if (i != 0) {
+            QFile::copy(inputFilePath, outputPath + "/" + filename);
+        }
+    }
+
+    return numberOfFiles;
 }
 
 QTEST_MAIN(TstSpdrSynchronize)

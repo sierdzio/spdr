@@ -106,44 +106,9 @@ bool SpdrImportPrivate::importFile(const QString &filePath) const
     Q_Q(const SpdrImport);
 
     QString outputPath(getOutputFilePath(filePath));
-
     outputPath = substituteStarsInPath(outputPath);
 
-    bool result = true;
-
-    if (!q->simulate()) {
-        bool skip = false;
-        if (QFile(outputPath).exists()) {
-            if (q->updateMode() == Spdr::Overwrite) {
-                result = QFile::remove(outputPath);
-            } else if (q->updateMode() == Spdr::Ignore) {
-                skip = true;
-            } else if (q->updateMode() == Spdr::Ask) { // TODO: implement Spdr::Ask
-                q->log(q->tr("This feature has not been implemented yet: Spdr::%1")
-                       .arg(Spdr::updateModeToString(Spdr::Ask)), Spdr::Critical);
-                return false;
-            }
-        }
-
-        if (!skip && result) {
-            // TODO: add handling for '*' character
-
-            QFileInfo outputFile(outputPath);
-            QDir().mkpath(outputFile.absolutePath());
-            result = QFile::copy(filePath, outputPath);
-
-            if (q->copyMode() == Spdr::Move) {
-                bool movingSuccessful = QFile::remove(filePath);
-                if (!movingSuccessful) {
-                    q->log(q->tr("MOVE: Could not remove the input file: ").arg(filePath), Spdr::MildLogging);
-                }
-            }
-        }
-    }
-
-    q->log(q->tr("COPY: Copying %1 to %2 has: %3").arg(filePath).arg(outputPath)
-           .arg(getOperationStatusFromBool(result)), Spdr::MediumLogging);
-    return result;
+    return q->performFileOperation(filePath, outputPath);
 }
 
 QString SpdrImportPrivate::getOutputFilePath(const QString &inputFilePath) const
@@ -230,17 +195,6 @@ QString SpdrImportPrivate::substituteStarsInPath(const QString &outputFilePath) 
     }
 
     return pathBuilder;
-}
-
-QString SpdrImportPrivate::getOperationStatusFromBool(bool status) const
-{
-    Q_Q(const SpdrImport);
-
-    if (status) {
-        return q->tr("succeeded");
-    } else {
-        return q->tr("failed");
-    }
 }
 
 /*!

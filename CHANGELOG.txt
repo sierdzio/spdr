@@ -9,8 +9,7 @@ Project’s GIT repo: https://github.com/sierdzio/spdar
  - start a general rewrite of the codebase with use of PIMPL and friends
  - spdr is divided into a core library, a GUI, a CLI, and a set of tests
    and benchmarks
- - make Qt 5 a hard dependency (drop Qt 4 support, at least from CLI and GUI.
-   libspdr should still be buildable using Qt 4, but not tested)
+ - make Qt 5 a hard dependency (drop Qt 4 support)
 
 2014-01-12:
  - fully rename the project to spdr
