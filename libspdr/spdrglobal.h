@@ -1,7 +1,7 @@
 #ifndef SPDRDLLSPEC_H
 #define SPDRDLLSPEC_H
 
-//#include <qglobal.h>
+#include <QString>
 #include <QObject>
 
 #ifdef LIBSPDR
@@ -10,6 +10,10 @@
 #define SPDR_DLLSPEC Q_DECL_IMPORT
 #endif
 
+/*!
+  Defines various enums and static functions that are needed in all other code
+  using Spdr.
+ */
 class Spdr : public QObject {
     Q_OBJECT
     Q_ENUMS(UpdateMode CopyMode LogLevel)
@@ -48,8 +52,58 @@ public:
         Debug = LogEverything //! Synonym for LogEverything
     };
 
+    static QString updateModeToString(UpdateMode mode)
+    {
+        QString result;
+        if (mode == Ask) {
+            result = "Ask";
+        } else if (mode == Overwrite) {
+            result = "Overwrite";
+        } else if (mode == Ignore) {
+            result = "Ignore";
+        }
+
+        return result;
+    }
+
+    static QString copyModeToString(CopyMode mode)
+    {
+        QString result;
+        if (mode == Copy) {
+            result = "Copy";
+        } else if (mode == Move) {
+            result = "Move";
+        }
+
+        return result;
+    }
+
+    static QString logLevelToString(LogLevel level)
+    {
+        QString result;
+        if (level == NoLogging) {
+            result = "NoLogging";
+        } else if (level == OnlyCritical) {
+            result = "OnlyCritical";
+        } else if (level == OnlyErrors) {
+            result = "OnlyErrors";
+        } else if (level == MildLogging) {
+            result = "MildLogging";
+        } else if (level == MediumLogging) {
+            result = "MediumLogging";
+        } else if (level == ExcessiveLogging) {
+            result = "ExcessiveLogging";
+        } else if (level == LogEverything || level == Debug) {
+            result = "LogEverything";
+        }
+
+        return result;
+    }
+
     /*!
-      This method can be used to register Spdr enums with the Meta Object system
+      This method can be used to register Spdr enums with the Meta Object system.
+
+      Useful when one needs to use those enums in Qt tests.
      */
     static void registerMetatypes()
     {

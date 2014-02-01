@@ -60,6 +60,39 @@ void SpdrSynchronize::registerMetatypes()
     qRegisterMetaType<SpdrSynchronize::SynchronizationOptions>("SpdrSynchronize::SynchronizationOptions");
 }
 
+QString SpdrSynchronize::synchronizationOptionsToString(SynchronizationOptions optionSet)
+{
+    QString result;
+    if (optionSet == None) {
+        result += "None";
+        return result;
+    }
+
+    if (optionSet & Bidirectional) {
+        result += "Bidirectional | ";
+    }
+
+    if (optionSet & Cache) {
+        result += "Cache | ";
+    }
+
+    if (optionSet & RemoveEmptyDirectories) {
+        result += "RemoveEmptyDirectories | ";
+    }
+
+    if (optionSet & RemoveMissingFiles) {
+        result += "RemoveMissingFiles | ";
+    }
+
+    if (optionSet & DeepSearch) {
+        result += "DeepSearch | ";
+    }
+
+    result.chop(3);
+
+    return result;
+}
+
 SpdrSynchronize::SpdrSynchronize(SpdrSynchronizePrivate &dd, QObject *parent) : SpdrBase(parent), d_ptr(&dd)
 {
     Q_D(SpdrSynchronize);

@@ -118,7 +118,8 @@ bool SpdrImportPrivate::importFile(const QString &filePath) const
             } else if (q->updateMode() == Spdr::Ignore) {
                 skip = true;
             } else if (q->updateMode() == Spdr::Ask) { // TODO: implement Spdr::Ask
-                q->log(q->tr("This feature has not been implemented yet: Spdr::Ask"), Spdr::OnlyCritical);
+                q->log(q->tr("This feature has not been implemented yet: Spdr::%1")
+                       .arg(Spdr::updateModeToString(Spdr::Ask)), Spdr::OnlyCritical);
                 return false;
             }
         }
@@ -219,6 +220,7 @@ QString SpdrImportPrivate::substituteStarsInPath(const QString &outputFilePath) 
                     pathBuilder.append(dirName);
                     q->log(q->tr("An existing directory that matches wildcard has been found: %1")
                            .arg(dirName), Spdr::ExcessiveLogging);
+                    break;
                 }
             }
         } else {

@@ -36,6 +36,7 @@ public:
     Q_INVOKABLE bool synchronize() const;
 
     static void registerMetatypes();
+    static QString synchronizationOptionsToString(SynchronizationOptions optionSet);
 
 signals:
     void optionsChanged(SpdrSynchronize::SynchronizationOptions newOptions);

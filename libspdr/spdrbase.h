@@ -8,6 +8,12 @@
 
 class SpdrBasePrivate;
 
+/*!
+  Base class for concrete file operation methods implementations available in Spdr.
+
+  It contains common properties and flags that other classes need: input and output
+  paths, log functionality, copy settings, etc.
+ */
 class SPDR_DLLSPEC SpdrBase : public QObject
 {
     Q_OBJECT
