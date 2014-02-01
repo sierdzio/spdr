@@ -20,9 +20,9 @@ have a comprehensive logging capabilities, be easy to install (configure file),
 etc.
 
 Support for Qt4 will be dropped, because the new spdr will use some of the new
-features present in Qt 5.2 (QCommandLine, maybe qCDebug and friends).
-As an additional experiment, spdr might also include QBS and CMake build
-configuration.
+features present in Qt 5.2 (QCommandLine, QRegularExpression,
+QDir:removeRecursively() maybe qCDebug and friends). As an additional experiment,
+spdr might also include QBS and CMake build configuration.
 
 Overview of the algorithm:
  - scan output, put it into local cache (comprising of data hash and file path)
