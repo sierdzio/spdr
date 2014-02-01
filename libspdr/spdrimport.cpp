@@ -106,6 +106,8 @@ bool SpdrImportPrivate::importFile(const QString &filePath) const
 
     QString outputPath(getOutputFilePath(filePath));
 
+    outputPath = substituteStarsInPath(outputPath);
+
     bool result = true;
 
     if (!q->simulate()) {
@@ -183,6 +185,8 @@ QString SpdrImportPrivate::getOutputFilePath(const QString &inputFilePath) const
  */
 QString SpdrImportPrivate::substituteStarsInPath(const QString &outputFilePath) const
 {
+    Q_Q(const SpdrImport);
+
     QChar star('*');
     if (!outputFilePath.contains(star)) {
         return outputFilePath;
@@ -204,10 +208,18 @@ QString SpdrImportPrivate::substituteStarsInPath(const QString &outputFilePath) 
             QDir currentDirectory(pathBuilder);
             QFileInfoList dirs(currentDirectory.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot));
 
+            QString regExpString(segment); // "*" + dirName + "*"
+            QRegularExpression regExp(regExpString);
+            q->log(q->tr("Star matching regular expression set to: %1").arg(regExpString), Spdr::Debug);
+
             foreach (const QFileInfo &dirInfo, dirs) {
                 QString dirName(dirInfo.fileName());
-                // TODO: finish
-                QRegularExpression regExp();
+
+                if (regExp.match(dirName).hasMatch()) {
+                    pathBuilder.append(dirName);
+                    q->log(q->tr("An existing directory that matches wildcard has been found: %1")
+                           .arg(dirName), Spdr::ExcessiveLogging);
+                }
             }
         } else {
             pathBuilder.append(segment);

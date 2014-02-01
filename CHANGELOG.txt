@@ -5,7 +5,7 @@ CHANGELOG
 This is a CHANGELOG for spdr.
 Project’s GIT repo: https://github.com/sierdzio/spdar
 
-2014-01:
+2014-01 and 2014-02:
  - start a general rewrite of the codebase with use of PIMPL and friends
  - spdr is divided into a core library, a GUI, a CLI, and a set of tests
    and benchmarks

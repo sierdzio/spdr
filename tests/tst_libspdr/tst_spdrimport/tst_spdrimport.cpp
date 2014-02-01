@@ -21,6 +21,7 @@ private slots:
     void testSignals();
     void testFormatSetting();
     void testBasicImporting();
+    void testStarSubstitutionImporting();
 };
 
 void TstSpdrImport::testDefaults()
@@ -146,6 +147,11 @@ void TstSpdrImport::testBasicImporting()
     QCOMPARE(testOutputDir.entryList(QDir::Files | QDir::NoDotAndDotDot).count(), numberOfFiles);
 
     QDir(testDataPath).removeRecursively();
+}
+
+void TstSpdrImport::testStarSubstitutionImporting()
+{
+
 }
 
 QTEST_MAIN(TstSpdrImport)
