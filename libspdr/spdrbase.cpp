@@ -90,7 +90,7 @@ void SpdrBase::setCopyMode(Spdr::CopyMode newCopyMode)
     if (newCopyMode != d->mCopyMode) {
         d->mCopyMode = newCopyMode;
 
-        log(tr("Copy mode changed to: %1").arg((int) newCopyMode), Spdr::Debug);
+        log(tr("Copy mode changed to: %1").arg(Spdr::copyModeToString(newCopyMode)), Spdr::Debug);
 
         emit copyModeChanged(newCopyMode);
     }
@@ -109,7 +109,7 @@ void SpdrBase::setUpdateMode(Spdr::UpdateMode newUpdateMode)
     if (newUpdateMode != d->mUpdateMode) {
         d->mUpdateMode = newUpdateMode;
 
-        log(tr("Update mode changed to: %1").arg((int) newUpdateMode), Spdr::Debug);
+        log(tr("Update mode changed to: %1").arg(Spdr::updateModeToString(newUpdateMode)), Spdr::Debug);
 
         emit updateModeChanged(newUpdateMode);
     }
@@ -124,7 +124,7 @@ Spdr::LogLevel SpdrBase::logLevel() const
 void SpdrBase::setLogLevel(Spdr::LogLevel newLevel)
 {
     Q_D(SpdrBase);
-    log(tr("Log level changed to: %1").arg((int) newLevel), Spdr::Debug);
+    log(tr("Log level changed to: %1").arg(Spdr::logLevelToString(newLevel)), Spdr::Debug);
     d->mLog.setLogLevel(newLevel);
 }
 

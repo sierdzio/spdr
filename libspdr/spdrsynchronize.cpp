@@ -28,7 +28,7 @@ void SpdrSynchronize::setOptions(SynchronizationOptions options)
     if (options != d->mOptions) {
         d->mOptions = options;
 
-        log(tr("Synchronization options changed to: %1").arg(QString::number((int) options, 16)), Spdr::Debug);
+        log(tr("Synchronization options changed to: %1").arg(synchronizationOptionsToString(options)), Spdr::Debug);
 
         emit optionsChanged(options);
     }
@@ -189,6 +189,7 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
     // TODO: implement all flags.
     // TODO: implement benchmarks.
     SpdrFileData inputFileData = getFileData(filePath);
+    QString outputBase(q->outputPath() + "/");
 
     if (!inputFileData.isValid) {
         return false;
@@ -196,7 +197,7 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
 
     // Fast track: if the paths match, and the hashes are the same, skip other checks
     {
-        QString outputFileMirrorPath(q->outputPath() + "/" + inputFileData.path);
+        QString outputFileMirrorPath(outputBase + inputFileData.path);
         QFileInfo outputFileMirrorInfo(outputFileMirrorPath);
         if (outputFileMirrorInfo.exists()) {
             SpdrFileData outputFileData = getFileData(outputFileMirrorPath);
@@ -220,23 +221,33 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
         SpdrFileData outputData = fileHashTable.value(inputFileData.checksumMd5);
 
         if (inputFileData.isMoved(outputData)) {
+            QString localCopyPath(outputBase + outputData.path);
+            QString localDestinationPath(outputBase + inputFileData.path);
+            QDir(q->outputPath()).mkpath(QFileInfo(localDestinationPath).absolutePath());
+
+            if (q->simulate()) {
+                q->log(q->tr("SIMULATE: Already existing file moved from %1 to %2")
+                       .arg(localCopyPath).arg(localDestinationPath), Spdr::MediumLogging);
+                return true;
+            }
+
             if (q->options() & SpdrSynchronize::RemoveMissingFiles) {
-                if (!QFile::rename(outputData.path, inputFileData.path)) {
-                    q->log(q->tr("MOVE: could not move the file from %1 to %2")
-                           .arg(outputData.path).arg(inputFileData.path), Spdr::Critical);
-                    return false;
-                } else {
+                if (QFile::rename(localCopyPath, localDestinationPath)) {
                     q->log(q->tr("MOVE: Already existing file moved from %1 to %2")
-                           .arg(outputData.path).arg(inputFileData.path), Spdr::MediumLogging);
+                           .arg(localCopyPath).arg(localDestinationPath), Spdr::MediumLogging);
+                } else {
+                    q->log(q->tr("MOVE: could not move the file from %1 to %2")
+                           .arg(localCopyPath).arg(localDestinationPath), Spdr::Critical);
+                    return false;
                 }
             } else {
-                if (!QFile::copy(outputData.path, inputFileData.path)) {
-                    q->log(q->tr("COPY: could not copy the file from %1 to %2")
-                           .arg(outputData.path).arg(inputFileData.path), Spdr::Critical);
-                    return false;
-                } else {
+                if (QFile::copy(localCopyPath, localDestinationPath)) {
                     q->log(q->tr("COPY: Already existing file copied from %1 to %2")
-                           .arg(outputData.path).arg(inputFileData.path), Spdr::MediumLogging);
+                           .arg(localCopyPath).arg(localDestinationPath), Spdr::MediumLogging);
+                } else {
+                    q->log(q->tr("COPY: could not copy the file from %1 to %2")
+                           .arg(localCopyPath).arg(localDestinationPath), Spdr::Critical);
+                    return false;
                 }
             }
 
@@ -258,7 +269,7 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
 
     // Now that we have eliminated other possibilites, we can conclude that
     // the file was added!
-    if (!q->performFileOperation(filePath, q->outputPath() + "/" + inputFileData.path)) {
+    if (!q->performFileOperation(filePath, outputBase + inputFileData.path)) {
         return false;
     }
 
@@ -325,7 +336,7 @@ QString SpdrSynchronizePrivate::getRelativeFilePath(const QString &absoluteFileP
 
     QDir absoluteDir;
 
-    if (q->outputPath().contains(absoluteFilePath)) {
+    if (absoluteFilePath.contains(q->outputPath())) {
         absoluteDir = QDir(q->outputPath());
     } else {
         absoluteDir = QDir(q->inputPath());

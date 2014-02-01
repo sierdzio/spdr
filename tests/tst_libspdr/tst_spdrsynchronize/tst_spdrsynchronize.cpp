@@ -99,9 +99,9 @@ void TstSpdrSynchronize::testAdvancedSynchronization()
     /*int numberOfFiles =*/ createTestFiles(testDataPath, false);
 
     SpdrSynchronize testObject;
-    testObject.setLogLevel(Spdr::Debug); // Error);
+    testObject.setLogLevel(Spdr::Error);
     testObject.setOptions(SpdrSynchronize::RemoveMissingFiles);
-    testObject.setSimulate(true);
+    testObject.setSimulate(false);
     testObject.setInputPath(testInputPath);
     testObject.setOutputPath(testOutputPath);
     QCOMPARE(testObject.synchronize(), true);
@@ -138,7 +138,15 @@ int TstSpdrSynchronize::createTestFiles(const QString &basePath, bool simplified
         file.close();
 
         if (i != 0) {
-            QFile::copy(inputFilePath, outputPath + "/" + filename);
+            if ((!simplified) && (i == 1)) {
+                if (i == 1) {
+                    QDir().mkpath(inputPath + "/moved");
+                    QFile::copy(inputFilePath, outputPath + "/" + filename);
+                    QFile::rename(inputFilePath, inputPath + "/moved/renamedFile1.txt");
+                }
+            } else {
+                QFile::copy(inputFilePath, outputPath + "/" + filename);
+            }
         }
     }
 
