@@ -7,13 +7,13 @@
 
 SpdrCliParser::SpdrCliParser(QObject *parent) : QObject(parent)
 {
-    isImport = false;
-    isSimulation = false;
+    options.isImport = false;
+    options.isSimulation = false;
 
-    copyMode = Spdr::Copy;
-    updateMode = Spdr::Overwrite;
-    logLevel = Spdr::MildLogging;
-    synchronizationOptions = SpdrSynchronize::Cache
+    options.copyMode = Spdr::Copy;
+    options.updateMode = Spdr::Overwrite;
+    options.logLevel = Spdr::MildLogging;
+    options.synchronizationOptions = SpdrSynchronize::Cache
             | SpdrSynchronize::RemoveEmptyDirectories
             | SpdrSynchronize::RemoveMissingFiles;
 }
@@ -68,8 +68,8 @@ bool SpdrCliParser::parse()
         return false;
     }
 
-    inputPath = inout.at(0);
-    outputPath = inout.at(1);
+    options.inputPath = inout.at(0);
+    options.outputPath = inout.at(1);
 
     if (parser.isSet(logLevelOption)) {
         bool isOk = true;
@@ -80,20 +80,19 @@ bool SpdrCliParser::parse()
             return false;
         }
 
-        logLevel = (Spdr::LogLevel) result;
+        options.logLevel = (Spdr::LogLevel) result;
     }
 
     if (parser.isSet(logFileOption)) {
-        logFile = parser.value(logFileOption);
+        options.logFile = parser.value(logFileOption);
     }
 
-    isImport = parser.isSet(importOption);
-    isSimulation = parser.isSet(simulateOption);
+    options.isImport = parser.isSet(importOption);
+    options.isSimulation = parser.isSet(simulateOption);
 
     if (parser.isSet(moveOption)) {
-        copyMode = Spdr::Move;
+        options.copyMode = Spdr::Move;
     }
-
 
     //updateMode;
     //synchronizationOptions;

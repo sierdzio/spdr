@@ -9,11 +9,14 @@ include(../definitions.pri)
 
 SOURCES += \
     main.cpp \
-    spdrcliparser.cpp
+    spdrcliparser.cpp \
+    spdrclirunner.cpp
 
 mac {
     QMAKE_POST_LINK = ln -f $${BUILDDIR}/../spdr/libspdr.0.dylib $${BUILDDIR}/$${TARGET}.app/Contents/MacOS/
 }
 
 HEADERS += \
-    spdrcliparser.h
+    spdrcliparser.h \
+    spdrclirunner.h \
+    spdrclioptions.h

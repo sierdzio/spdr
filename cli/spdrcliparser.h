@@ -4,27 +4,22 @@
 #include <QString>
 #include <QObject>
 
-#include "SpdrBase"
-#include "SpdrSynchronize"
+#include "spdrclioptions.h"
 
+/*!
+  Parses the command line options for Spdr Command line tool.
+
+  All information is put into public members of this class (for convenience).
+ */
 class SpdrCliParser : public QObject
 {
     Q_OBJECT
+
 public:
     explicit SpdrCliParser(QObject *parent = 0);
     bool parse();
 
-    bool isImport;
-    bool isSimulation;
-
-    Spdr::CopyMode copyMode;
-    Spdr::UpdateMode updateMode;
-    Spdr::LogLevel logLevel;
-    SpdrSynchronize::SynchronizationOptions synchronizationOptions;
-
-    QString logFile;
-    QString inputPath;
-    QString outputPath;
+    SpdrCliOptions options;
 };
 
 #endif // SPDRCLIPARSER_H
