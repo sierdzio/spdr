@@ -28,7 +28,8 @@ private:
 void TstSpdrSynchronize::testDefaults()
 {
     SpdrSynchronize testObject;
-    QCOMPARE(testObject.options(), SpdrSynchronize::None);
+    QCOMPARE(testObject.options(), SpdrSynchronize::RemoveEmptyDirectories
+             | SpdrSynchronize::RemoveMissingFiles | SpdrSynchronize::Cache);
     QCOMPARE(testObject.split(), 0);
 }
 

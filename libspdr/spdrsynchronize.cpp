@@ -12,7 +12,7 @@ SpdrSynchronize::SpdrSynchronize(QObject *parent) : SpdrBase(parent), d_ptr(new 
     Q_D(SpdrSynchronize);
 
     d->mSplit = 0;
-    d->mOptions = SpdrSynchronize::None;
+    d->mOptions = SpdrSynchronize::RemoveEmptyDirectories | RemoveMissingFiles | Cache;
 }
 
 SpdrSynchronize::SynchronizationOptions SpdrSynchronize::options() const
@@ -204,6 +204,7 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
 
             if (inputFileData.isValid && inputFileData.isEqual(outputFileData)) {
                 if (q->performFileOperation(filePath, outputFileMirrorPath)) {
+                    fileHashTable.remove(inputFileData.checksumMd5);
                     return true;
                 }
             }
@@ -218,7 +219,8 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
     // do it all in one go).
     if (fileHashTable.contains(inputFileData.checksumMd5))
     {
-        SpdrFileData outputData = fileHashTable.value(inputFileData.checksumMd5);
+        //SpdrFileData outputData = fileHashTable.value(inputFileData.checksumMd5);
+        SpdrFileData outputData = fileHashTable.take(inputFileData.checksumMd5);
 
         if (inputFileData.isMoved(outputData)) {
             QString localCopyPath(outputBase + outputData.path);

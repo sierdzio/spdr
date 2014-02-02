@@ -26,7 +26,8 @@ public:
                                            (input and output swap after
                                            first synchronization) */
         Cache                  = 0x0002, /*!< Spdr will cache output folder structure,
-                                           thus improving performance */
+                                           thus improving performance (at the cost
+                                           of using more memory) */
         RemoveEmptyDirectories = 0x0004, /*!< If syncing makes a directory empty,
                                            it will be removed */
         RemoveMissingFiles     = 0x0008, /*!< If some files are missing in input,
