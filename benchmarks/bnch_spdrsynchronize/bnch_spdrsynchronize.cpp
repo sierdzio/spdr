@@ -35,7 +35,7 @@ void BnchSpdrSynchronize::simpleSynchronizationBenchmark()
     QString testInputPath(testDataPath + QLatin1String("/input"));
     QString testOutputPath(testDataPath + QLatin1String("/output"));
 
-    /*int numberOfFiles =*/ createTestFiles(testDataPath, false);
+    createTestFiles(testDataPath, false);
 
     SpdrSynchronize testObject;
     testObject.setLogLevel(Spdr::Error);

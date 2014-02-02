@@ -58,6 +58,12 @@ bool SpdrSynchronize::synchronize() const
 {
     Q_D(const SpdrSynchronize);
 
+    log(tr("START: beginning synchronization"), Spdr::MildLogging);
+    log(tr("Using options: %1").arg(synchronizationOptionsToString(options())), Spdr::ExcessiveLogging);
+    log(tr("Input path: %1").arg(inputPath()), Spdr::ExcessiveLogging);
+    log(tr("Output path: %1").arg(outputPath()), Spdr::ExcessiveLogging);
+    log(tr("Simulation: %1").arg(simulate()), Spdr::ExcessiveLogging);
+
     QHash<QByteArray, SpdrFileData> outputFileData;
     if (!d->readDirectoryFileData(outputPath(), &outputFileData)) {
         log(tr("Could not read file information from output directory"), Spdr::Error);
@@ -72,10 +78,11 @@ bool SpdrSynchronize::synchronize() const
         return false;
     }
 
-    log(tr("%1 files still left in the index after synchronization").arg(outputFileData.count()),
+    int missingFilesCount = outputFileData.count();
+    log(tr("%1 files still left in the index after synchronization").arg(missingFilesCount),
         Spdr::MildLogging);
 
-    if (options() & RemoveMissingFiles) {
+    if ((missingFilesCount > 0) && (options() & RemoveMissingFiles)) {
         log(tr("They will be removed because RemoveMissingFiles option is set"), Spdr::MildLogging);
 
         foreach (const SpdrFileData &data, outputFileData) {

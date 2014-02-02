@@ -15,6 +15,7 @@ class TstSpdrSynchronize : public QObject
     Q_OBJECT
 
 private slots:
+    void initTestCase();
     void testDefaults();
     void testSetters();
     void testSignals();
@@ -23,7 +24,15 @@ private slots:
 
 private:
     int createTestFiles(const QString &basePath, bool simplified);
+
+    QString logFilePath;
 };
+
+void TstSpdrSynchronize::initTestCase()
+{
+    logFilePath = "testLog.txt";
+    QFile::remove(logFilePath);
+}
 
 void TstSpdrSynchronize::testDefaults()
 {
@@ -84,7 +93,8 @@ void TstSpdrSynchronize::testSimpleSynchronization()
     /*int numberOfFiles =*/ createTestFiles(testDataPath, true);
 
     SpdrSynchronize testObject;
-    testObject.setLogLevel(Spdr::Error);
+    testObject.setLogFile(logFilePath);
+    testObject.setLogLevel(Spdr::Debug);
     testObject.setSimulate(true);
     testObject.setInputPath(testInputPath);
     testObject.setOutputPath(testOutputPath);
@@ -108,7 +118,8 @@ void TstSpdrSynchronize::testAdvancedSynchronization()
     /*int numberOfFiles =*/ createTestFiles(testDataPath, false);
 
     SpdrSynchronize testObject;
-    testObject.setLogLevel(Spdr::Error);
+    testObject.setLogFile(logFilePath);
+    testObject.setLogLevel(Spdr::Debug);
     testObject.setOptions(SpdrSynchronize::RemoveMissingFiles
                           | SpdrSynchronize::RemoveEmptyDirectories
                           | SpdrSynchronize::Cache);
@@ -151,20 +162,31 @@ int TstSpdrSynchronize::createTestFiles(const QString &basePath, bool simplified
         file.write(fileContent.toUtf8());
         file.close();
 
-        if (i != 0) {
-            if ((!simplified) && ((i == 1) || (i == 2))) {
+        if (i != 0) { // file0.txt is no copied to output at all
+            QString outputFilePath(outputPath + "/" + filename);
+
+            if ((!simplified) && ((i == 1) || (i == 2) || (i == 3) || (i == 4))) {
                 if (i == 1) {
-                    // Moved file
+                    // Moved input file
                     QDir().mkpath(inputPath + "/moved");
-                    QFile::copy(inputFilePath, outputPath + "/" + filename);
+                    QFile::copy(inputFilePath, outputFilePath);
                     QFile::rename(inputFilePath, inputPath + "/moved/renamedFile1.txt");
                 } else if (i == 2) {
-                    // Missing file
-                    QFile::copy(inputFilePath, outputPath + "/" + filename);
+                    // Missing input file
+                    QFile::copy(inputFilePath, outputFilePath);
                     QFile::remove(inputFilePath);
+                } else if (i == 3) {
+                    // Renamed (moved) output file
+                    QFile::copy(inputFilePath, outputFilePath);
+                    QFile::rename(outputFilePath, outputPath + "/anotherFile3.txt");
+                } else if (i == 4) {
+                    // Copied input file
+                    QFile::copy(inputFilePath, outputFilePath);
+                    QFile::copy(inputFilePath, inputPath + "/anotherFile4.txt");
+                    QFile::copy(inputFilePath, inputPath + "/zanotherFile4.txt");
                 }
             } else {
-                QFile::copy(inputFilePath, outputPath + "/" + filename);
+                QFile::copy(inputFilePath, outputFilePath);
             }
         }
     }

@@ -16,6 +16,7 @@ class TstSpdrImport : public QObject
     Q_OBJECT
 
 private slots:
+    void initTestCase();
     void testDefaults();
     void testSetters();
     void testSignals();
@@ -25,7 +26,15 @@ private slots:
 
 private:
     int createTestFiles(const QString &basePath, bool includeSubdir = false);
+
+    QString logFilePath;
 };
+
+void TstSpdrImport::initTestCase()
+{
+    logFilePath = "testLog.txt";
+    QFile::remove(logFilePath);
+}
 
 void TstSpdrImport::testDefaults()
 {
@@ -64,7 +73,8 @@ void TstSpdrImport::testSignals()
 void TstSpdrImport::testFormatSetting()
 {
     SpdrImport testObject;
-    testObject.setLogLevel(Spdr::NoLogging);
+    testObject.setLogFile(logFilePath);
+    testObject.setLogLevel(Spdr::Debug);
     QString testFormat("./<badTag/here");
     bool result = true;
 
@@ -113,7 +123,8 @@ void TstSpdrImport::testBasicImporting()
     int numberOfFiles = createTestFiles(testInputPath, true);
 
     SpdrImport testObject;
-    testObject.setLogLevel(Spdr::Error);
+    testObject.setLogFile(logFilePath);
+    testObject.setLogLevel(Spdr::Debug);
     testObject.setSimulate(true);
     testObject.setInputPath(testInputPath);
     testObject.setOutputPath(testOutputPath + "/<yyyy>/<MM>/");
@@ -154,7 +165,8 @@ void TstSpdrImport::testStarSubstitutionImporting()
     int numberOfFiles = createTestFiles(testInputPath, true);
 
     SpdrImport testObject;
-    testObject.setLogLevel(Spdr::Error);
+    testObject.setLogFile(logFilePath);
+    testObject.setLogLevel(Spdr::Debug);
     testObject.setSimulate(true);
     testObject.setInputPath(testInputPath);
     testObject.setOutputPath(testOutputPath + "/<yyyy>/<MM>*/");

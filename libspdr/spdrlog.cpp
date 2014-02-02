@@ -58,7 +58,11 @@ void SpdrLog::log(const QString &message, Spdr::LogLevel logLevelToUse) const
     if (mIsLogFileSet) {
         QFile file(mLogFilePath);
         if (file.open(QFile::Text | QFile::WriteOnly | QFile::Append)) {
-            file.write(message.toUtf8());
+            file.write(message.toUtf8().append("\n"));
+
+            if(logLevelToUse == Spdr::Critical || logLevelToUse == Spdr::Error) {
+                qDebug(message.toLocal8Bit().constData(), NULL);
+            }
         } else {
             //QString logFile(mLogFilePath);
             //setLogFilePath(QString::null);
