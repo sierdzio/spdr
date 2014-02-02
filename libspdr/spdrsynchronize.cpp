@@ -1,6 +1,7 @@
 #include "spdrsynchronize_p.h"
 
 #include <QByteArray>
+#include <QStringList>
 #include <QCryptographicHash>
 #include <QFile>
 #include <QFileInfo>
@@ -66,10 +67,36 @@ bool SpdrSynchronize::synchronize() const
     log(tr("Output file structure has been successfully analyzed"), Spdr::MediumLogging);
     log(tr("%1 files have been found and indexed").arg(outputFileData.count()), Spdr::MediumLogging);
 
-    if (!d->synchronizeDirectory(inputPath(), outputFileData)) {
+    if (!d->synchronizeDirectory(inputPath(), &outputFileData)) {
         log(tr("Could not finish directory synchronization due to errors"), Spdr::Error);
         return false;
     }
+
+    log(tr("%1 files still left in the index after synchronization").arg(outputFileData.count()),
+        Spdr::MediumLogging);
+
+    if (options() & RemoveMissingFiles) {
+        log(tr("They will be removed because RemoveMissingFiles option is set"), Spdr::MediumLogging);
+
+        foreach (const SpdrFileData &data, outputFileData) {
+            QString fileToRemove(outputPath() + "/" + data.path);
+            if (QFile::remove(fileToRemove)) {
+                log(tr("REMOVE: File %1 has been removed").arg(fileToRemove), Spdr::MediumLogging);
+            } else {
+                log(tr("REMOVE: Could not remove %1").arg(fileToRemove), Spdr::Error);
+                return false;
+            }
+        }
+    }
+
+    if (options() & RemoveEmptyDirectories) {
+        log(tr("Removing empty directories (if any)"), Spdr::MediumLogging);
+        if (!d->removeEmptyDirectory(outputPath())) {
+            return false;
+        }
+    }
+
+    log(tr("DONE: Synchronization successful"), Spdr::MildLogging);
 
     return true;
 }
@@ -159,7 +186,7 @@ bool SpdrSynchronizePrivate::readFileData(const QString &filePath,
 }
 
 bool SpdrSynchronizePrivate::synchronizeDirectory(const QString &directoryPath,
-                                                  QHash<QByteArray, SpdrFileData> &fileHashTable) const
+                                                  QHash<QByteArray, SpdrFileData> *fileHashTable) const
 {
     QDir inputDirectory(directoryPath);
 
@@ -182,7 +209,7 @@ bool SpdrSynchronizePrivate::synchronizeDirectory(const QString &directoryPath,
 }
 
 bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
-                                             QHash<QByteArray, SpdrFileData> &fileHashTable) const
+                                             QHash<QByteArray, SpdrFileData> *fileHashTable) const
 {
     Q_Q(const SpdrSynchronize);
 
@@ -204,7 +231,7 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
 
             if (inputFileData.isValid && inputFileData.isEqual(outputFileData)) {
                 if (q->performFileOperation(filePath, outputFileMirrorPath)) {
-                    fileHashTable.remove(inputFileData.checksumMd5);
+                    fileHashTable->remove(inputFileData.checksumMd5);
                     return true;
                 }
             }
@@ -217,10 +244,10 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
     // Let us first try to find by hash. Potentially suboptimal!
     // TODO: optimize! Don't try with contains() and then extract the value,
     // do it all in one go).
-    if (fileHashTable.contains(inputFileData.checksumMd5))
+    if (fileHashTable->contains(inputFileData.checksumMd5))
     {
         //SpdrFileData outputData = fileHashTable.value(inputFileData.checksumMd5);
-        SpdrFileData outputData = fileHashTable.take(inputFileData.checksumMd5);
+        SpdrFileData outputData = fileHashTable->take(inputFileData.checksumMd5);
 
         if (inputFileData.isMoved(outputData)) {
             QString localCopyPath(outputBase + outputData.path);
@@ -273,6 +300,34 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
     // the file was added!
     if (!q->performFileOperation(filePath, outputBase + inputFileData.path)) {
         return false;
+    }
+
+    return true;
+}
+
+bool SpdrSynchronizePrivate::removeEmptyDirectory(const QString &directoryPath) const
+{
+    Q_Q(const SpdrSynchronize);
+
+    QDir inputDirectory(directoryPath);
+    QFileInfoList dirList(inputDirectory.entryInfoList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot));
+
+    if (dirList.isEmpty()) {
+        if (QDir(directoryPath).rmdir(directoryPath)) {
+            q->log(q->tr("REMOVE: Removed empty directory %1").arg(directoryPath),
+                   Spdr::MediumLogging);
+            return true;
+        } else {
+            q->log(q->tr("REMOVE: Could not remove empty directory %1").arg(directoryPath),
+                   Spdr::Error);
+            return false;
+        }
+    } else {
+        foreach (const QFileInfo &dir, dirList) {
+            if (dir.isDir()) {
+                removeEmptyDirectory(dir.absoluteFilePath());
+            }
+        }
     }
 
     return true;

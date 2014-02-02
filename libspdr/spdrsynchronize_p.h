@@ -70,8 +70,10 @@ public:
     bool readDirectoryFileData(const QString &directoryPath, QHash<QByteArray, SpdrFileData> *fileHashTable) const;
     bool readFileData(const QString &filePath, QHash<QByteArray, SpdrFileData> *fileHashTable) const;
 
-    bool synchronizeDirectory(const QString &directoryPath, QHash<QByteArray, SpdrFileData> &fileHashTable) const;
-    bool synchronizeFile(const QString &filePath, QHash<QByteArray, SpdrFileData> &fileHashTable) const;
+    bool synchronizeDirectory(const QString &directoryPath, QHash<QByteArray, SpdrFileData> *fileHashTable) const;
+    bool synchronizeFile(const QString &filePath, QHash<QByteArray, SpdrFileData> *fileHashTable) const;
+
+    bool removeEmptyDirectory(const QString &directoryPath) const;
 
     SpdrFileData getFileData(const QString &filePath) const;
     QString getRelativeFilePath(const QString &absoluteFilePath) const;

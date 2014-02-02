@@ -57,6 +57,9 @@ bool SpdrImport::import() const
 
     result = d->importDirectory(inputPath());
 
+    if (result) {
+        log(tr("DONE: Directory import successful"), Spdr::MildLogging);
+    }
     return result;
 }
 

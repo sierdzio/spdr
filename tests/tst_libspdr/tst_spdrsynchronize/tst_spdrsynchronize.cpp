@@ -100,8 +100,10 @@ void TstSpdrSynchronize::testAdvancedSynchronization()
     /*int numberOfFiles =*/ createTestFiles(testDataPath, false);
 
     SpdrSynchronize testObject;
-    testObject.setLogLevel(Spdr::Error);
-    testObject.setOptions(SpdrSynchronize::RemoveMissingFiles);
+    testObject.setLogLevel(Spdr::Debug); //Error);
+    testObject.setOptions(SpdrSynchronize::RemoveMissingFiles
+                          | SpdrSynchronize::RemoveEmptyDirectories
+                          | SpdrSynchronize::Cache);
     testObject.setSimulate(false);
     testObject.setInputPath(testInputPath);
     testObject.setOutputPath(testOutputPath);
@@ -118,6 +120,11 @@ int TstSpdrSynchronize::createTestFiles(const QString &basePath, bool simplified
     QString outputPath(basePath + "/output");
     QDir().mkpath(inputPath);
     QDir().mkpath(outputPath);
+
+    if (!simplified) {
+        QDir().mkdir(outputPath + "/emptyDir1");
+        QDir().mkdir(outputPath + "/emptyDir2");
+    }
 
     int numberOfFiles = 10;
 
@@ -139,11 +146,16 @@ int TstSpdrSynchronize::createTestFiles(const QString &basePath, bool simplified
         file.close();
 
         if (i != 0) {
-            if ((!simplified) && (i == 1)) {
+            if ((!simplified) && ((i == 1) || (i == 2))) {
                 if (i == 1) {
+                    // Moved file
                     QDir().mkpath(inputPath + "/moved");
                     QFile::copy(inputFilePath, outputPath + "/" + filename);
                     QFile::rename(inputFilePath, inputPath + "/moved/renamedFile1.txt");
+                } else if (i == 2) {
+                    // Missing file
+                    QFile::copy(inputFilePath, outputPath + "/" + filename);
+                    QFile::remove(inputFilePath);
                 }
             } else {
                 QFile::copy(inputFilePath, outputPath + "/" + filename);
