@@ -64,8 +64,8 @@ bool SpdrSynchronize::synchronize() const
         return false;
     }
 
-    log(tr("Output file structure has been successfully analyzed"), Spdr::MediumLogging);
-    log(tr("%1 files have been found and indexed").arg(outputFileData.count()), Spdr::MediumLogging);
+    log(tr("Output file structure has been successfully analyzed"), Spdr::MildLogging);
+    log(tr("%1 files have been found and indexed").arg(outputFileData.count()), Spdr::MildLogging);
 
     if (!d->synchronizeDirectory(inputPath(), &outputFileData)) {
         log(tr("Could not finish directory synchronization due to errors"), Spdr::Error);
@@ -73,10 +73,10 @@ bool SpdrSynchronize::synchronize() const
     }
 
     log(tr("%1 files still left in the index after synchronization").arg(outputFileData.count()),
-        Spdr::MediumLogging);
+        Spdr::MildLogging);
 
     if (options() & RemoveMissingFiles) {
-        log(tr("They will be removed because RemoveMissingFiles option is set"), Spdr::MediumLogging);
+        log(tr("They will be removed because RemoveMissingFiles option is set"), Spdr::MildLogging);
 
         foreach (const SpdrFileData &data, outputFileData) {
             QString fileToRemove(outputPath() + "/" + data.path);
@@ -90,7 +90,7 @@ bool SpdrSynchronize::synchronize() const
     }
 
     if (options() & RemoveEmptyDirectories) {
-        log(tr("Removing empty directories (if any)"), Spdr::MediumLogging);
+        log(tr("Removing empty directories (if any)"), Spdr::MildLogging);
         if (!d->removeEmptyDirectory(outputPath())) {
             return false;
         }

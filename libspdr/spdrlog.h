@@ -21,6 +21,9 @@ public:
     void setLogFilePath(const QString &filePath);
     void log(const QString &message, Spdr::LogLevel logLevelToUse = Spdr::LogEverything) const;
 
+//signals:
+//    void logMessage(const QString &message, Spdr::LogLevel logLevelToUse = Spdr::LogEverything) const;
+
 private:
     bool mIsLogFileSet;
     Spdr::LogLevel mLogLevel;

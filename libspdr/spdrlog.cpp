@@ -47,6 +47,10 @@ void SpdrLog::setLogFilePath(const QString &filePath)
 
 void SpdrLog::log(const QString &message, Spdr::LogLevel logLevelToUse) const
 {
+    if (logLevel() == Spdr::NoLogging) {
+        return;
+    }
+
     if (((int) logLevelToUse) > ((int) logLevel())) {
         return;
     }

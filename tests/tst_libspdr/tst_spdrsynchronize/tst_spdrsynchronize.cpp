@@ -69,6 +69,10 @@ void TstSpdrSynchronize::testSignals()
     QCOMPARE(arguments.at(0).toInt(), 7);
 }
 
+/*!
+  A simple, simulated synchronization that tests only basic features, like
+  copying the newer version of a file to output.
+ */
 void TstSpdrSynchronize::testSimpleSynchronization()
 {
     QString testDataPath("testData");
@@ -89,6 +93,10 @@ void TstSpdrSynchronize::testSimpleSynchronization()
     QDir(testDataPath).removeRecursively();
 }
 
+/*!
+  Tests more advanced features of SpdrSynchronize: removing missing files,
+  removing empty directories, moving files about.
+ */
 void TstSpdrSynchronize::testAdvancedSynchronization()
 {
     QString testDataPath("testData");
@@ -100,7 +108,7 @@ void TstSpdrSynchronize::testAdvancedSynchronization()
     /*int numberOfFiles =*/ createTestFiles(testDataPath, false);
 
     SpdrSynchronize testObject;
-    testObject.setLogLevel(Spdr::Debug); //Error);
+    testObject.setLogLevel(Spdr::Error);
     testObject.setOptions(SpdrSynchronize::RemoveMissingFiles
                           | SpdrSynchronize::RemoveEmptyDirectories
                           | SpdrSynchronize::Cache);
@@ -114,8 +122,6 @@ void TstSpdrSynchronize::testAdvancedSynchronization()
 
 int TstSpdrSynchronize::createTestFiles(const QString &basePath, bool simplified)
 {
-    Q_UNUSED(simplified);
-
     QString inputPath(basePath + "/input");
     QString outputPath(basePath + "/output");
     QDir().mkpath(inputPath);

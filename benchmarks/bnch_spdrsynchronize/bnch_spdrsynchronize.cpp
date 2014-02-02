@@ -4,51 +4,106 @@
 #include <QObject>
 #include <QDebug>
 #include <QTest>
+#include <QFile>
+#include <QDir>
 
 class BnchSpdrSynchronize : public QObject
 {
     Q_OBJECT
 
 private slots:
-    void testSetters();
-    void benchmarkSplit_data();
-    void benchmarkSplit();
+    void simpleSynchronizationBenchmark_data();
+    void simpleSynchronizationBenchmark();
+
+private:
+    int createTestFiles(const QString &basePath, bool simplified);
 };
 
-void BnchSpdrSynchronize::testSetters()
+void BnchSpdrSynchronize::simpleSynchronizationBenchmark_data()
 {
-    SpdrSynchronize testObject;
+    QTest::addColumn<bool>("simulate");
+    QTest::newRow("Simulation enabled") << true;
+    QTest::newRow("Simulation disabled") << false;
+}
 
-    int propertyTestValue = 3;
+void BnchSpdrSynchronize::simpleSynchronizationBenchmark()
+{
+    QFETCH(bool, simulate);
+    QString testDataPath("testData");
+    QDir(testDataPath).removeRecursively();
+
+    QString testInputPath(testDataPath + QLatin1String("/input"));
+    QString testOutputPath(testDataPath + QLatin1String("/output"));
+
+    /*int numberOfFiles =*/ createTestFiles(testDataPath, false);
+
+    SpdrSynchronize testObject;
+    testObject.setLogLevel(Spdr::Error);
+    testObject.setOptions(SpdrSynchronize::RemoveMissingFiles
+                          | SpdrSynchronize::RemoveEmptyDirectories
+                          | SpdrSynchronize::Cache);
+    testObject.setInputPath(testInputPath);
+    testObject.setOutputPath(testOutputPath);
+
+    testObject.setSimulate(simulate);
+
     QBENCHMARK {
-        testObject.setProperty("split", propertyTestValue);
+        testObject.synchronize();
     }
 
-    QCOMPARE(testObject.split(), propertyTestValue);
-    QCOMPARE(testObject.property("split").toInt(), propertyTestValue);
+    QDir(testDataPath).removeRecursively();
 }
 
-void BnchSpdrSynchronize::benchmarkSplit_data()
+int BnchSpdrSynchronize::createTestFiles(const QString &basePath, bool simplified)
 {
-    QTest::addColumn<bool>("splitCompare");
-    QTest::newRow("compare using Q_PROPERTY") << true;
-    QTest::newRow("compare using C++") << false;
-}
+    QString inputPath(basePath + "/input");
+    QString outputPath(basePath + "/output");
+    QDir().mkpath(inputPath);
+    QDir().mkpath(outputPath);
 
-void BnchSpdrSynchronize::benchmarkSplit()
-{
-    QFETCH(bool, splitCompare);
-    SpdrSynchronize testObject;
+    if (!simplified) {
+        QDir().mkdir(outputPath + "/emptyDir1");
+        QDir().mkdir(outputPath + "/emptyDir2");
+    }
 
-    if (splitCompare) {
-        QBENCHMARK {
-            testObject.setProperty("split", 5);
+    int numberOfFiles = 150;
+
+    for (int i = 0; i < numberOfFiles; i++) {
+        QString filename(QString("file%1.txt").arg(QString::number(i)));
+        QString inputFilePath = inputPath + "/" + filename;
+
+        QFile file(inputFilePath);
+
+        if (!file.open(QFile::Text | QFile::WriteOnly)) {
+            continue;
         }
-    } else {
-        QBENCHMARK {
-            testObject.setSplit(5);
+
+        QString fileContent("Content of file number: ");
+        fileContent += QString::number(i);
+        fileContent += ". Random data: ";
+        fileContent += QString::number(qrand());
+        file.write(fileContent.toUtf8());
+        file.close();
+
+        if (i != 0) {
+            if ((!simplified) && ((i == 1) || (i == 2))) {
+                if (i == 1) {
+                    // Moved file
+                    QDir().mkpath(inputPath + "/moved");
+                    QFile::copy(inputFilePath, outputPath + "/" + filename);
+                    QFile::rename(inputFilePath, inputPath + "/moved/renamedFile1.txt");
+                } else if (i == 2) {
+                    // Missing file
+                    QFile::copy(inputFilePath, outputPath + "/" + filename);
+                    QFile::remove(inputFilePath);
+                }
+            } else {
+                QFile::copy(inputFilePath, outputPath + "/" + filename);
+            }
         }
     }
+
+    return numberOfFiles;
 }
 
 QTEST_MAIN(BnchSpdrSynchronize)
