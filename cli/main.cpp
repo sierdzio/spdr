@@ -1,9 +1,15 @@
 #include <QCoreApplication>
-#include <QCommandLineParser>
+
+#include "spdrcliparser.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication app(argc, argv);
+    app.setApplicationName("Spdr command line");
+    app.setApplicationVersion("0.0.1");
 
-    return 0; // app.exec();
+    SpdrCliParser parser;
+    parser.parse();
+
+    return app.exec();
 }

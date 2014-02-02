@@ -14,3 +14,13 @@ Here will be some real info once the functionality is ready. For now, best see
 
 System requirements:
 any working PC/ Mac or other device that Qt runs on, Qt 5.2 installed (minimum).
+
+
+Project's TODO:
+ - a LOT :-)
+ - use EXIF comparison
+ - use DIFF comparison
+ - use lazy caching (calculate SHA only when really needed)
+ - implement all SpdrSynchronize flags, especially including "no cache"
+ - CLI
+ - GUI
