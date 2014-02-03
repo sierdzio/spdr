@@ -8,6 +8,18 @@
 #include <QFileInfoList>
 #include <QDir>
 
+/*!
+  \class SpdrImport
+
+  This class can be used to intelligently import a directory, dividing all files
+  into neatly organised set of directories.
+
+  For example, you may have a directory full of unsorted photos. Then, by importing
+  that directory with this filter set: ../myPhotos/<yyyy>/<MM>/<yyyy-MM-dd>, it will
+  copy all files to "myPhotos", and also make sure they are all put into separate
+  directories based on the date they were taken.
+ */
+
 SpdrImport::SpdrImport(QObject *parent) : SpdrBase(parent), d_ptr(new SpdrImportPrivate(this))
 {
     Q_D(SpdrImport);

@@ -58,6 +58,10 @@ bool SpdrSynchronize::synchronize() const
 {
     Q_D(const SpdrSynchronize);
 
+    if (inputPath().isEmpty() || outputPath().isEmpty()) {
+        return false;
+    }
+
     log(tr("START: beginning synchronization"), Spdr::MildLogging);
     log(tr("Using options: %1").arg(synchronizationOptionsToString(options())), Spdr::ExcessiveLogging);
     log(tr("Input path: %1").arg(inputPath()), Spdr::ExcessiveLogging);
@@ -301,7 +305,10 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
     // Now, let us see if we can find a file with the same name and update it.
     // TODO: this needs to be done!
     // TODO: diff and EXIF comparison
-    {}
+    if (q->options() & SpdrSynchronize::DeepSearch) {
+        //q->log(q->tr("No file match using standard search. Performing deep search"),
+        //       Spdr::MildLogging);
+    }
 
     // Now that we have eliminated other possibilites, we can conclude that
     // the file was added!

@@ -5,6 +5,61 @@
 #include <QFileInfo>
 #include <QDir>
 
+/*!
+  \class SpdrBase
+
+  Base class for concrete file operation methods implementations available in Spdr.
+
+  It contains common properties and flags that other classes need: input and output
+  paths, log functionality, copy settings, etc.
+ */
+
+/*!
+  \property inputPath
+
+  This is a required parameter (Spdr will bail out if this property is empty).
+  Current directory can be specified with a single dot ".". The directory is
+  always scanned recursively.
+
+  It specifies the input path for Spdr to use. Input path is used as a base folder
+  for import/ synchronization. This means that Spdr is treating it as a folder
+  that is more up-to-date; a reference. Output path will be modified based on
+  what is found in input path. Files in input path can be modified only if you
+  set CopyMode to Move. In all other cases it will never be changed.
+
+  \sa setCopyMode, setOutputPath
+ */
+
+/*!
+  \property outputPath
+
+  This is a required parameter (Spdr will bail out if this property is empty).
+  Current directory can be specified with a single dot ".". Spdr will generate the
+  whole directory tree below it.
+
+  Output path specifies the destination folder for import or synchronize operations.
+
+  For import operation, the output file structure will be determined by the format
+  tags specified (see SpdrImport::setOutputPath for more details). Tags should be
+  enclosed in "<" and ">" and contain QDateTime formatting of dates. Adding a star
+  "*" outside of the tags will be treated as wildcard characters (allowing you
+  to merge into an existing directory tree).
+
+  For synchronize operation, the output file structure will be synchronized with
+  input path: after the operation they should both look the same.
+ */
+
+/*!
+  \property simulate
+
+  If set to true, Spdr will run as usual, performing all the operations, but it will
+  not do any acutal changes on the file system. This is best combined with a high
+  LogLevel: it allows to perform a "dry run" and check if everythign would be
+  done as needed.
+
+  \sa setLogLevel, logLevel
+ */
+
 SpdrBase::SpdrBase(QObject *parent) : QObject(parent), d_ptr(new SpdrBasePrivate(this))
 {
     Q_D(SpdrBase);

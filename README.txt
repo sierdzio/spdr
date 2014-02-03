@@ -24,3 +24,4 @@ Project's TODO:
  - implement all SpdrSynchronize flags, especially including "no cache"
  - CLI
  - GUI
+ - consider removing CopyMode from SpdrSynchronize. The "Move" operation is superfluous there

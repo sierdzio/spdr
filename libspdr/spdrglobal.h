@@ -19,8 +19,6 @@ class Spdr : public QObject {
     Q_ENUMS(UpdateMode CopyMode LogLevel)
 
 public:
-    // TODO: add toString() method for all enums!
-
     /*!
       Determines what Spdr should do when the output file already exists.
      */
@@ -52,6 +50,9 @@ public:
         Debug = LogEverything //!< Synonym for LogEverything
     };
 
+    /*!
+      Returns a string representation of given \a mode. Useful in debugging/ logging.
+     */
     static QString updateModeToString(UpdateMode mode)
     {
         QString result;
@@ -66,6 +67,9 @@ public:
         return result;
     }
 
+    /*!
+      Returns a string representation of given \a mode. Useful in debugging/ logging.
+     */
     static QString copyModeToString(CopyMode mode)
     {
         QString result;
@@ -78,6 +82,9 @@ public:
         return result;
     }
 
+    /*!
+      Returns a string representation of given \a level of logging.
+     */
     static QString logLevelToString(LogLevel level)
     {
         QString result;
