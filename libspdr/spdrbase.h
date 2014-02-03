@@ -30,9 +30,6 @@ public:
     Q_INVOKABLE bool simulate() const;
     Q_INVOKABLE void setSimulate(bool simulationEnabled);
 
-    Q_INVOKABLE Spdr::CopyMode copyMode() const;
-    Q_INVOKABLE void setCopyMode(Spdr::CopyMode newCopyMode);
-
     Q_INVOKABLE Spdr::UpdateMode updateMode() const;
     Q_INVOKABLE void setUpdateMode(Spdr::UpdateMode newUpdateMode);
 
@@ -43,8 +40,6 @@ public:
     Q_INVOKABLE void setLogFile(const QString &logFilePath);
     Q_INVOKABLE QString logFile() const;
 
-    Q_INVOKABLE bool performFileOperation(const QString &inputFile, const QString &outputFile) const;
-
 public slots:
     void log(const QString &message, Spdr::LogLevel logLevelToUse = Spdr::LogEverything) const;
 
@@ -52,7 +47,6 @@ signals:
     void inputPathChanged(const QString &newInputPath);
     void outputPathChanged(const QString &newOutputPath);
     void simulateChanged(bool simulationEnabled);
-    void copyModeChanged(Spdr::CopyMode newCopyMode);
     void updateModeChanged(Spdr::UpdateMode newUpdateMode);
 
 protected:

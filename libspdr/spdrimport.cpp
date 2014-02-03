@@ -25,6 +25,7 @@ SpdrImport::SpdrImport(QObject *parent) : SpdrBase(parent), d_ptr(new SpdrImport
     Q_D(SpdrImport);
 
     d->mPathSeparatorRegularExpression = "[\\\\]|[/]";
+    d->mCopyMode = Copy;
 }
 
 /*!
@@ -55,6 +56,31 @@ bool SpdrImport::setOutputPath(const QString &newOutputPath)
     }
 
     return false;
+}
+
+/*!
+  Returns the current setting of CopyMode.
+ */
+SpdrImport::CopyMode SpdrImport::copyMode() const
+{
+    Q_D(const SpdrImport);
+    return d->mCopyMode;
+}
+
+/*!
+  Sets the CopyMode to \a newCopyMode.
+ */
+void SpdrImport::setCopyMode(SpdrImport::CopyMode newCopyMode)
+{
+    Q_D(SpdrImport);
+
+    if (newCopyMode != d->mCopyMode) {
+        d->mCopyMode = newCopyMode;
+
+        log(tr("Copy mode changed to: %1").arg(copyModeToString(newCopyMode)), Spdr::Debug);
+
+        emit copyModeChanged(newCopyMode);
+    }
 }
 
 bool SpdrImport::import() const
@@ -88,10 +114,102 @@ bool SpdrImport::import(const QString &inputPath, const QString &outputPath)
     return object.import();
 }
 
+/*!
+  Returns a string representation of given \a mode. Useful in debugging/ logging.
+ */
+QString SpdrImport::copyModeToString(SpdrImport::CopyMode mode)
+{
+    QString result;
+    if (mode == Copy) {
+        result = "Copy";
+    } else if (mode == Move) {
+        result = "Move";
+    }
+
+    return result;
+}
+
+/*!
+  This method can be used to register Spdr enums with the Meta Object system.
+
+  Useful when one needs to use those enums in Qt tests.
+ */
+void SpdrImport::registerMetatypes()
+{
+    qRegisterMetaType<SpdrImport::CopyMode>("SpdrImport::CopyMode");
+}
+
 SpdrImport::SpdrImport(SpdrImportPrivate &dd, QObject *parent) : SpdrBase(parent), d_ptr(&dd)
 {
     Q_D(SpdrImport);
     Q_UNUSED(d);
+}
+
+/*!
+  Performs the requested file operation based on CopyMode and UpdateMode settings.
+
+  Returns true if successful.
+ */
+bool SpdrImportPrivate::performFileOperation(const QString &inputFile, const QString &outputFile) const
+{
+    Q_Q(const SpdrImport);
+
+    bool result = true;
+
+    if (areFilesTheSame(inputFile, outputFile)) {
+        q->log(q->tr("COPY: Skipping copying %1 to %2: files are identical")
+               .arg(inputFile).arg(outputFile), Spdr::MediumLogging);
+    } else {
+        if (!q->simulate()) {
+            bool skip = false;
+
+            if (QFile(outputFile).exists()) {
+                if (q->updateMode() == Spdr::Overwrite) {
+                    result = QFile::remove(outputFile);
+                } else if (q->updateMode() == Spdr::Ignore) {
+                    skip = true;
+                } else if (q->updateMode() == Spdr::Ask) { // TODO: implement Spdr::Ask
+                    q->log(q->tr("This feature has not been implemented yet: Spdr::%1")
+                           .arg(Spdr::updateModeToString(Spdr::Ask)), Spdr::Critical);
+                    return false;
+                }
+            }
+
+            if (!skip && result) {
+                QFileInfo outputFileInfo(outputFile);
+                QDir().mkpath(outputFileInfo.absolutePath());
+
+                if (q->copyMode() == SpdrImport::Move) {
+                    result = QFile::rename(inputFile, outputFile);
+                } else {
+                    result = QFile::copy(inputFile, outputFile);
+                }
+            }
+        }
+
+        q->log(q->tr("COPY: Copying %1 to %2 has: %3").arg(inputFile).arg(outputFile)
+               .arg(Spdr::getOperationStatusFromBool(result)), Spdr::MediumLogging);
+    }
+
+    return result;
+}
+
+/*!
+  Returns true if file names for \a input and \a output are the same.
+ */
+bool SpdrImportPrivate::areFilesTheSame(const QString &input, const QString &output) const
+{
+    QFileInfo inputInfo(input);
+    QFileInfo outputInfo(output);
+
+    if (inputInfo.fileName() == outputInfo.fileName()
+            && inputInfo.size() == outputInfo.size()
+            && inputInfo.created() == outputInfo.created())
+    {
+        return true;
+    }
+
+    return false;
 }
 
 bool SpdrImportPrivate::importDirectory(const QString &directoryPath) const
@@ -118,12 +236,10 @@ bool SpdrImportPrivate::importDirectory(const QString &directoryPath) const
 
 bool SpdrImportPrivate::importFile(const QString &filePath) const
 {
-    Q_Q(const SpdrImport);
-
     QString outputPath(getOutputFilePath(filePath));
     outputPath = substituteStarsInPath(outputPath);
 
-    return q->performFileOperation(filePath, outputPath);
+    return performFileOperation(filePath, outputPath);
 }
 
 QString SpdrImportPrivate::getOutputFilePath(const QString &inputFilePath) const
@@ -136,7 +252,7 @@ QString SpdrImportPrivate::getOutputFilePath(const QString &inputFilePath) const
 
     // Reads both Unix and Windows paths
     QStringList pathSegments(q->outputPath().split(QRegularExpression(mPathSeparatorRegularExpression),
-                                          QString::KeepEmptyParts));
+                                                   QString::KeepEmptyParts));
     pathSegments.append(fileInfo.fileName());
     QStringList outputPathSegments;
 
@@ -175,7 +291,7 @@ QString SpdrImportPrivate::substituteStarsInPath(const QString &outputFilePath) 
     }
 
     QStringList outputPathSegments(outputFilePath.split(QRegularExpression(mPathSeparatorRegularExpression),
-                                          QString::KeepEmptyParts));
+                                                        QString::KeepEmptyParts));
 
     // Go through every segment, see if dir exists, see if there is a name match,
     // fix the segment.

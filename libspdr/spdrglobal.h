@@ -16,7 +16,7 @@
  */
 class Spdr : public QObject {
     Q_OBJECT
-    Q_ENUMS(UpdateMode CopyMode LogLevel)
+    Q_ENUMS(UpdateMode LogLevel)
 
 public:
     /*!
@@ -26,14 +26,6 @@ public:
         Ask       = 0, //!< Spdr will ask what should be done every time
         Overwrite = 1, //!< Spdr will try to overwrite the output file
         Ignore    = 2 //!< Spdr will ignore (skip) that file
-    };
-
-    /*!
-      Determines what operation should Spdr perform on files it is operating on
-     */
-    enum CopyMode {
-        Copy = 0, //!< Files will be copied (no changes in input paths)
-        Move = 1 //!< Files will be moved (file may be deleted from input path, if the move operation is succesful)
     };
 
     /*!
@@ -68,21 +60,6 @@ public:
     }
 
     /*!
-      Returns a string representation of given \a mode. Useful in debugging/ logging.
-     */
-    static QString copyModeToString(CopyMode mode)
-    {
-        QString result;
-        if (mode == Copy) {
-            result = "Copy";
-        } else if (mode == Move) {
-            result = "Move";
-        }
-
-        return result;
-    }
-
-    /*!
       Returns a string representation of given \a level of logging.
      */
     static QString logLevelToString(LogLevel level)
@@ -108,6 +85,19 @@ public:
     }
 
     /*!
+      This is just an internal convenience method used for returning translatable
+      operation status messages.
+     */
+    static QString getOperationStatusFromBool(bool status)
+    {
+        if (status) {
+            return QObject::tr("succeeded");
+        } else {
+            return QObject::tr("failed");
+        }
+    }
+
+    /*!
       This method can be used to register Spdr enums with the Meta Object system.
 
       Useful when one needs to use those enums in Qt tests.
@@ -115,7 +105,6 @@ public:
     static void registerMetatypes()
     {
         qRegisterMetaType<Spdr::UpdateMode>("Spdr::UpdateMode");
-        qRegisterMetaType<Spdr::CopyMode>("Spdr::CopyMode");
         qRegisterMetaType<Spdr::LogLevel>("Spdr::LogLevel");
     }
 

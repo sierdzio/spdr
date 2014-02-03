@@ -10,9 +10,9 @@ SpdrCliParser::SpdrCliParser(QObject *parent) : QObject(parent)
     options.isImport = false;
     options.isSimulation = false;
 
-    options.copyMode = Spdr::Copy;
     options.updateMode = Spdr::Overwrite;
     options.logLevel = Spdr::MildLogging;
+    options.copyMode = SpdrImport::Copy;
     options.synchronizationOptions = SpdrSynchronize::Cache
             | SpdrSynchronize::RemoveEmptyDirectories
             | SpdrSynchronize::RemoveMissingFiles;
@@ -91,7 +91,7 @@ bool SpdrCliParser::parse()
     options.isSimulation = parser.isSet(simulateOption);
 
     if (parser.isSet(moveOption)) {
-        options.copyMode = Spdr::Move;
+        options.copyMode = SpdrImport::Move;
     }
 
     //updateMode;

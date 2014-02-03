@@ -40,6 +40,7 @@ void TstSpdrImport::testDefaults()
 {
     SpdrImport testObject;
     QCOMPARE(testObject.outputPath(), QString());
+    QCOMPARE(testObject.copyMode(), SpdrImport::Copy);
 }
 
 void TstSpdrImport::testSetters()
@@ -48,6 +49,9 @@ void TstSpdrImport::testSetters()
 
     testObject.setOutputPath("./");
     QCOMPARE(testObject.outputPath(), QString("."));
+
+    testObject.setCopyMode(SpdrImport::Move);
+    QCOMPARE(testObject.copyMode(), SpdrImport::Move);
 
     // TODO: test for property manipulation of output path
     /*
@@ -62,12 +66,16 @@ void TstSpdrImport::testSignals()
 {
     Spdr::registerMetatypes();
     SpdrImport testObject;
+    testObject.registerMetatypes();
     QSignalSpy spy(&testObject, SIGNAL(outputPathChanged(QString)));
+    QSignalSpy spyCopyMode(&testObject, SIGNAL(copyModeChanged(SpdrImport::CopyMode)));
 
     testObject.setOutputPath("aaa");
     //testObject.setProperty("format", "bbb");
+    testObject.setCopyMode(SpdrImport::Move);
 
     QCOMPARE(spy.count(), 1);
+    QCOMPARE(spyCopyMode.count(), 1);
 }
 
 void TstSpdrImport::testFormatSetting()

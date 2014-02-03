@@ -158,7 +158,6 @@ SpdrSynchronize::SpdrSynchronize(SpdrSynchronizePrivate &dd, QObject *parent)
     Q_UNUSED(d);
 }
 
-
 bool SpdrSynchronizePrivate::readDirectoryFileData(const QString &directoryPath,
                                                    QHash<QByteArray, SpdrFileData> *fileHashTable) const
 {
@@ -241,10 +240,10 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
             SpdrFileData outputFileData = getFileData(outputFileMirrorPath);
 
             if (inputFileData.isValid && inputFileData.isEqual(outputFileData)) {
-                if (q->performFileOperation(filePath, outputFileMirrorPath)) {
-                    fileHashTable->remove(inputFileData.checksumMd5);
-                    return true;
-                }
+                q->log(q->tr("COPY: Skipping copying %1 to %2: files are identical")
+                    .arg(filePath).arg(outputFileMirrorPath), Spdr::MediumLogging);
+                fileHashTable->remove(inputFileData.checksumMd5);
+                return true;
             }
         }
     }
@@ -291,13 +290,6 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
                 }
             }
 
-            if (q->copyMode() == Spdr::Move) {
-                if (!QFile::remove(filePath)) {
-                    q->log(q->tr("Could not remove the input file: %1").arg(filePath),
-                           Spdr::MediumLogging);
-                }
-            }
-
             return true;
         }
     }
@@ -312,8 +304,21 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
 
     // Now that we have eliminated other possibilites, we can conclude that
     // the file was added!
-    if (!q->performFileOperation(filePath, outputBase + inputFileData.path)) {
-        return false;
+    //if (!q->performFileOperation(filePath, outputBase + inputFileData.path)) {
+    {
+        QString outputFilePath(outputBase + inputFileData.path);
+
+        QFileInfo outputFileInfo(outputFilePath);
+        QDir().mkpath(outputFileInfo.absolutePath());
+
+        bool result = QFile::copy(filePath, outputFilePath);
+
+        q->log(q->tr("COPY: Copying %1 to %2 has: %3").arg(filePath).arg(outputFilePath)
+               .arg(Spdr::getOperationStatusFromBool(result)), Spdr::MediumLogging);
+
+        if (!result) {
+            return false;
+        }
     }
 
     return true;

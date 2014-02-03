@@ -2,6 +2,7 @@
 #define SPDRCLIOPTIONS_H
 
 #include "SpdrBase"
+#include "SpdrImport"
 #include "SpdrSynchronize"
 
 #include <QString>
@@ -12,9 +13,9 @@ public:
     bool isImport;
     bool isSimulation;
 
-    Spdr::CopyMode copyMode;
     Spdr::UpdateMode updateMode;
     Spdr::LogLevel logLevel;
+    SpdrImport::CopyMode copyMode;
     SpdrSynchronize::SynchronizationOptions synchronizationOptions;
 
     QString logFile;

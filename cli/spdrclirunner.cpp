@@ -31,7 +31,6 @@ void SpdrCliRunner::performActions()
         synchronize.setLogFile(mOptions.logFile);
         synchronize.setLogLevel(mOptions.logLevel);
         synchronize.setSimulate(mOptions.isSimulation);
-        synchronize.setCopyMode(mOptions.copyMode);
         synchronize.setUpdateMode(mOptions.updateMode);
         synchronize.setOptions(mOptions.synchronizationOptions);
         synchronize.synchronize();

@@ -68,7 +68,6 @@ SpdrBase::SpdrBase(QObject *parent) : QObject(parent), d_ptr(new SpdrBasePrivate
     Q_D(SpdrBase);
 
     d->mSimulate = false;
-    d->mCopyMode = Spdr::Copy;
     d->mUpdateMode = Spdr::Ask;
 }
 
@@ -160,31 +159,6 @@ void SpdrBase::setSimulate(bool simulationEnabled)
 }
 
 /*!
-  Returns the current setting of Spdr::CopyMode.
- */
-Spdr::CopyMode SpdrBase::copyMode() const
-{
-    Q_D(const SpdrBase);
-    return d->mCopyMode;
-}
-
-/*!
-  Sets the Spdr::CopyMode to \a newCopyMode.
- */
-void SpdrBase::setCopyMode(Spdr::CopyMode newCopyMode)
-{
-    Q_D(SpdrBase);
-
-    if (newCopyMode != d->mCopyMode) {
-        d->mCopyMode = newCopyMode;
-
-        log(tr("Copy mode changed to: %1").arg(Spdr::copyModeToString(newCopyMode)), Spdr::Debug);
-
-        emit copyModeChanged(newCopyMode);
-    }
-}
-
-/*!
   Returns the current setting of Spdr::UpdateMode.
  */
 Spdr::UpdateMode SpdrBase::updateMode() const
@@ -259,55 +233,6 @@ QString SpdrBase::logFile() const
 }
 
 /*!
-  Performs the requested file operation based on CopyMode and UpdateMode settings.
-
-  Returns true if successful.
- */
-bool SpdrBase::performFileOperation(const QString &inputFile, const QString &outputFile) const
-{
-    Q_D(const SpdrBase);
-
-    bool result = true;
-
-    if (d->areFilesTheSame(inputFile, outputFile)) {
-        log(tr("COPY: Skipping copying %1 to %2: files are identical")
-            .arg(inputFile).arg(outputFile), Spdr::MediumLogging);
-    } else {
-        if (!simulate()) {
-            bool skip = false;
-
-            if (QFile(outputFile).exists()) {
-                if (updateMode() == Spdr::Overwrite) {
-                    result = QFile::remove(outputFile);
-                } else if (updateMode() == Spdr::Ignore) {
-                    skip = true;
-                } else if (updateMode() == Spdr::Ask) { // TODO: implement Spdr::Ask
-                    log(tr("This feature has not been implemented yet: Spdr::%1")
-                        .arg(Spdr::updateModeToString(Spdr::Ask)), Spdr::Critical);
-                    return false;
-                }
-            }
-
-            if (!skip && result) {
-                QFileInfo outputFileInfo(outputFile);
-                QDir().mkpath(outputFileInfo.absolutePath());
-
-                if (copyMode() == Spdr::Move) {
-                    result = QFile::rename(inputFile, outputFile);
-                } else {
-                    result = QFile::copy(inputFile, outputFile);
-                }
-            }
-        }
-
-        log(tr("COPY: Copying %1 to %2 has: %3").arg(inputFile).arg(outputFile)
-            .arg(d->getOperationStatusFromBool(result)), Spdr::MediumLogging);
-    }
-
-    return result;
-}
-
-/*!
   Prints the log \a message using \a logLevelToUse. Please note that if the log
   level is set to a higher value than \a logLevelToUse, this method will not
   print anything.
@@ -327,37 +252,4 @@ SpdrBase::SpdrBase(SpdrBasePrivate &dd, QObject *parent) : QObject(parent), d_pt
 {
     Q_D(SpdrBase);
     Q_UNUSED(d);
-}
-
-/*!
-  This is just an internal convenience method used for returning translatable
-  operation status messages.
- */
-QString SpdrBasePrivate::getOperationStatusFromBool(bool status) const
-{
-    Q_Q(const SpdrBase);
-
-    if (status) {
-        return q->tr("succeeded");
-    } else {
-        return q->tr("failed");
-    }
-}
-
-/*!
-  Returns true if file names for \a input and \a output are the same.
- */
-bool SpdrBasePrivate::areFilesTheSame(const QString &input, const QString &output) const
-{
-    QFileInfo inputInfo(input);
-    QFileInfo outputInfo(output);
-
-    if (inputInfo.fileName() == outputInfo.fileName()
-            && inputInfo.size() == outputInfo.size()
-            && inputInfo.created() == outputInfo.created())
-    {
-        return true;
-    }
-
-    return false;
 }

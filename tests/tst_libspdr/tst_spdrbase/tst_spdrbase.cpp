@@ -23,7 +23,6 @@ void TstSpdrBase::testDefaults()
     SpdrBase testObject;
     QCOMPARE(testObject.inputPath(), QString());
     QCOMPARE(testObject.outputPath(), QString());
-    QCOMPARE(testObject.copyMode(), Spdr::Copy);
     QCOMPARE(testObject.updateMode(), Spdr::Ask);
     QCOMPARE(testObject.logLevel(), Spdr::Error);
     QCOMPARE(testObject.isUsingLogFile(), false);
@@ -39,9 +38,6 @@ void TstSpdrBase::testSetters()
 
     testObject.setOutputPath(pathTester);
     QCOMPARE(testObject.outputPath(), pathTester);
-
-    testObject.setCopyMode(Spdr::Move);
-    QCOMPARE(testObject.copyMode(), Spdr::Move);
 
     testObject.setUpdateMode(Spdr::Overwrite);
     QCOMPARE(testObject.updateMode(), Spdr::Overwrite);
@@ -61,18 +57,15 @@ void TstSpdrBase::testSignals()
     SpdrBase testObject;
     QSignalSpy spyInputPath(&testObject, SIGNAL(inputPathChanged(QString)));
     QSignalSpy spyOutputPath(&testObject, SIGNAL(outputPathChanged(QString)));
-    QSignalSpy spyCopyMode(&testObject, SIGNAL(copyModeChanged(Spdr::CopyMode)));
     QSignalSpy spyUpdateMode(&testObject, SIGNAL(updateModeChanged(Spdr::UpdateMode)));
 
     QString pathTester("/some/path");
     testObject.setInputPath(pathTester);
     testObject.setOutputPath(pathTester);
-    testObject.setCopyMode(Spdr::Move);
     testObject.setUpdateMode(Spdr::Ignore);
 
     QCOMPARE(spyInputPath.count(), 1);
     QCOMPARE(spyOutputPath.count(), 1);
-    QCOMPARE(spyCopyMode.count(), 1);
     QCOMPARE(spyUpdateMode.count(), 1);
 }
 
