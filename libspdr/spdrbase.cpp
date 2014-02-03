@@ -60,6 +60,9 @@
   \sa setLogLevel, logLevel
  */
 
+/*!
+  Constructs the SpdrBase object, sets default values.
+ */
 SpdrBase::SpdrBase(QObject *parent) : QObject(parent), d_ptr(new SpdrBasePrivate(this))
 {
     Q_D(SpdrBase);
@@ -69,12 +72,18 @@ SpdrBase::SpdrBase(QObject *parent) : QObject(parent), d_ptr(new SpdrBasePrivate
     d->mUpdateMode = Spdr::Ask;
 }
 
+/*!
+  Returns the current input path.
+ */
 QString SpdrBase::inputPath() const
 {
     Q_D(const SpdrBase);
     return d->mInputPath;
 }
 
+/*!
+  Sets the input path to \a newInputPath. Currend directory can be set with ".".
+ */
 void SpdrBase::setInputPath(const QString &newInputPath)
 {
     Q_D(SpdrBase);
@@ -88,12 +97,22 @@ void SpdrBase::setInputPath(const QString &newInputPath)
     }
 }
 
+/*!
+  Returns the current output path.
+ */
 QString SpdrBase::outputPath() const
 {
     Q_D(const SpdrBase);
     return d->mOutputPath;
 }
 
+/*!
+  Sets the output path to \a newOutputPath. Returns false if the paths is not valid.
+
+  This method works a bit differently for SpdrImport, see SpdrImport::setOutputPath.
+
+  \sa SpdrImport::setOutputPath
+ */
 bool SpdrBase::setOutputPath(const QString &newOutputPath)
 {
     Q_D(SpdrBase);
@@ -115,12 +134,20 @@ bool SpdrBase::setOutputPath(const QString &newOutputPath)
     return true;
 }
 
+/*!
+  Returns true if Spdr is working in simulation mode.
+ */
 bool SpdrBase::simulate() const
 {
     Q_D(const SpdrBase);
     return d->mSimulate;
 }
 
+/*!
+  When \a simulationEnabled is set to true, Spdr will run in simulation mode.
+  This means that it will perform all operations as usual, but it will not actually
+  change anything on the file system.
+ */
 void SpdrBase::setSimulate(bool simulationEnabled)
 {
     Q_D(SpdrBase);
@@ -132,12 +159,18 @@ void SpdrBase::setSimulate(bool simulationEnabled)
     }
 }
 
+/*!
+  Returns the current setting of Spdr::CopyMode.
+ */
 Spdr::CopyMode SpdrBase::copyMode() const
 {
     Q_D(const SpdrBase);
     return d->mCopyMode;
 }
 
+/*!
+  Sets the Spdr::CopyMode to \a newCopyMode.
+ */
 void SpdrBase::setCopyMode(Spdr::CopyMode newCopyMode)
 {
     Q_D(SpdrBase);
@@ -151,12 +184,18 @@ void SpdrBase::setCopyMode(Spdr::CopyMode newCopyMode)
     }
 }
 
+/*!
+  Returns the current setting of Spdr::UpdateMode.
+ */
 Spdr::UpdateMode SpdrBase::updateMode() const
 {
     Q_D(const SpdrBase);
     return d->mUpdateMode;
 }
 
+/*!
+  Sets the Spdr::UpdateMode to \a newUpdateMode.
+ */
 void SpdrBase::setUpdateMode(Spdr::UpdateMode newUpdateMode)
 {
     Q_D(SpdrBase);
@@ -170,12 +209,18 @@ void SpdrBase::setUpdateMode(Spdr::UpdateMode newUpdateMode)
     }
 }
 
+/*!
+  Returns the current Spdr::LogLevel.
+ */
 Spdr::LogLevel SpdrBase::logLevel() const
 {
     Q_D(const SpdrBase);
     return d->mLog.logLevel();
 }
 
+/*!
+  Sets the Spdr::LogLevel to \a newLevel.
+ */
 void SpdrBase::setLogLevel(Spdr::LogLevel newLevel)
 {
     Q_D(SpdrBase);
@@ -183,12 +228,19 @@ void SpdrBase::setLogLevel(Spdr::LogLevel newLevel)
     d->mLog.setLogLevel(newLevel);
 }
 
+/*!
+  Returns true if Spdr is using the log file.
+ */
 bool SpdrBase::isUsingLogFile() const
 {
     Q_D(const SpdrBase);
     return d->mLog.isUsingLogFile();
 }
 
+/*!
+  Sets the log file path to \a logFilePath. If \a logFilePath is empty, Spdr will
+  push all log messages to stdout.
+ */
 void SpdrBase::setLogFile(const QString &logFilePath)
 {
     Q_D(SpdrBase);
@@ -196,12 +248,21 @@ void SpdrBase::setLogFile(const QString &logFilePath)
     log(tr("Now using log file: %1").arg(d->mLog.isUsingLogFile()? d->mLog.logFilePath() : "stdout"), Spdr::Debug);
 }
 
+/*!
+  Returns the path to the log file used by Spdr. An empty string means that stdout is
+  being used to display the log messages.
+ */
 QString SpdrBase::logFile() const
 {
     Q_D(const SpdrBase);
     return d->mLog.logFilePath();
 }
 
+/*!
+  Performs the requested file operation based on CopyMode and UpdateMode settings.
+
+  Returns true if successful.
+ */
 bool SpdrBase::performFileOperation(const QString &inputFile, const QString &outputFile) const
 {
     Q_D(const SpdrBase);
@@ -246,18 +307,32 @@ bool SpdrBase::performFileOperation(const QString &inputFile, const QString &out
     return result;
 }
 
+/*!
+  Prints the log \a message using \a logLevelToUse. Please note that if the log
+  level is set to a higher value than \a logLevelToUse, this method will not
+  print anything.
+
+  \sa setLogLevel, setLogFile
+ */
 void SpdrBase::log(const QString &message, Spdr::LogLevel logLevelToUse) const
 {
     Q_D(const SpdrBase);
     d->mLog.log(message, logLevelToUse);
 }
 
+/*!
+  PIMPL constructor. Please ignore.
+ */
 SpdrBase::SpdrBase(SpdrBasePrivate &dd, QObject *parent) : QObject(parent), d_ptr(&dd)
 {
     Q_D(SpdrBase);
     Q_UNUSED(d);
 }
 
+/*!
+  This is just an internal convenience method used for returning translatable
+  operation status messages.
+ */
 QString SpdrBasePrivate::getOperationStatusFromBool(bool status) const
 {
     Q_Q(const SpdrBase);
@@ -269,6 +344,9 @@ QString SpdrBasePrivate::getOperationStatusFromBool(bool status) const
     }
 }
 
+/*!
+  Returns true if file names for \a input and \a output are the same.
+ */
 bool SpdrBasePrivate::areFilesTheSame(const QString &input, const QString &output) const
 {
     QFileInfo inputInfo(input);
