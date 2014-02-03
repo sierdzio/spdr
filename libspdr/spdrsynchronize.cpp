@@ -8,6 +8,25 @@
 #include <QFileInfoList>
 #include <QDir>
 
+/*!
+  \class SpdrSynchronize
+
+  This class can be used to synchronize 2 directories.
+
+  The folder specified in input path is considered to be more "up-to-date" and
+  more important. The files it contains will not be changed unless you run
+  synchronization in Bidirectional mode.
+
+  The output path is the target, or destination, directory. It will be brought
+  up to date (into sync) with input directory. Spdr tries to optimise the
+  process as much as possible: when a new file in input is only moved from a
+  different place, Spdr will detect that and move it in output - which is much
+  faster than deleting and copying the file again.
+  */
+
+/*!
+  Standard constructor, initializes the object with default values.
+  */
 SpdrSynchronize::SpdrSynchronize(QObject *parent) : SpdrBase(parent), d_ptr(new SpdrSynchronizePrivate(this))
 {
     Q_D(SpdrSynchronize);
@@ -16,12 +35,18 @@ SpdrSynchronize::SpdrSynchronize(QObject *parent) : SpdrBase(parent), d_ptr(new 
     d->mOptions = SpdrSynchronize::RemoveEmptyDirectories | RemoveMissingFiles | Cache;
 }
 
+/*!
+  Returns the options that are currently set.
+  */
 SpdrSynchronize::SynchronizationOptions SpdrSynchronize::options() const
 {
     Q_D(const SpdrSynchronize);
     return d->mOptions;
 }
 
+/*!
+  Sets the current \a options.
+  */
 void SpdrSynchronize::setOptions(SynchronizationOptions options)
 {
     Q_D(SpdrSynchronize);
@@ -35,12 +60,24 @@ void SpdrSynchronize::setOptions(SynchronizationOptions options)
     }
 }
 
+/*!
+  WARNING: currently not used.
+
+  Returns the split (number of concurrent jobs) that Spdr will use during
+  synchronization.
+  */
 int SpdrSynchronize::split() const
 {
     Q_D(const SpdrSynchronize);
     return d->mSplit;
 }
 
+/*!
+  WARNING: currently not used.
+
+  Set number (\a split) of concurrent jobs Spdr should use when performing
+  synchronization.
+  */
 void SpdrSynchronize::setSplit(uint split)
 {
     Q_D(SpdrSynchronize);
@@ -54,6 +91,11 @@ void SpdrSynchronize::setSplit(uint split)
     }
 }
 
+/*!
+  Performs the synchrnization based on all settings. Input path is treated as
+  the reference directory, and when synchronization is finished, output path
+  should have exactly the same data inside, arranged in the same way.
+  */
 bool SpdrSynchronize::synchronize() const
 {
     Q_D(const SpdrSynchronize);
@@ -112,12 +154,20 @@ bool SpdrSynchronize::synchronize() const
     return true;
 }
 
+/*!
+  Can be used to register the SynchronizationOptions enum with meta object system.
+
+  This is usually only required when using QtTestLib.
+  */
 void SpdrSynchronize::registerMetatypes()
 {
     Spdr::registerMetatypes();
     qRegisterMetaType<SpdrSynchronize::SynchronizationOptions>("SpdrSynchronize::SynchronizationOptions");
 }
 
+/*!
+  Returns all flags set in \a optionSet as a string. Useful for logging and debugging.
+  */
 QString SpdrSynchronize::synchronizationOptionsToString(SynchronizationOptions optionSet)
 {
     QString result;
@@ -151,6 +201,9 @@ QString SpdrSynchronize::synchronizationOptionsToString(SynchronizationOptions o
     return result;
 }
 
+/*!
+  Private constructor. Best ignore it.
+  */
 SpdrSynchronize::SpdrSynchronize(SpdrSynchronizePrivate &dd, QObject *parent)
     : SpdrBase(parent), d_ptr(&dd)
 {
@@ -158,6 +211,12 @@ SpdrSynchronize::SpdrSynchronize(SpdrSynchronizePrivate &dd, QObject *parent)
     Q_UNUSED(d);
 }
 
+/*!
+  Recursively reads file data in given \a directoryPath and all subdirectories.
+  Returns true when successful. Resulting data can be read from \a fileHashTable.
+
+  \sa readFileData
+  */
 bool SpdrSynchronizePrivate::readDirectoryFileData(const QString &directoryPath,
                                                    QHash<QByteArray, SpdrFileData> *fileHashTable) const
 {
@@ -181,6 +240,10 @@ bool SpdrSynchronizePrivate::readDirectoryFileData(const QString &directoryPath,
     return true;
 }
 
+/*!
+  Reads data from a single file given in \afilePath. Returns true if successful.
+  Data can be read later from \a fileHashTable.
+  */
 bool SpdrSynchronizePrivate::readFileData(const QString &filePath,
                                           QHash<QByteArray, SpdrFileData> *fileHashTable) const
 {
@@ -195,6 +258,12 @@ bool SpdrSynchronizePrivate::readFileData(const QString &filePath,
     return true;
 }
 
+/*!
+  Performs synchronization on a single directory given in \a directoryPath (from
+  input!), then recursively for all subdirectories. Returns true if everything
+  went fine. Uses \a fileHashTable to read the information about output directory
+  files.
+  */
 bool SpdrSynchronizePrivate::synchronizeDirectory(const QString &directoryPath,
                                                   QHash<QByteArray, SpdrFileData> *fileHashTable) const
 {
@@ -218,6 +287,11 @@ bool SpdrSynchronizePrivate::synchronizeDirectory(const QString &directoryPath,
     return true;
 }
 
+/*!
+  Decides how a single file should be synchronized. File given in \a filePath
+  should come from the input directory structure. \a fileHashTable is used to
+  scan information about output files. Returns true if successful.
+  */
 bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
                                              QHash<QByteArray, SpdrFileData> *fileHashTable) const
 {
@@ -324,6 +398,10 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
     return true;
 }
 
+/*!
+  Recursively removes all emppty directories found in \a directoryPath, including
+  itself.
+  */
 bool SpdrSynchronizePrivate::removeEmptyDirectory(const QString &directoryPath) const
 {
     Q_Q(const SpdrSynchronize);
@@ -352,6 +430,9 @@ bool SpdrSynchronizePrivate::removeEmptyDirectory(const QString &directoryPath) 
     return true;
 }
 
+/*!
+  Reads file data from a single file given in \a filePath, and returns it.
+  */
 SpdrFileData SpdrSynchronizePrivate::getFileData(const QString &filePath) const
 {
     Q_Q(const SpdrSynchronize);
@@ -406,6 +487,11 @@ SpdrFileData SpdrSynchronizePrivate::getFileData(const QString &filePath) const
     return fileData;
 }
 
+/*!
+  Gets the relative path to file specified by \a absoluteFilePath. Returns a path
+  that is relative to either input or output directory (depending on where the
+  given file is coming from).
+  */
 QString SpdrSynchronizePrivate::getRelativeFilePath(const QString &absoluteFilePath) const
 {
     Q_Q(const SpdrSynchronize);

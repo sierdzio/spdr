@@ -87,7 +87,20 @@ void SpdrImport::setCopyMode(SpdrImport::CopyMode newCopyMode)
 }
 
 /*!
-  Performs the import operation.
+  Performs the import operation. That is to say, it takes all files from input
+  path and puts them into output path according to formatting tags that have
+  been used.
+
+  For example, if you want to copy your newly taken photographs onto your local
+  foto archive/ gallery, you can use this output path:
+
+  /some/path/<yyyy>/<MM>/<yyyy-MM-dd>*
+
+  This will copy the files into a well-organized folder structure. Later, when
+  you take more pictures, you can run import() again, and the archive will be
+  updated.
+
+  \sa setOutputPath
  */
 bool SpdrImport::import() const
 {
@@ -107,6 +120,9 @@ bool SpdrImport::import() const
     return result;
 }
 
+/*!
+  Static overload for SpdrImport::import().
+  */
 bool SpdrImport::import(const QString &inputPath, const QString &outputPath)
 {
     SpdrImport object;
@@ -218,6 +234,12 @@ bool SpdrImportPrivate::areFilesTheSame(const QString &input, const QString &out
     return false;
 }
 
+/*!
+  Recursively imports a directory specified by \a directoryPath. Internally,
+  this method also calls importFile() for every file it encounters.
+
+  \sa importFile
+  */
 bool SpdrImportPrivate::importDirectory(const QString &directoryPath) const
 {
     QDir inputDirectory(directoryPath);
@@ -240,14 +262,21 @@ bool SpdrImportPrivate::importDirectory(const QString &directoryPath) const
     return true;
 }
 
+/*!
+  Imports the file specified by \a filePath. File destination is acquired
+  automatically based on output path.
+  */
 bool SpdrImportPrivate::importFile(const QString &filePath) const
 {
     QString outputPath(getOutputFilePath(filePath));
     outputPath = substituteStarsInPath(outputPath);
-
     return performFileOperation(filePath, outputPath);
 }
 
+/*!
+  Constructs the output file path based on formatting tags specified in output
+  path property.
+  */
 QString SpdrImportPrivate::getOutputFilePath(const QString &inputFilePath) const
 {
     Q_Q(const SpdrImport);
@@ -375,7 +404,12 @@ bool SpdrImportPrivate::checkFormat(const QString &format) const
     return result;
 }
 
-int SpdrImportPrivate::countOccurences(const QString &stringToSearchThrough, const QChar &characterToCount) const
+/*!
+  Returns the number of times \a characterToCount can be found in
+  \a stringToSearchThrough.
+  */
+int SpdrImportPrivate::countOccurences(const QString &stringToSearchThrough,
+                                       const QChar &characterToCount) const
 {
     int result = 0;
     for (int i = 0; i < stringToSearchThrough.length(); i++) {

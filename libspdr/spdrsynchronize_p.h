@@ -22,17 +22,24 @@ public:
     QDateTime creationDate;
     qint64 size;
 
+    /*!
+      Returns a nicely formatted information about the file.
+      */
     QString toString() const
     {
-        QString result("Name: " + name);
-        result += "Relative path: " + path;
-        result += "MD5: " + checksumMd5;
-        result += "SHA: " + checksumSha;
-        result += "Created: " + creationDate.toString("dd-MM-yyyy");
+        QString result("Name: " + name + "\n");
+        result += "Relative path: " + path + "\n";
+        result += "MD5: " + checksumMd5 + "\n";
+        result += "SHA: " + checksumSha + "\n";
+        result += "Created: " + creationDate.toString("dd-MM-yyyy") + "\n";
         result += "Size: " + QString::number(size);
         return result;
     }
 
+    /*!
+      Returns true if current file is equal to \a other. That means that the names,
+      creation dates, checksums and sizes are all the same.
+      */
     bool isEqual(const SpdrFileData &other)
     {
         if ((name == other.name) && (checksumMd5 == other.checksumMd5)
@@ -46,6 +53,10 @@ public:
         return false;
     }
 
+    /*!
+      Returns true if the current file and \a other are the same, but moved
+      to some other place (and/ or renamed).
+      */
     bool isMoved(const SpdrFileData &other)
     {
         if ((checksumMd5 == other.checksumMd5)
@@ -67,11 +78,15 @@ public:
     SpdrSynchronizePrivate(SpdrSynchronize *q) : q_ptr(q) {}
     SpdrSynchronize *q_ptr;
 
-    bool readDirectoryFileData(const QString &directoryPath, QHash<QByteArray, SpdrFileData> *fileHashTable) const;
-    bool readFileData(const QString &filePath, QHash<QByteArray, SpdrFileData> *fileHashTable) const;
+    bool readDirectoryFileData(const QString &directoryPath,
+                               QHash<QByteArray, SpdrFileData> *fileHashTable) const;
+    bool readFileData(const QString &filePath,
+                      QHash<QByteArray, SpdrFileData> *fileHashTable) const;
 
-    bool synchronizeDirectory(const QString &directoryPath, QHash<QByteArray, SpdrFileData> *fileHashTable) const;
-    bool synchronizeFile(const QString &filePath, QHash<QByteArray, SpdrFileData> *fileHashTable) const;
+    bool synchronizeDirectory(const QString &directoryPath,
+                              QHash<QByteArray, SpdrFileData> *fileHashTable) const;
+    bool synchronizeFile(const QString &filePath,
+                         QHash<QByteArray, SpdrFileData> *fileHashTable) const;
 
     bool removeEmptyDirectory(const QString &directoryPath) const;
 
