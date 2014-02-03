@@ -13,6 +13,8 @@ class SPDR_DLLSPEC SpdrImport : public SpdrBase
     Q_OBJECT
     Q_ENUMS(CopyMode)
 
+    //Q_PROPERTY(Spdr::CopyMode copyMode READ copyMode WRITE setCopyMode NOTIFY copyModeChanged)
+
 public:
     /*!
       Determines what operation should Spdr perform on files it is operating on

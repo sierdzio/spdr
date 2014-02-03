@@ -15,7 +15,6 @@ class SPDR_DLLSPEC SpdrBase : public QObject
     Q_PROPERTY(QString outputPath READ outputPath WRITE setOutputPath NOTIFY outputPathChanged)
     Q_PROPERTY(bool simulate READ simulate WRITE setSimulate NOTIFY simulateChanged)
 
-    //Q_PROPERTY(Spdr::CopyMode copyMode READ copyMode WRITE setCopyMode NOTIFY copyModeChanged)
     //Q_PROPERTY(Spdr::UpdateMode updateMode READ updateMode WRITE setUpdateMode NOTIFY updateModeChanged)
 
 public:

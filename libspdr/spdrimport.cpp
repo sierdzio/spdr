@@ -20,6 +20,9 @@
   directories based on the date they were taken.
  */
 
+/*!
+  Standard constructor: creates the object and sets default values for properties.
+ */
 SpdrImport::SpdrImport(QObject *parent) : SpdrBase(parent), d_ptr(new SpdrImportPrivate(this))
 {
     Q_D(SpdrImport);
@@ -29,7 +32,7 @@ SpdrImport::SpdrImport(QObject *parent) : SpdrBase(parent), d_ptr(new SpdrImport
 }
 
 /*!
-  Can be used to set the format for the import dir, along with the path.
+  Can be used to set the format for the destination directory, along with the path.
 
   Example format: ../myPhotos/<yyyy>/<MM>/<yyyy-MM-dd>*
 
@@ -39,7 +42,7 @@ SpdrImport::SpdrImport(QObject *parent) : SpdrBase(parent), d_ptr(new SpdrImport
 
   Accepted date formatting strings are the same as for QDateTime class and have
   to be put between "<" and ">" (otherwise they will be treated as part of the
-  path).
+  path). Spdr understands tags for date as well as for time.
  */
 bool SpdrImport::setOutputPath(const QString &newOutputPath)
 {
@@ -83,6 +86,9 @@ void SpdrImport::setCopyMode(SpdrImport::CopyMode newCopyMode)
     }
 }
 
+/*!
+  Performs the import operation.
+ */
 bool SpdrImport::import() const
 {
     Q_D(const SpdrImport);
@@ -273,6 +279,7 @@ QString SpdrImportPrivate::getOutputFilePath(const QString &inputFilePath) const
 
     return outputPathSegments.join("/");
 }
+
 /*!
   Use this to replace all occurences of '*' with directory candidates (if applicable).
 
