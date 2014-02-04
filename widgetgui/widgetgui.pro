@@ -10,6 +10,13 @@ include(../definitions.pri)
 INCLUDEPATH += src
 
 SOURCES += \
-    main.cpp
+    main.cpp \
+    spdrguimainwindow.cpp
 
 TRANSLATIONS += locale/spdr_pl.ts
+
+FORMS += \
+    spdrguimainwindow.ui
+
+HEADERS += \
+    spdrguimainwindow.h

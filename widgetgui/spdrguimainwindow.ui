@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SpdrGuiMainWindow</class>
+ <widget class="QMainWindow" name="SpdrGuiMainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tabSynchronize">
+       <attribute name="title">
+        <string>Synchronize</string>
+       </attribute>
+       <widget class="QLabel" name="labelSynchronizationInput">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>10</y>
+          <width>131</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Input directory</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="labelSynchronizationOutput">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>90</y>
+          <width>131</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Output directory</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEditSynchronizationInput">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>40</y>
+          <width>113</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="placeholderText">
+         <string>/some/path</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButtonSynchronizationInput">
+        <property name="geometry">
+         <rect>
+          <x>160</x>
+          <y>40</y>
+          <width>114</width>
+          <height>32</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Select dir</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEditSynchronizationOutput">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>120</y>
+          <width>113</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="placeholderText">
+         <string>/some/path</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButtonSynchronizationOutput">
+        <property name="geometry">
+         <rect>
+          <x>150</x>
+          <y>110</y>
+          <width>114</width>
+          <height>32</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Select dir</string>
+        </property>
+       </widget>
+       <widget class="QGroupBox" name="groupBoxSynchronizationOptions">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>170</y>
+          <width>371</width>
+          <height>221</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>Options</string>
+        </property>
+        <widget class="QCheckBox" name="checkBoxSynchronizationSimulate">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>70</y>
+           <width>87</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>simulate</string>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tabImport">
+       <attribute name="title">
+        <string>Import</string>
+       </attribute>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
