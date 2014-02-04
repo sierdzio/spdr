@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>621</width>
+    <height>653</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -106,25 +106,256 @@
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>170</y>
+          <y>150</y>
           <width>371</width>
           <height>221</height>
          </rect>
         </property>
         <property name="title">
-         <string>Options</string>
+         <string>Basic options</string>
         </property>
         <widget class="QCheckBox" name="checkBoxSynchronizationSimulate">
          <property name="geometry">
           <rect>
            <x>20</x>
-           <y>70</y>
+           <y>140</y>
            <width>87</width>
            <height>20</height>
           </rect>
          </property>
          <property name="text">
-          <string>simulate</string>
+          <string>Simulate</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="checkBoxSynchronizationLog">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>70</y>
+           <width>111</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Use log file</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEditSynchronizationLog">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>110</y>
+           <width>113</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>/log/file/path</string>
+         </property>
+         <property name="placeholderText">
+          <string>/some/path</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButtonSynchronizationLog">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>110</y>
+           <width>114</width>
+           <height>32</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Select dir</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="labelSynchronizeLogLevel">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>40</y>
+           <width>91</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Log level</string>
+         </property>
+        </widget>
+        <widget class="QComboBox" name="comboBoxSynchronizeLogLevel">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>110</x>
+           <y>30</y>
+           <width>111</width>
+           <height>26</height>
+          </rect>
+         </property>
+         <property name="currentIndex">
+          <number>3</number>
+         </property>
+         <item>
+          <property name="text">
+           <string>0 - no logging</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>1 - only critical errors</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>2 - only errors</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>3 - mild logging</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>4 - medium logging</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>5 - excessive logging</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>6 - log everything (debug output)</string>
+          </property>
+         </item>
+        </widget>
+        <widget class="QLabel" name="labelSynchronizeUpdateMode">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>170</y>
+           <width>101</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Update mode</string>
+         </property>
+        </widget>
+        <widget class="QComboBox" name="comboBoxSynchronizeUpdateMode">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>170</y>
+           <width>111</width>
+           <height>26</height>
+          </rect>
+         </property>
+         <item>
+          <property name="text">
+           <string>Ask</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Overwrite</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Ignore</string>
+          </property>
+         </item>
+        </widget>
+       </widget>
+       <widget class="QGroupBox" name="groupBoxAdvancedOptions">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>380</y>
+          <width>241</width>
+          <height>161</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>Advanced options</string>
+        </property>
+        <widget class="QCheckBox" name="checkBoxDeepSearch">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>130</y>
+           <width>161</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Perform deep search</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="checkBoxRemoveEmptyDirectiories">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>80</y>
+           <width>201</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Remove empty directories</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="checkBoxCache">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>50</y>
+           <width>87</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Use cache</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="checkBoxBidirectional">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>30</y>
+           <width>121</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Bidirectional</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="checkBoxRemoveMissingFiles">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>100</y>
+           <width>161</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Remove missing files</string>
          </property>
         </widget>
        </widget>
@@ -143,7 +374,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>621</width>
      <height>22</height>
     </rect>
    </property>
@@ -151,5 +382,38 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>checkBoxSynchronizationLog</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>lineEditSynchronizationLog</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>129</x>
+     <y>269</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>141</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxSynchronizationLog</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>pushButtonSynchronizationLog</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>164</x>
+     <y>282</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>237</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
