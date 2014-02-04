@@ -1,6 +1,8 @@
 #ifndef SPDRGUIMAINWINDOW_H
 #define SPDRGUIMAINWINDOW_H
 
+#include "spdrguibasicinputform.h"
+
 #include <QMainWindow>
 
 namespace Ui {
@@ -17,6 +19,8 @@ public:
 
 private:
     Ui::SpdrGuiMainWindow *ui;
+    SpdrGuiBasicInputForm *importForm;
+    SpdrGuiBasicInputForm *synchronizeForm;
 };
 
 #endif // SPDRGUIMAINWINDOW_H
