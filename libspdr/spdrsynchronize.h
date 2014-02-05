@@ -40,18 +40,19 @@ public:
 
     Q_INVOKABLE SynchronizationOptions options() const;
     Q_INVOKABLE void setOptions(SynchronizationOptions options);
+    static QString synchronizationOptionsToString(SynchronizationOptions optionSet);
 
     Q_INVOKABLE int split() const;
     Q_INVOKABLE void setSplit(uint split);
 
-    Q_INVOKABLE bool synchronize() const;
-
     static void registerMetatypes();
-    static QString synchronizationOptionsToString(SynchronizationOptions optionSet);
+
+public slots:
+    bool synchronize() const;
 
 signals:
-    void optionsChanged(SpdrSynchronize::SynchronizationOptions newOptions);
-    void splitChanged(int newSplit);
+    void optionsChanged(SpdrSynchronize::SynchronizationOptions newOptions) const;
+    void splitChanged(int newSplit) const;
 
 protected:
     SpdrSynchronize(SpdrSynchronizePrivate &dd, QObject *parent = 0);

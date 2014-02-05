@@ -43,10 +43,11 @@ public slots:
     void log(const QString &message, Spdr::LogLevel logLevelToUse = Spdr::LogEverything) const;
 
 signals:
-    void inputPathChanged(const QString &newInputPath);
-    void outputPathChanged(const QString &newOutputPath);
-    void simulateChanged(bool simulationEnabled);
-    void updateModeChanged(Spdr::UpdateMode newUpdateMode);
+    void finished(bool result) const;
+    void inputPathChanged(const QString &newInputPath) const;
+    void outputPathChanged(const QString &newOutputPath) const;
+    void simulateChanged(bool simulationEnabled) const;
+    void updateModeChanged(Spdr::UpdateMode newUpdateMode) const;
 
 protected:
     SpdrBase(SpdrBasePrivate &dd, QObject *parent = 0);

@@ -109,6 +109,7 @@ bool SpdrImport::import() const
     bool result = true;
 
     if (inputPath().isEmpty() || outputPath().isEmpty()) {
+        finished(false);
         return false;
     }
 
@@ -117,23 +118,9 @@ bool SpdrImport::import() const
     if (result) {
         log(tr("DONE: Directory import successful"), Spdr::MildLogging);
     }
+
+    emit finished(result);
     return result;
-}
-
-/*!
-  Static overload for SpdrImport::import().
-  */
-bool SpdrImport::import(const QString &inputPath, const QString &outputPath)
-{
-    SpdrImport object;
-
-    object.setInputPath(inputPath);
-
-    if (!object.setOutputPath(outputPath)) {
-        return false;
-    }
-
-    return object.import();
 }
 
 /*!

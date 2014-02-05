@@ -17,6 +17,13 @@ public:
     explicit SpdrGuiMainWindow(QWidget *parent = 0);
     ~SpdrGuiMainWindow();
 
+private slots:
+    void on_pushButtonSynchronize_clicked();
+    void on_pushButtonImport_clicked();
+
+    void synchronizationFinished(bool result);
+    void importFinished(bool result);
+
 private:
     Ui::SpdrGuiMainWindow *ui;
     SpdrGuiBasicInputForm *importForm;

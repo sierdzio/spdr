@@ -17,6 +17,11 @@ public:
 
 //private:
     Ui::SpdrGuiBasicInputForm *ui;
+
+private slots:
+    void on_pushButtonInput_clicked();
+    void on_pushButtonOutput_clicked();
+    void on_pushButtonLog_clicked();
 };
 
 #endif // SPDRGUIBASICINPUTFORM_H

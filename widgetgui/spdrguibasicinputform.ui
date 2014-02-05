@@ -14,9 +14,6 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
-   <property name="rightMargin">
-    <number>12</number>
-   </property>
    <item row="4" column="0" colspan="3">
     <widget class="QGroupBox" name="groupBoxOptions">
      <property name="title">
@@ -228,6 +225,9 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="currentIndex">
+           <number>1</number>
+          </property>
           <item>
            <property name="text">
             <string>Ask</string>
@@ -308,5 +308,38 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>checkBoxLog</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>lineEditLog</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>93</x>
+     <y>182</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>89</x>
+     <y>207</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxLog</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>pushButtonLog</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>242</x>
+     <y>178</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>646</x>
+     <y>210</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

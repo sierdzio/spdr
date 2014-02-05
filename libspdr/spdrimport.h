@@ -30,16 +30,15 @@ public:
 
     Q_INVOKABLE CopyMode copyMode() const;
     Q_INVOKABLE void setCopyMode(CopyMode newCopyMode);
-
-    Q_INVOKABLE bool import() const;
-    Q_INVOKABLE static bool import(const QString &inputPath, const QString &outputPath);
-
     Q_INVOKABLE static QString copyModeToString(CopyMode mode);
 
     static void registerMetatypes();
 
+public slots:
+    bool import() const;
+
 signals:
-    void copyModeChanged(SpdrImport::CopyMode newCopyMode);
+    void copyModeChanged(SpdrImport::CopyMode newCopyMode) const;
 
 protected:
     SpdrImport(SpdrImportPrivate &dd, QObject *parent = 0);
