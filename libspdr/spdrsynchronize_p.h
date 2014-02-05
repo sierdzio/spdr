@@ -44,7 +44,7 @@ public:
     {
         if ((name == other.name) && (checksumMd5 == other.checksumMd5)
                 && (checksumSha == other.checksumSha)
-                && (creationDate == other.creationDate)
+                //&& (creationDate == other.creationDate)
                 && (size == other.size))
         {
             return true;
@@ -88,6 +88,7 @@ public:
     bool synchronizeFile(const QString &filePath,
                          QHash<QByteArray, SpdrFileData> *fileHashTable) const;
 
+    bool removeEmptyDirectories(const QString &rootDirectoryPath) const;
     bool removeEmptyDirectory(const QString &directoryPath) const;
 
     SpdrFileData getFileData(const QString &filePath) const;

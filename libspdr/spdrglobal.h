@@ -91,9 +91,9 @@ public:
     static QString getOperationStatusFromBool(bool status)
     {
         if (status) {
-            return QObject::tr("succeeded");
+            return QObject::tr("success");
         } else {
-            return QObject::tr("failed");
+            return QObject::tr("failure");
         }
     }
 

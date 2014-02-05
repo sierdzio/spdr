@@ -133,10 +133,24 @@ bool SpdrSynchronize::synchronize() const
 
         foreach (const SpdrFileData &data, outputFileData) {
             QString fileToRemove(outputPath() + "/" + data.path);
-            if (QFile::remove(fileToRemove)) {
-                log(tr("REMOVE: File %1 has been removed").arg(fileToRemove), Spdr::MediumLogging);
+
+            bool result = false;
+            QString operation;
+
+            if (simulate()) {
+                result = true;
+                operation = "SIMULATE REMOVE";
             } else {
-                log(tr("REMOVE: Could not remove %1").arg(fileToRemove), Spdr::Error);
+                operation = "REMOVE";
+                result = QFile::remove(fileToRemove);
+            }
+
+            log(tr("%1 (%2): File %3").arg(operation)
+                .arg(Spdr::getOperationStatusFromBool(result))
+                .arg(fileToRemove),
+                result? Spdr::MediumLogging : Spdr::Error);
+
+            if (!result) {
                 return false;
             }
         }
@@ -144,7 +158,7 @@ bool SpdrSynchronize::synchronize() const
 
     if (options() & RemoveEmptyDirectories) {
         log(tr("Removing empty directories (if any)"), Spdr::MildLogging);
-        if (!d->removeEmptyDirectory(outputPath())) {
+        if (!d->removeEmptyDirectories(outputPath())) {
             return false;
         }
     }
@@ -310,12 +324,13 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
     {
         QString outputFileMirrorPath(outputBase + inputFileData.path);
         QFileInfo outputFileMirrorInfo(outputFileMirrorPath);
+
         if (outputFileMirrorInfo.exists()) {
             SpdrFileData outputFileData = getFileData(outputFileMirrorPath);
 
             if (inputFileData.isValid && inputFileData.isEqual(outputFileData)) {
-                q->log(q->tr("COPY: Skipping copying %1 to %2: files are identical")
-                    .arg(filePath).arg(outputFileMirrorPath), Spdr::MediumLogging);
+                q->log(q->tr("SKIP: Files %1 and %2 are identical")
+                       .arg(filePath).arg(outputFileMirrorPath), Spdr::ExcessiveLogging);
                 fileHashTable->remove(inputFileData.checksumMd5);
                 return true;
             }
@@ -338,30 +353,29 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
             QString localDestinationPath(outputBase + inputFileData.path);
             QDir(q->outputPath()).mkpath(QFileInfo(localDestinationPath).absolutePath());
 
+            bool result = false;
+            QString operation;
+
             if (q->simulate()) {
-                q->log(q->tr("SIMULATE: Already existing file moved from %1 to %2")
-                       .arg(localCopyPath).arg(localDestinationPath), Spdr::MediumLogging);
-                return true;
+                result = true;
+                operation = "SIMULATE";
+            } else {
+                if (q->options() & SpdrSynchronize::RemoveMissingFiles) {
+                    result = QFile::rename(localCopyPath, localDestinationPath);
+                    operation = "MOVE";
+                } else {
+                    result = QFile::copy(localCopyPath, localDestinationPath);
+                    operation = "COPY";
+                }
             }
 
-            if (q->options() & SpdrSynchronize::RemoveMissingFiles) {
-                if (QFile::rename(localCopyPath, localDestinationPath)) {
-                    q->log(q->tr("MOVE: Already existing file moved from %1 to %2")
-                           .arg(localCopyPath).arg(localDestinationPath), Spdr::MediumLogging);
-                } else {
-                    q->log(q->tr("MOVE: could not move the file from %1 to %2")
-                           .arg(localCopyPath).arg(localDestinationPath), Spdr::Critical);
-                    return false;
-                }
-            } else {
-                if (QFile::copy(localCopyPath, localDestinationPath)) {
-                    q->log(q->tr("COPY: Already existing file copied from %1 to %2")
-                           .arg(localCopyPath).arg(localDestinationPath), Spdr::MediumLogging);
-                } else {
-                    q->log(q->tr("COPY: could not copy the file from %1 to %2")
-                           .arg(localCopyPath).arg(localDestinationPath), Spdr::Critical);
-                    return false;
-                }
+            q->log(q->tr("%1 (%2): Already existing file from %3 to %4").arg(operation)
+                   .arg(Spdr::getOperationStatusFromBool(result))
+                   .arg(localCopyPath).arg(localDestinationPath),
+                   result? Spdr::MediumLogging : Spdr::Critical);
+
+            if (!result) {
+                return false;
             }
 
             return true;
@@ -385,10 +399,21 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
         QFileInfo outputFileInfo(outputFilePath);
         QDir().mkpath(outputFileInfo.absolutePath());
 
-        bool result = QFile::copy(filePath, outputFilePath);
+        bool result = false;
+        QString operation;
 
-        q->log(q->tr("COPY: Copying %1 to %2 has: %3").arg(filePath).arg(outputFilePath)
-               .arg(Spdr::getOperationStatusFromBool(result)), Spdr::MediumLogging);
+        if (q->simulate()) {
+            result = true;
+            operation = "SIMULATE COPY";
+        } else {
+            result = QFile::copy(filePath, outputFilePath);
+            operation = "COPY";
+        }
+
+        q->log(q->tr("%1 (%2): %3 to %4").arg(operation)
+               .arg(Spdr::getOperationStatusFromBool(result))
+               .arg(filePath).arg(outputFilePath),
+               result? Spdr::MediumLogging : Spdr::Critical);
 
         if (!result) {
             return false;
@@ -399,35 +424,58 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
 }
 
 /*!
-  Recursively removes all emppty directories found in \a directoryPath, including
-  itself.
+  Recursively removes all emppty directories found in \a directoryPath.
   */
-bool SpdrSynchronizePrivate::removeEmptyDirectory(const QString &directoryPath) const
+bool SpdrSynchronizePrivate::removeEmptyDirectories(const QString &rootDirectoryPath) const
 {
-    Q_Q(const SpdrSynchronize);
-
-    QDir inputDirectory(directoryPath);
+    QDir inputDirectory(rootDirectoryPath);
     QFileInfoList dirList(inputDirectory.entryInfoList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot));
 
     if (dirList.isEmpty()) {
-        if (QDir(directoryPath).rmdir(directoryPath)) {
-            q->log(q->tr("REMOVE: Removed empty directory %1").arg(directoryPath),
-                   Spdr::MediumLogging);
-            return true;
-        } else {
-            q->log(q->tr("REMOVE: Could not remove empty directory %1").arg(directoryPath),
-                   Spdr::Error);
-            return false;
-        }
+        removeEmptyDirectory(rootDirectoryPath);
     } else {
         foreach (const QFileInfo &dir, dirList) {
             if (dir.isDir()) {
-                removeEmptyDirectory(dir.absoluteFilePath());
+                if(!removeEmptyDirectories(dir.absoluteFilePath())) {
+                    return false;
+                }
             }
+        }
+
+        // After cleaning subdirs, we need to check this dir again
+        dirList = inputDirectory.entryInfoList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
+        if (dirList.isEmpty()) {
+            return removeEmptyDirectory(rootDirectoryPath);
         }
     }
 
     return true;
+}
+
+/*!
+  Removes a single specified directory
+ */
+bool SpdrSynchronizePrivate::removeEmptyDirectory(const QString &directoryPath) const
+{
+    Q_Q(const SpdrSynchronize);
+
+    bool result = false;
+    QString operation;
+
+    if (q->simulate()) {
+        result = true;
+        operation = "SIMULATE REMOVE";
+    } else {
+        operation = "REMOVE";
+        result = QDir(directoryPath + "/../").rmdir(directoryPath);
+    }
+
+    q->log(q->tr("%1 (%2): Empty directory %3").arg(operation)
+           .arg(Spdr::getOperationStatusFromBool(result))
+           .arg(directoryPath),
+           result? Spdr::MediumLogging : Spdr::Critical);
+
+    return result;
 }
 
 /*!

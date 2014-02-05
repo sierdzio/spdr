@@ -66,7 +66,7 @@ void SpdrLog::setLogFilePath(const QString &filePath)
 
     if (mIsLogFileSet) {
         QFile file(mLogFilePath);
-        if (!file.open(QFile::Text | QFile::WriteOnly | QFile::Append)) {
+        if (!file.open(QFile::Text | QFile::WriteOnly)) {
             QString logFile(mLogFilePath);
             setLogFilePath(QString::null);
             log(QString("Log file %1 could not be opened for writing! Reverting to stdout").arg(logFile));

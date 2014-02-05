@@ -3,6 +3,8 @@
 #include "SpdrImport"
 #include "SpdrSynchronize"
 
+#include <QCoreApplication>
+
 SpdrCliRunner::SpdrCliRunner(QObject *parent) : QObject(parent)
 {
 }
@@ -14,6 +16,7 @@ void SpdrCliRunner::setOptions(SpdrCliOptions options)
 
 void SpdrCliRunner::performActions()
 {
+    bool result = false;
     if (mOptions.isImport) {
         SpdrImport import(this);
         import.setInputPath(mOptions.inputPath);
@@ -23,7 +26,7 @@ void SpdrCliRunner::performActions()
         import.setSimulate(mOptions.isSimulation);
         import.setCopyMode(mOptions.copyMode);
         import.setUpdateMode(mOptions.updateMode);
-        import.import();
+        result = import.import();
     } else {
         SpdrSynchronize synchronize(this);
         synchronize.setInputPath(mOptions.inputPath);
@@ -33,6 +36,8 @@ void SpdrCliRunner::performActions()
         synchronize.setSimulate(mOptions.isSimulation);
         synchronize.setUpdateMode(mOptions.updateMode);
         synchronize.setOptions(mOptions.synchronizationOptions);
-        synchronize.synchronize();
+        result = synchronize.synchronize();
     }
+
+    QCoreApplication::instance()->exit(!result);
 }
