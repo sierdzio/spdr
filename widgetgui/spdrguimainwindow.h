@@ -3,6 +3,7 @@
 
 #include "spdrguibasicinputform.h"
 
+#include <QThread>
 #include <QMainWindow>
 
 namespace Ui {
@@ -28,6 +29,9 @@ private:
     Ui::SpdrGuiMainWindow *ui;
     SpdrGuiBasicInputForm *importForm;
     SpdrGuiBasicInputForm *synchronizeForm;
+
+    QThread importThread;
+    QThread synchronizeThread;
 };
 
 #endif // SPDRGUIMAINWINDOW_H

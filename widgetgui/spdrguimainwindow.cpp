@@ -5,8 +5,6 @@
 #include "SpdrImport"
 #include "SpdrSynchronize"
 
-#include <QThread>
-
 SpdrGuiMainWindow::SpdrGuiMainWindow(QWidget *parent) : QMainWindow(parent),
     ui(new Ui::SpdrGuiMainWindow)
 {
@@ -21,6 +19,12 @@ SpdrGuiMainWindow::SpdrGuiMainWindow(QWidget *parent) : QMainWindow(parent),
 
 SpdrGuiMainWindow::~SpdrGuiMainWindow()
 {
+    importThread.quit();
+    importThread.wait();
+
+    synchronizeThread.quit();
+    synchronizeThread.wait();
+
     delete ui;
 }
 
@@ -61,15 +65,13 @@ void SpdrGuiMainWindow::on_pushButtonSynchronize_clicked()
     }
 
     synchronizer->setOptions(options);
+    synchronizer->moveToThread(&synchronizeThread);
 
-    QThread *thread = new QThread(this);
-    synchronizer->moveToThread(thread);
-
-    connect(thread, &QThread::finished, synchronizer, &SpdrSynchronize::deleteLater);
-    connect(thread, &QThread::started, synchronizer, &SpdrSynchronize::synchronize);
+    connect(&synchronizeThread, &QThread::finished, synchronizer, &SpdrSynchronize::deleteLater);
+    connect(&synchronizeThread, &QThread::started, synchronizer, &SpdrSynchronize::synchronize);
     connect(synchronizer, &SpdrSynchronize::finished, this, &SpdrGuiMainWindow::synchronizationFinished, Qt::QueuedConnection);
 
-    thread->start();
+    synchronizeThread.start();
 }
 
 void SpdrGuiMainWindow::on_pushButtonImport_clicked()
@@ -87,14 +89,13 @@ void SpdrGuiMainWindow::on_pushButtonImport_clicked()
         importer->setLogFile(importForm->ui->lineEditLog->text());
     }
 
-    QThread *thread = new QThread(this);
-    importer->moveToThread(thread);
+    importer->moveToThread(&importThread);
 
-    connect(thread, &QThread::finished, importer, &SpdrImport::deleteLater);
-    connect(thread, &QThread::started, importer, &SpdrImport::import);
+    connect(&importThread, &QThread::finished, importer, &SpdrImport::deleteLater);
+    connect(&importThread, &QThread::started, importer, &SpdrImport::import);
     connect(importer, &SpdrImport::finished, this, &SpdrGuiMainWindow::importFinished, Qt::QueuedConnection);
 
-    thread->start();
+    importThread.start();
 }
 
 void SpdrGuiMainWindow::synchronizationFinished(bool result)
@@ -104,6 +105,9 @@ void SpdrGuiMainWindow::synchronizationFinished(bool result)
     } else {
         ui->labelSynchronizeResult->setText(tr("Error: see the log"));
     }
+
+    synchronizeThread.quit();
+    synchronizeThread.wait();
 
     ui->pushButtonSynchronize->setEnabled(true);
 }
@@ -115,6 +119,9 @@ void SpdrGuiMainWindow::importFinished(bool result)
     } else {
         ui->labelImportResult->setText(tr("Error: see the log"));
     }
+
+    importThread.quit();
+    importThread.wait();
 
     ui->pushButtonImport->setEnabled(true);
 }
