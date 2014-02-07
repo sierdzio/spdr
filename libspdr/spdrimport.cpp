@@ -21,6 +21,15 @@
  */
 
 /*!
+  \enum SpdrImport::CopyMode
+
+  Determines what operation should Spdr perform on files it is operating on
+
+    \var SpdrImport::CopyMode SpdrImport::Copy Files will be copied (no changes in input paths)
+    \var SpdrImport::CopyMode SpdrImport::Move Files will be moved (file may be deleted from input path, if the move operation is succesful)
+  */
+
+/*!
   Standard constructor: creates the object and sets default values for properties.
  */
 SpdrImport::SpdrImport(QObject *parent) : SpdrBase(parent), d_ptr(new SpdrImportPrivate(this))

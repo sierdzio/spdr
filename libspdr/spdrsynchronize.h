@@ -17,18 +17,11 @@ class SPDR_DLLSPEC SpdrSynchronize : public SpdrBase {
 public:
     SpdrSynchronize(QObject *parent = 0);
 
-    /*!
-      Contains additional flags that can be passed to synchronization algorithm.
-     */
     enum SynchronizationOption {
-        None                   = 0x0000, //!< No additional options will be used
-        RemoveEmptyDirectories = 0x0001, /*!< If syncing makes a directory empty,
-                                           it will be removed */
-        RemoveMissingFiles     = 0x0002, /*!< If some files are missing in input,
-                                           they will also be removed from output */
-        DeepSearch             = 0x0004 /*!< Spdr will search for existing files
-                                           using all available methods: file name,
-                                           file position, file's data hash, file diff */
+        None                   = 0x0000,
+        RemoveEmptyDirectories = 0x0001,
+        RemoveMissingFiles     = 0x0002,
+        DeepSearch             = 0x0004
     };
     Q_DECLARE_FLAGS(SynchronizationOptions, SynchronizationOption)
 

@@ -25,6 +25,17 @@
   */
 
 /*!
+  \enum SpdrSynchronize::SynchronizationOption
+
+  Contains additional flags that can be passed to synchronization algorithm.
+
+    \var SpdrSynchronize::SynchronizationOption SpdrSynchronize::None No additional options will be used
+    \var SpdrSynchronize::SynchronizationOption SpdrSynchronize::RemoveEmptyDirectories If syncing makes a directory empty, it will be removed
+    \var SpdrSynchronize::SynchronizationOption SpdrSynchronize::RemoveMissingFiles If some files are missing in input, they will also be removed from output
+    \var SpdrSynchronize::SynchronizationOption SpdrSynchronize::DeepSearch Spdr will search for existing files using all available methods. Crucially, it will calculate SHA1 and MD5 checksums for all files: to avoid hash clashes. The DeepSearch will take more (a lot more) time, but in most situations the result will be exactly the same as running Spdr without it.
+     */
+
+/*!
   Standard constructor, initializes the object with default values.
   */
 SpdrSynchronize::SpdrSynchronize(QObject *parent) : SpdrBase(parent), d_ptr(new SpdrSynchronizePrivate(this))

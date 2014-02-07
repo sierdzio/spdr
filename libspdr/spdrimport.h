@@ -16,12 +16,9 @@ class SPDR_DLLSPEC SpdrImport : public SpdrBase
     //Q_PROPERTY(Spdr::CopyMode copyMode READ copyMode WRITE setCopyMode NOTIFY copyModeChanged)
 
 public:
-    /*!
-      Determines what operation should Spdr perform on files it is operating on
-     */
     enum CopyMode {
-        Copy = 0, //!< Files will be copied (no changes in input paths)
-        Move = 1 //!< Files will be moved (file may be deleted from input path, if the move operation is succesful)
+        Copy = 0,
+        Move = 1
     };
 
     SpdrImport(QObject *parent = 0);
