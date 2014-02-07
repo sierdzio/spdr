@@ -14,7 +14,7 @@
   Defines various enums and static functions that are needed in all other code
   using Spdr.
  */
-class Spdr : public QObject {
+class SPDR_DLLSPEC Spdr : public QObject {
     Q_OBJECT
     Q_ENUMS(UpdateMode LogLevel)
 
