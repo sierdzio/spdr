@@ -17,6 +17,7 @@ public:
     bool isValid;
     QString name;
     QString path;
+    QString absoluteFilePath;
     QByteArray checksumMd5;
     QByteArray checksumSha;
     QDateTime creationDate;
@@ -29,6 +30,7 @@ public:
     {
         QString result("Name: " + name + "\n");
         result += "Relative path: " + path + "\n";
+        result += "Absolute file path: " + absoluteFilePath + "\n";
         result += "MD5: " + checksumMd5 + "\n";
         result += "SHA: " + checksumSha + "\n";
         result += "Created: " + creationDate.toString("dd-MM-yyyy") + "\n";
@@ -44,7 +46,6 @@ public:
     {
         if ((name == other.name) && (checksumMd5 == other.checksumMd5)
                 && (checksumSha == other.checksumSha)
-                //&& (creationDate == other.creationDate)
                 && (size == other.size))
         {
             return true;

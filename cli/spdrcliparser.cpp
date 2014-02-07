@@ -13,8 +13,7 @@ SpdrCliParser::SpdrCliParser(QObject *parent) : QObject(parent)
     options.updateMode = Spdr::Overwrite;
     options.logLevel = Spdr::MildLogging;
     options.copyMode = SpdrImport::Copy;
-    options.synchronizationOptions = SpdrSynchronize::Cache
-            | SpdrSynchronize::RemoveEmptyDirectories
+    options.synchronizationOptions = SpdrSynchronize::RemoveEmptyDirectories
             | SpdrSynchronize::RemoveMissingFiles;
 }
 

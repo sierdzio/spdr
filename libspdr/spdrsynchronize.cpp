@@ -32,7 +32,7 @@ SpdrSynchronize::SpdrSynchronize(QObject *parent) : SpdrBase(parent), d_ptr(new 
     Q_D(SpdrSynchronize);
 
     d->mSplit = 0;
-    d->mOptions = SpdrSynchronize::RemoveEmptyDirectories | RemoveMissingFiles | Cache;
+    d->mOptions = SpdrSynchronize::RemoveEmptyDirectories | RemoveMissingFiles;
 }
 
 /*!
@@ -200,14 +200,6 @@ QString SpdrSynchronize::synchronizationOptionsToString(SynchronizationOptions o
     if (optionSet == None) {
         result += "None";
         return result;
-    }
-
-    if (optionSet & Bidirectional) {
-        result += "Bidirectional | ";
-    }
-
-    if (optionSet & Cache) {
-        result += "Cache | ";
     }
 
     if (optionSet & RemoveEmptyDirectories) {
@@ -502,6 +494,7 @@ SpdrFileData SpdrSynchronizePrivate::getFileData(const QString &filePath) const
     fileData.isValid = true;
     fileData.name = fileInfo.fileName();
     fileData.path = getRelativeFilePath(fileInfo.absoluteFilePath());
+    fileData.absoluteFilePath = fileInfo.absoluteFilePath();
     fileData.creationDate = fileInfo.created();
     fileData.size = fileInfo.size();
 
@@ -529,20 +522,22 @@ SpdrFileData SpdrSynchronizePrivate::getFileData(const QString &filePath) const
 
     fileMd5.close();
 
-    QFile fileSha(filePath);
-    if (fileSha.open(QFile::ReadOnly)) {
-        QCryptographicHash sha(QCryptographicHash::Sha1);
+    if (q->options() & SpdrSynchronize::DeepSearch) {
+        QFile fileSha(filePath);
+        if (fileSha.open(QFile::ReadOnly)) {
+            QCryptographicHash sha(QCryptographicHash::Sha1);
 
-        if (sha.addData(&fileSha)) {
-            fileData.checksumMd5 = sha.result();
+            if (sha.addData(&fileSha)) {
+                fileData.checksumMd5 = sha.result();
+            } else {
+                q->log(fileHashingError.arg("SHA").arg(fileData.path), Spdr::Error);
+            }
         } else {
-            q->log(fileHashingError.arg("SHA").arg(fileData.path), Spdr::Error);
+            q->log(fileReadError, Spdr::Critical);
         }
-    } else {
-        q->log(fileReadError, Spdr::Critical);
-    }
 
-    fileSha.close();
+        fileSha.close();
+    }
 
     return fileData;
 }

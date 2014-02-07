@@ -38,15 +38,14 @@ void TstSpdrSynchronize::testDefaults()
 {
     SpdrSynchronize testObject;
     QCOMPARE(testObject.options(), SpdrSynchronize::RemoveEmptyDirectories
-             | SpdrSynchronize::RemoveMissingFiles | SpdrSynchronize::Cache);
+             | SpdrSynchronize::RemoveMissingFiles);
     QCOMPARE(testObject.split(), 0);
 }
 
 void TstSpdrSynchronize::testSetters()
 {
     SpdrSynchronize testObject;
-    SpdrSynchronize::SynchronizationOptions options = SpdrSynchronize::Cache
-            | SpdrSynchronize::DeepSearch;
+    SpdrSynchronize::SynchronizationOptions options = SpdrSynchronize::DeepSearch;
 
     testObject.setOptions(options);
     QCOMPARE(testObject.options(), options);
@@ -68,7 +67,7 @@ void TstSpdrSynchronize::testSignals()
     QSignalSpy spyOptions(&testObject, SIGNAL(optionsChanged(SpdrSynchronize::SynchronizationOptions)));
     QSignalSpy spySplit(&testObject, SIGNAL(splitChanged(int)));
 
-    testObject.setOptions(SpdrSynchronize::Bidirectional);
+    testObject.setOptions(SpdrSynchronize::DeepSearch);
     QCOMPARE(spyOptions.count(), 1);
 
     testObject.setSplit(5);
@@ -121,8 +120,7 @@ void TstSpdrSynchronize::testAdvancedSynchronization()
     testObject.setLogFile(logFilePath);
     testObject.setLogLevel(Spdr::Debug);
     testObject.setOptions(SpdrSynchronize::RemoveMissingFiles
-                          | SpdrSynchronize::RemoveEmptyDirectories
-                          | SpdrSynchronize::Cache);
+                          | SpdrSynchronize::RemoveEmptyDirectories);
     testObject.setSimulate(false);
     testObject.setInputPath(testInputPath);
     testObject.setOutputPath(testOutputPath);

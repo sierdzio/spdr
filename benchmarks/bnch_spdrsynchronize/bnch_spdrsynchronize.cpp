@@ -40,8 +40,7 @@ void BnchSpdrSynchronize::simpleSynchronizationBenchmark()
     SpdrSynchronize testObject;
     testObject.setLogLevel(Spdr::Error);
     testObject.setOptions(SpdrSynchronize::RemoveMissingFiles
-                          | SpdrSynchronize::RemoveEmptyDirectories
-                          | SpdrSynchronize::Cache);
+                          | SpdrSynchronize::RemoveEmptyDirectories);
     testObject.setInputPath(testInputPath);
     testObject.setOutputPath(testOutputPath);
 

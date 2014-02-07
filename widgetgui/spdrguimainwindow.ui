@@ -55,23 +55,6 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout">
            <item>
-            <widget class="QCheckBox" name="checkBoxBidirectional">
-             <property name="text">
-              <string>Bidirectional</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="checkBoxCache">
-             <property name="text">
-              <string>Use cache</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
             <widget class="QCheckBox" name="checkBoxRemoveEmptyDirectiories">
              <property name="text">
               <string>Remove empty directories</string>
@@ -252,7 +235,7 @@
      <x>0</x>
      <y>0</y>
      <width>621</width>
-     <height>20</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

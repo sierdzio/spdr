@@ -22,17 +22,11 @@ public:
      */
     enum SynchronizationOption {
         None                   = 0x0000, //!< No additional options will be used
-        Bidirectional          = 0x0001, /*!< Sync will be performed in both ways
-                                           (input and output swap after
-                                           first synchronization) */
-        Cache                  = 0x0002, /*!< Spdr will cache output folder structure,
-                                           thus improving performance (at the cost
-                                           of using more memory) */
-        RemoveEmptyDirectories = 0x0004, /*!< If syncing makes a directory empty,
+        RemoveEmptyDirectories = 0x0001, /*!< If syncing makes a directory empty,
                                            it will be removed */
-        RemoveMissingFiles     = 0x0008, /*!< If some files are missing in input,
+        RemoveMissingFiles     = 0x0002, /*!< If some files are missing in input,
                                            they will also be removed from output */
-        DeepSearch             = 0x0010 /*!< Spdr will search for existing files
+        DeepSearch             = 0x0004 /*!< Spdr will search for existing files
                                            using all available methods: file name,
                                            file position, file's data hash, file diff */
     };

@@ -44,14 +44,6 @@ void SpdrGuiMainWindow::on_pushButtonSynchronize_clicked()
 
     SpdrSynchronize::SynchronizationOptions options;
 
-    if (ui->checkBoxBidirectional->isChecked()) {
-        options |= SpdrSynchronize::Bidirectional;
-    }
-
-    if (ui->checkBoxCache->isChecked()) {
-        options |= SpdrSynchronize::Cache;
-    }
-
     if (ui->checkBoxDeepSearch->isChecked()) {
         options |= SpdrSynchronize::DeepSearch;
     }
