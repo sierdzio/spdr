@@ -88,13 +88,23 @@ void SpdrBase::setInputPath(const QString &newInputPath)
 {
     Q_D(SpdrBase);
 
-    // TODO: add path validation!
-
-    if (newInputPath != d->mInputPath) {
-        d->mInputPath = newInputPath;
-        log(tr("Input path changed to: %1").arg(newInputPath), Spdr::Debug);
-        emit inputPathChanged(newInputPath);
+    if (newInputPath == d->mInputPath) {
+        return;
     }
+
+    QDir newDir(newInputPath);
+    if (!newDir.exists()) {
+        log(tr("Input directory path does not exist"), Spdr::Critical);
+        return;
+    }
+
+    if (newDir.isRoot()) {
+        log(tr("WARNING: Input path set to root directory: this can be dangerous"), Spdr::MildLogging);
+    }
+
+    d->mInputPath = newInputPath;
+    log(tr("Input path changed to: %1").arg(newInputPath), Spdr::Debug);
+    emit inputPathChanged(newInputPath);
 }
 
 /*!
@@ -113,23 +123,33 @@ QString SpdrBase::outputPath() const
 
   \sa SpdrImport::setOutputPath
  */
-bool SpdrBase::setOutputPath(const QString &newOutputPath)
+bool SpdrBase::setOutputPath(const QString &newOutputPath, bool checkIfExists)
 {
     Q_D(SpdrBase);
 
-    // TODO: add path validation!
-
-    if (newOutputPath != d->mOutputPath) {
-        d->mOutputPath = newOutputPath;
-
-        if (d->mOutputPath.endsWith(QChar('/')) || d->mOutputPath.endsWith(QChar('\\'))) {
-            d->mOutputPath.chop(1);
-        }
-
-        log(tr("Output path changed to: %1").arg(d->mOutputPath), Spdr::Debug);
-
-        emit outputPathChanged(d->mOutputPath);
+    if (newOutputPath == d->mOutputPath) {
+        return true;
     }
+
+    QDir newDir(newOutputPath);
+    if (checkIfExists && !newDir.exists()) {
+        log(tr("Output directory path does not exist"), Spdr::Critical);
+        return false;
+    }
+
+    if (newDir.isRoot()) {
+        log(tr("WARNING: Output path set to root directory: this can be dangerous"), Spdr::MildLogging);
+    }
+
+    d->mOutputPath = newOutputPath;
+
+    if (d->mOutputPath.endsWith(QChar('/')) || d->mOutputPath.endsWith(QChar('\\'))) {
+        d->mOutputPath.chop(1);
+    }
+
+    log(tr("Output path changed to: %1").arg(d->mOutputPath), Spdr::Debug);
+
+    emit outputPathChanged(d->mOutputPath);
 
     return true;
 }

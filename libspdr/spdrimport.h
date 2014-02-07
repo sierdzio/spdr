@@ -23,7 +23,7 @@ public:
 
     SpdrImport(QObject *parent = 0);
 
-    Q_INVOKABLE bool setOutputPath(const QString &newOutputPath);
+    Q_INVOKABLE bool setOutputPath(const QString &newOutputPath, bool checkIfExists = true);
 
     Q_INVOKABLE CopyMode copyMode() const;
     Q_INVOKABLE void setCopyMode(CopyMode newCopyMode);

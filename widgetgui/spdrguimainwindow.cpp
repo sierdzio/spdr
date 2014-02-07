@@ -5,10 +5,13 @@
 #include "SpdrImport"
 #include "SpdrSynchronize"
 
+#include <QApplication>
+
 SpdrGuiMainWindow::SpdrGuiMainWindow(QWidget *parent) : QMainWindow(parent),
     ui(new Ui::SpdrGuiMainWindow)
 {
     ui->setupUi(this);
+    setWindowTitle(qApp->applicationName());
 
     importForm = new SpdrGuiBasicInputForm(this);
     synchronizeForm = new SpdrGuiBasicInputForm(this);

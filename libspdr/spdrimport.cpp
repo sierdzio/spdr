@@ -53,13 +53,14 @@ SpdrImport::SpdrImport(QObject *parent) : SpdrBase(parent), d_ptr(new SpdrImport
   to be put between "<" and ">" (otherwise they will be treated as part of the
   path). Spdr understands tags for date as well as for time.
  */
-bool SpdrImport::setOutputPath(const QString &newOutputPath)
+bool SpdrImport::setOutputPath(const QString &newOutputPath, bool checkIfExists)
 {
+    Q_UNUSED(checkIfExists);
     Q_D(SpdrImport);
 
     if (newOutputPath != outputPath()) {
         if (d->checkFormat(newOutputPath)) {
-            SpdrBase::setOutputPath(newOutputPath);
+            SpdrBase::setOutputPath(newOutputPath, false);
             return true;
         } else if (!outputPath().isEmpty()) {
             SpdrBase::setOutputPath(QString::null);
