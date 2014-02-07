@@ -22,13 +22,17 @@ private:
 void BnchSpdrSynchronize::simpleSynchronizationBenchmark_data()
 {
     QTest::addColumn<bool>("simulate");
-    QTest::newRow("Simulation enabled") << true;
-    QTest::newRow("Simulation disabled") << false;
+    QTest::addColumn<bool>("deep");
+    QTest::newRow("Simulate shallow") << true << false;
+    QTest::newRow("Simulate deep") << true << true;
+    QTest::newRow("Normal shallow") << false << false;
+    QTest::newRow("Normal deep") << false << true;
 }
 
 void BnchSpdrSynchronize::simpleSynchronizationBenchmark()
 {
     QFETCH(bool, simulate);
+    QFETCH(bool, deep);
     QString testDataPath("testData");
     QDir(testDataPath).removeRecursively();
 
@@ -39,8 +43,14 @@ void BnchSpdrSynchronize::simpleSynchronizationBenchmark()
 
     SpdrSynchronize testObject;
     testObject.setLogLevel(Spdr::Error);
-    testObject.setOptions(SpdrSynchronize::RemoveMissingFiles
-                          | SpdrSynchronize::RemoveEmptyDirectories);
+    if (deep) {
+        testObject.setOptions(SpdrSynchronize::RemoveMissingFiles
+                              | SpdrSynchronize::RemoveEmptyDirectories
+                              | SpdrSynchronize::DeepSearch);
+    } else {
+        testObject.setOptions(SpdrSynchronize::RemoveMissingFiles
+                              | SpdrSynchronize::RemoveEmptyDirectories);
+    }
     testObject.setInputPath(testInputPath);
     testObject.setOutputPath(testOutputPath);
 
