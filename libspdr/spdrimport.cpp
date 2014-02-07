@@ -10,6 +10,7 @@
 
 /*!
   \class SpdrImport
+  \ingroup libspdr
 
   This class can be used to intelligently import a directory, dividing all files
   into neatly organised set of directories.
@@ -25,8 +26,10 @@
 
   Determines what operation should Spdr perform on files it is operating on
 
-    \var SpdrImport::CopyMode SpdrImport::Copy Files will be copied (no changes in input paths)
-    \var SpdrImport::CopyMode SpdrImport::Move Files will be moved (file may be deleted from input path, if the move operation is succesful)
+    \var SpdrImport::CopyMode SpdrImport::Copy
+         Files will be copied (no changes in input paths)
+    \var SpdrImport::CopyMode SpdrImport::Move
+         Files will be moved (file may be deleted from input path, if the move operation is succesful)
   */
 
 /*!

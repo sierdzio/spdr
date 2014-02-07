@@ -7,6 +7,7 @@
 
 /*!
   \class SpdrBase
+  \ingroup libspdr
 
   Base class for concrete file operation methods implementations available in Spdr.
 

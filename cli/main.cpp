@@ -4,6 +4,21 @@
 #include "spdrcliparser.h"
 #include "spdrclirunner.h"
 
+/*!
+  \addtogroup cli Spdr Command Line Tool
+
+  \brief spdr-cli is a handy tool offering the whole functionality of Spdr from
+  the command line.
+
+  Run spdr-cli --help to get more info on how to use it.
+  */
+
+/*!
+  \ingroup cli
+
+  The main routine: reads from command line and runs the operations that the user
+  has requested.
+  */
 int main(int argc, char *argv[])
 {
     QCoreApplication app(argc, argv);

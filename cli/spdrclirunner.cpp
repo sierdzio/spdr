@@ -5,6 +5,15 @@
 
 #include <QCoreApplication>
 
+/*!
+  \class SpdrCliRunner
+  \ingroup cli
+
+  Class used to run operations as requested by the user on the command line.
+
+  It can be safely used in a thread.
+ */
+
 SpdrCliRunner::SpdrCliRunner(QObject *parent) : QObject(parent)
 {
 }

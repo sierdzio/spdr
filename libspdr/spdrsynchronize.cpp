@@ -10,6 +10,7 @@
 
 /*!
   \class SpdrSynchronize
+  \ingroup libspdr
 
   This class can be used to synchronize 2 directories.
 
@@ -29,10 +30,14 @@
 
   Contains additional flags that can be passed to synchronization algorithm.
 
-    \var SpdrSynchronize::SynchronizationOption SpdrSynchronize::None No additional options will be used
-    \var SpdrSynchronize::SynchronizationOption SpdrSynchronize::RemoveEmptyDirectories If syncing makes a directory empty, it will be removed
-    \var SpdrSynchronize::SynchronizationOption SpdrSynchronize::RemoveMissingFiles If some files are missing in input, they will also be removed from output
-    \var SpdrSynchronize::SynchronizationOption SpdrSynchronize::DeepSearch Spdr will search for existing files using all available methods. Crucially, it will calculate SHA1 and MD5 checksums for all files: to avoid hash clashes. The DeepSearch will take more (a lot more) time, but in most situations the result will be exactly the same as running Spdr without it.
+    \var SpdrSynchronize::SynchronizationOption SpdrSynchronize::None
+         No additional options will be used
+    \var SpdrSynchronize::SynchronizationOption SpdrSynchronize::RemoveEmptyDirectories
+         If syncing makes a directory empty, it will be removed
+    \var SpdrSynchronize::SynchronizationOption SpdrSynchronize::RemoveMissingFiles
+         If some files are missing in input, they will also be removed from output
+    \var SpdrSynchronize::SynchronizationOption SpdrSynchronize::DeepSearch
+         Spdr will search for existing files using all available methods. Crucially, it will calculate SHA1 and MD5 checksums for all files: to avoid hash clashes. The DeepSearch will take more (a lot more) time, but in most situations the result will be exactly the same as running Spdr without it.
      */
 
 /*!
@@ -270,7 +275,7 @@ bool SpdrSynchronizePrivate::readDirectoryFileData(const QString &directoryPath,
 }
 
 /*!
-  Reads data from a single file given in \afilePath. Returns true if successful.
+  Reads data from a single file given in \a filePath. Returns true if successful.
   Data can be read later from \a fileHashTable.
   */
 bool SpdrSynchronizePrivate::readFileData(const QString &filePath,
@@ -291,7 +296,7 @@ bool SpdrSynchronizePrivate::readFileData(const QString &filePath,
   Performs synchronization on a single directory given in \a directoryPath (from
   input!), then recursively for all subdirectories. Returns true if everything
   went fine. Uses \a fileHashTable to read the information about output directory
-  files.
+  files. Returns true if successful.
   */
 bool SpdrSynchronizePrivate::synchronizeDirectory(const QString &directoryPath,
                                                   QHash<QByteArray, SpdrFileData> *fileHashTable) const
@@ -439,7 +444,8 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
 }
 
 /*!
-  Recursively removes all emppty directories found in \a directoryPath.
+  Recursively removes all emppty directories found in \a rootDirectoryPath. Returns true
+  if successful.
   */
 bool SpdrSynchronizePrivate::removeEmptyDirectories(const QString &rootDirectoryPath) const
 {
@@ -468,7 +474,7 @@ bool SpdrSynchronizePrivate::removeEmptyDirectories(const QString &rootDirectory
 }
 
 /*!
-  Removes a single specified directory
+  Removes a single specified directory (\a directoryPath). Returns true if successful.
  */
 bool SpdrSynchronizePrivate::removeEmptyDirectory(const QString &directoryPath) const
 {

@@ -5,6 +5,15 @@
 #include <QCommandLineParser>
 #include <QCommandLineOption>
 
+/*!
+  \class SpdrCliParser
+  \ingroup cli
+
+  Parses the command line options for Spdr Command line tool.
+
+  All information is put into public members of this class (for convenience).
+ */
+
 SpdrCliParser::SpdrCliParser(QObject *parent) : QObject(parent)
 {
     options.isImport = false;

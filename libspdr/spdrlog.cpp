@@ -4,6 +4,7 @@
 
 /*!
   \class SpdrLog
+  \ingroup libspdr
 
   Simple class used for log messages throughout Spdr.
   */

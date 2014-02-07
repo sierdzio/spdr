@@ -3,6 +3,14 @@
 
 #include <QFileDialog>
 
+/*!
+  \class SpdrGuiBasicInputForm
+  \ingroup wigetgui
+
+  Class used to display options that are common to both import and sychronize
+  functionalities.
+ */
+
 SpdrGuiBasicInputForm::SpdrGuiBasicInputForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SpdrGuiBasicInputForm)

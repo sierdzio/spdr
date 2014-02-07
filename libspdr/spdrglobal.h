@@ -11,6 +11,15 @@
 #endif
 
 /*!
+  \addtogroup libspdr Spdr Library
+
+  \brief The Spdr library forms the core of this project, it is used by both Spdr Command
+  Line Tool and the GUI.
+  */
+
+/*!
+  \ingroup libspdr
+
   Defines various enums and static functions that are needed in all other code
   using Spdr.
  */

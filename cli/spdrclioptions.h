@@ -7,6 +7,12 @@
 
 #include <QString>
 
+/*!
+  \ingroup cli
+
+  A container class: holds all the flags and switches that the user has set on
+  the command line.
+  */
 class SpdrCliOptions
 {
 public:

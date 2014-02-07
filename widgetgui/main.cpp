@@ -2,7 +2,16 @@
 
 #include "spdrguimainwindow.h"
 
-/*
+/*!
+  \addtogroup wigetgui Spdr Widget GUI
+
+  \brief widgetgui is a GUI application offering full functionality of the Spdr
+  library.
+  */
+
+/*!
+  \ingroup widgetgui
+
   Application's main function. Runs spdr dialog, optionally fires
   the translator.
   */

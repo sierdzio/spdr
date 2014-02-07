@@ -6,11 +6,6 @@
 
 #include "spdrclioptions.h"
 
-/*!
-  Parses the command line options for Spdr Command line tool.
-
-  All information is put into public members of this class (for convenience).
- */
 class SpdrCliParser : public QObject
 {
     Q_OBJECT
