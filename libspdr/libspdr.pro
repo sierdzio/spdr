@@ -8,7 +8,7 @@ include(../definitions.pri)
 
 DEFINES += LIBSPDR
 
-VERSION = 0.0.1
+VERSION = 0.1.0
 
 static {
   message("Library built in static mode")

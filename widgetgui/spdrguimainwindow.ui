@@ -79,6 +79,9 @@
              <property name="text">
               <string>Perform deep search</string>
              </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
           </layout>

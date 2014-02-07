@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     app.setApplicationName("Spdr Widget GUI");
-    app.setApplicationVersion("0.0.1");
+    app.setApplicationVersion("0.1.0");
 
     SpdrGuiMainWindow mainWindow;
     mainWindow.show();
