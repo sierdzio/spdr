@@ -6,6 +6,7 @@
 #include "SpdrSynchronize"
 
 #include <QApplication>
+#include <QMessageBox>
 
 /*!
   \class SpdrGuiMainWindow
@@ -71,7 +72,10 @@ void SpdrGuiMainWindow::on_pushButtonSynchronize_clicked()
 
     connect(&synchronizeThread, &QThread::finished, synchronizer, &SpdrSynchronize::deleteLater);
     connect(&synchronizeThread, &QThread::started, synchronizer, &SpdrSynchronize::synchronize);
-    connect(synchronizer, &SpdrSynchronize::finished, this, &SpdrGuiMainWindow::synchronizationFinished, Qt::QueuedConnection);
+    connect(synchronizer, &SpdrSynchronize::finished, this,
+            &SpdrGuiMainWindow::synchronizationFinished, Qt::QueuedConnection);
+    connect(synchronizer, &SpdrSynchronize::logMessage, this,
+            &SpdrGuiMainWindow::messageLogSynchronize, Qt::QueuedConnection);
 
     synchronizeThread.start();
 }
@@ -95,7 +99,10 @@ void SpdrGuiMainWindow::on_pushButtonImport_clicked()
 
     connect(&importThread, &QThread::finished, importer, &SpdrImport::deleteLater);
     connect(&importThread, &QThread::started, importer, &SpdrImport::import);
-    connect(importer, &SpdrImport::finished, this, &SpdrGuiMainWindow::importFinished, Qt::QueuedConnection);
+    connect(importer, &SpdrImport::finished,
+            this, &SpdrGuiMainWindow::importFinished, Qt::QueuedConnection);
+    connect(importer, &SpdrImport::logMessage,
+            this, &SpdrGuiMainWindow::messageLogImport, Qt::QueuedConnection);
 
     importThread.start();
 }
@@ -126,4 +133,28 @@ void SpdrGuiMainWindow::importFinished(bool result)
     importThread.wait();
 
     ui->pushButtonImport->setEnabled(true);
+}
+
+void SpdrGuiMainWindow::messageLogImport(const QString &message, Spdr::LogLevel logLevel)
+{
+    Q_UNUSED(logLevel);
+    ui->labelImportResult->setText(message);
+}
+
+void SpdrGuiMainWindow::messageLogSynchronize(const QString &message, Spdr::LogLevel logLevel)
+{
+    Q_UNUSED(logLevel);
+    ui->labelSynchronizeResult->setText(message);
+}
+
+void SpdrGuiMainWindow::on_actionAboutSpdr_triggered()
+{
+    QString aboutText(tr("Spdr is a file hierarchy management toolkit"));
+
+    QMessageBox::about(this, tr("About Spdr"), aboutText);
+}
+
+void SpdrGuiMainWindow::on_actionAboutQt_triggered()
+{
+    QMessageBox::aboutQt(this, tr("About Qt framework being used in Spdr"));
 }

@@ -238,11 +238,29 @@
      <x>0</x>
      <y>0</y>
      <width>621</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>About</string>
+    </property>
+    <addaction name="actionAboutSpdr"/>
+    <addaction name="actionAboutQt"/>
+   </widget>
+   <addaction name="menuAbout"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionAboutSpdr">
+   <property name="text">
+    <string>About Spdr</string>
+   </property>
+  </action>
+  <action name="actionAboutQt">
+   <property name="text">
+    <string>About Qt</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

@@ -2,6 +2,7 @@
 #define SPDRGUIMAINWINDOW_H
 
 #include "spdrguibasicinputform.h"
+#include "spdrglobal.h"
 
 #include <QThread>
 #include <QMainWindow>
@@ -21,9 +22,13 @@ public:
 private slots:
     void on_pushButtonSynchronize_clicked();
     void on_pushButtonImport_clicked();
+    void on_actionAboutSpdr_triggered();
+    void on_actionAboutQt_triggered();
 
     void synchronizationFinished(bool result);
     void importFinished(bool result);
+    void messageLogImport(const QString &message, Spdr::LogLevel logLevel);
+    void messageLogSynchronize(const QString &message, Spdr::LogLevel logLevel);
 
 private:
     Ui::SpdrGuiMainWindow *ui;
