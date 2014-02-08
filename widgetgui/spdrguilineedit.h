@@ -11,6 +11,7 @@ class SpdrGuiLineEdit : public QLineEdit
     Q_OBJECT
 public:
     explicit SpdrGuiLineEdit(QWidget *parent = 0);
+    bool canBeFile;
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

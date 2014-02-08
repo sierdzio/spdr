@@ -43,13 +43,13 @@ void SpdrGuiMainWindow::on_pushButtonSynchronize_clicked()
     ui->pushButtonSynchronize->setEnabled(false);
 
     SpdrSynchronize *synchronizer = new SpdrSynchronize;
-    synchronizer->setInputPath(synchronizeForm->ui->lineEditInput->text());
-    synchronizer->setOutputPath(synchronizeForm->ui->lineEditOutput->text());
+    synchronizer->setInputPath(synchronizeForm->lineEditInput->text());
+    synchronizer->setOutputPath(synchronizeForm->lineEditOutput->text());
     synchronizer->setLogLevel((Spdr::LogLevel) synchronizeForm->ui->comboBoxSynchronizeLogLevel->currentIndex());
     synchronizer->setSimulate(synchronizeForm->ui->checkBoxSimulate->isChecked());
 
     if (synchronizeForm->ui->checkBoxLog->isChecked()) {
-        synchronizer->setLogFile(synchronizeForm->ui->lineEditLog->text());
+        synchronizer->setLogFile(synchronizeForm->lineEditLog->text());
     }
 
     SpdrSynchronize::SynchronizationOptions options;
@@ -81,14 +81,14 @@ void SpdrGuiMainWindow::on_pushButtonImport_clicked()
     ui->pushButtonImport->setEnabled(false);
 
     SpdrImport *importer = new SpdrImport;
-    importer->setInputPath(importForm->ui->lineEditInput->text());
-    importer->setOutputPath(importForm->ui->lineEditOutput->text());
+    importer->setInputPath(importForm->lineEditInput->text());
+    importer->setOutputPath(importForm->lineEditOutput->text());
     importer->setLogLevel((Spdr::LogLevel) importForm->ui->comboBoxSynchronizeLogLevel->currentIndex());
     importer->setSimulate(importForm->ui->checkBoxSimulate->isChecked());
     importer->setCopyMode((SpdrImport::CopyMode) ui->comboBoxCopyMode->currentIndex());
 
     if (importForm->ui->checkBoxLog->isChecked()) {
-        importer->setLogFile(importForm->ui->lineEditLog->text());
+        importer->setLogFile(importForm->lineEditLog->text());
     }
 
     importer->moveToThread(&importThread);

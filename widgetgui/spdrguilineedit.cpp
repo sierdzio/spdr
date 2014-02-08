@@ -4,10 +4,14 @@
 #include <QDragEnterEvent>
 #include <QDropEvent>
 #include <QDir>
+#include <QFileInfo>
+#include <QUrl>
 
 SpdrGuiLineEdit::SpdrGuiLineEdit(QWidget *parent) : QLineEdit(parent)
 {
     setAcceptDrops(true);
+    setPlaceholderText(tr("/some/example/path (you can drag & drop here)"));
+    canBeFile = false;
 }
 
 void SpdrGuiLineEdit::dragEnterEvent(QDragEnterEvent *event)
@@ -19,12 +23,11 @@ void SpdrGuiLineEdit::dragEnterEvent(QDragEnterEvent *event)
 
 void SpdrGuiLineEdit::dropEvent(QDropEvent *event)
 {
-    QString dropPath(event->mimeData()->text());
-    QDir dropDir(dropPath);
+    QString dropPath(QUrl::fromUserInput(event->mimeData()->text()).toDisplayString(QUrl::PreferLocalFile));
+    QFileInfo dropDir(dropPath);
 
-    if (dropDir.exists()) {
+    if ((canBeFile && dropDir.isFile()) || (dropDir.exists() && dropDir.isDir())) {
         setText(dropDir.absoluteFilePath());
         event->acceptProposedAction();
     }
-
 }
