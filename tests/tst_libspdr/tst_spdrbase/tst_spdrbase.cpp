@@ -33,6 +33,7 @@ private slots:
     void testDefaults();
     void testSetters();
     void testSignals();
+    void testLogging();
 };
 
 void TstSpdrBase::testDefaults()
@@ -96,6 +97,11 @@ void TstSpdrBase::testSignals()
     QCOMPARE(spyInputPath.count(), 1);
     QCOMPARE(spyOutputPath.count(), 1);
     QCOMPARE(spyUpdateMode.count(), 1);
+}
+
+void TstSpdrBase::testLogging()
+{
+    // TODO: perform test
 }
 
 QTEST_MAIN(TstSpdrBase)

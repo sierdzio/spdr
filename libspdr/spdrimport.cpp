@@ -122,7 +122,7 @@ bool SpdrImport::import() const
     bool result = true;
 
     if (inputPath().isEmpty() || outputPath().isEmpty()) {
-        finished(false);
+        emit finished(false);
         return false;
     }
 
@@ -398,8 +398,6 @@ bool SpdrImportPrivate::checkFormat(const QString &format) const
             break;
         }
     }
-
-    // TODO: check validity of the whole path
 
     return result;
 }

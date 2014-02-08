@@ -64,6 +64,12 @@ void TstSpdrImport::testSetters()
     testObject.setOutputPath(pathTester);
     QCOMPARE(testObject.outputPath(), QString(pathTester));
 
+    // SpdrImport accepts invalid paths because it will try to create
+    // the whole output path while importing.
+    QString newPathTester("/some/path");
+    testObject.setOutputPath(newPathTester);
+    QCOMPARE(testObject.outputPath(), QString(newPathTester));
+
     testObject.setCopyMode(SpdrImport::Move);
     QCOMPARE(testObject.copyMode(), SpdrImport::Move);
 
@@ -140,7 +146,7 @@ void TstSpdrImport::testBasicImporting()
     QString testInputPath(testDataPath + QLatin1String("/testInput"));
     QString testOutputPath(testDataPath + QLatin1String("/testOutput"));
     QDir().mkpath(testInputPath);
-    QDir().mkpath(testOutputPath);
+    //QDir().mkpath(testOutputPath);
 
     int numberOfFiles = createTestFiles(testInputPath, true);
 
