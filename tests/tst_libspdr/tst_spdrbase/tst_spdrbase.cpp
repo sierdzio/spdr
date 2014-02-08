@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QTest>
 #include <QSignalSpy>
+#include <QCoreApplication>
 
 /*!
   \addtogroup tests Spdr library tests
@@ -48,8 +49,18 @@ void TstSpdrBase::testDefaults()
 void TstSpdrBase::testSetters()
 {
     SpdrBase testObject;
+    testObject.setLogLevel(Spdr::NoLogging);
 
+    // Unless somebody creates /some/path, this setting of input should fail!
     QString pathTester("/some/path");
+    testObject.setInputPath(pathTester);
+    QCOMPARE(testObject.inputPath(), QString(""));
+
+    testObject.setOutputPath(pathTester);
+    QCOMPARE(testObject.outputPath(), QString(""));
+
+    // This should be always successful
+    pathTester = QCoreApplication::instance()->applicationDirPath();
     testObject.setInputPath(pathTester);
     QCOMPARE(testObject.inputPath(), pathTester);
 
@@ -62,6 +73,7 @@ void TstSpdrBase::testSetters()
     testObject.setLogLevel(Spdr::LogEverything);
     QCOMPARE(testObject.logLevel(), Spdr::LogEverything);
 
+    // Path will not be found because the logger checks if it is valid!
     QString randomPath("some/random/path");
     testObject.setLogFile(randomPath);
     QCOMPARE(testObject.isUsingLogFile(), false);
@@ -76,7 +88,7 @@ void TstSpdrBase::testSignals()
     QSignalSpy spyOutputPath(&testObject, SIGNAL(outputPathChanged(QString)));
     QSignalSpy spyUpdateMode(&testObject, SIGNAL(updateModeChanged(Spdr::UpdateMode)));
 
-    QString pathTester("/some/path");
+    QString pathTester(QCoreApplication::instance()->applicationDirPath());
     testObject.setInputPath(pathTester);
     testObject.setOutputPath(pathTester);
     testObject.setUpdateMode(Spdr::Ignore);
