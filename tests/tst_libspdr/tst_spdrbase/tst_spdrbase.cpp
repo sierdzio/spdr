@@ -9,7 +9,7 @@
 #include <QCoreApplication>
 
 /*!
-  \addtogroup tests Spdr library tests
+  \addtogroup tests Spdr Tests
 
   \brief Spdr comes bundled with a set of tests for all of it's library public
   classes and functionality.

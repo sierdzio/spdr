@@ -46,7 +46,7 @@ public:
         Error = 2, //!< All errors will be printed
         MildLogging = 3, //!< Some important log information will be printed
         MediumLogging = 4, //!< Most interesting pieces of information will be printed
-        ExcessiveLogging = 5, //! Use this only when you need to be flooded with messages
+        ExcessiveLogging = 5, //!< Use this only when you need to be flooded with messages
         LogEverything = 6, //!< All log messages will be printed
         Debug = LogEverything //!< Synonym for LogEverything
     };

@@ -6,7 +6,7 @@
 #include <QTest>
 
 /*!
-  \addtogroup benchmarks Spdr library benchmarks
+  \addtogroup benchmarks Spdr Benchmarks
 
   \brief Spdr comes bundled with a set of benchmarks that (should) show the differences
   between using various import/ synchronization settings.
