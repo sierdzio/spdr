@@ -56,6 +56,14 @@ void TstSpdrImport::testSetters()
     testObject.setOutputPath("./");
     QCOMPARE(testObject.outputPath(), QString("."));
 
+    QString pathTester(QCoreApplication::instance()->applicationDirPath());
+    testObject.setOutputPath(pathTester);
+    QCOMPARE(testObject.outputPath(), QString(pathTester));
+
+    pathTester = pathTester + "/<yyyy>/<MM>";
+    testObject.setOutputPath(pathTester);
+    QCOMPARE(testObject.outputPath(), QString(pathTester));
+
     testObject.setCopyMode(SpdrImport::Move);
     QCOMPARE(testObject.copyMode(), SpdrImport::Move);
 
