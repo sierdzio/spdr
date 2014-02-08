@@ -27,6 +27,7 @@ SOURCES += \
 
 HEADERS += \
     Spdr \
+    SpdrLog \
     SpdrBase \
     SpdrImport \
     SpdrSynchronize \
@@ -37,4 +38,5 @@ HEADERS += \
     spdrsynchronize_p.h \
     spdrlog.h \
     spdrbase.h \
-    spdrbase_p.h
+    spdrbase_p.h \
+    spdrlog_p.h

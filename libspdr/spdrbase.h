@@ -2,13 +2,14 @@
 #define SPDRBASE_H
 
 #include "spdrglobal.h"
+#include "SpdrLog"
 
 #include <QString>
 #include <QObject>
 
 class SpdrBasePrivate;
 
-class SPDR_DLLSPEC SpdrBase : public QObject
+class SPDR_DLLSPEC SpdrBase : public SpdrLog
 {
     Q_OBJECT
     Q_PROPERTY(QString inputPath READ inputPath WRITE setInputPath NOTIFY inputPathChanged)
@@ -31,16 +32,6 @@ public:
 
     Q_INVOKABLE Spdr::UpdateMode updateMode() const;
     Q_INVOKABLE void setUpdateMode(Spdr::UpdateMode newUpdateMode);
-
-    Q_INVOKABLE Spdr::LogLevel logLevel() const;
-    Q_INVOKABLE void setLogLevel(Spdr::LogLevel newLevel);
-
-    Q_INVOKABLE bool isUsingLogFile() const;
-    Q_INVOKABLE void setLogFile(const QString &logFilePath);
-    Q_INVOKABLE QString logFile() const;
-
-public slots:
-    void log(const QString &message, Spdr::LogLevel logLevelToUse = Spdr::LogEverything) const;
 
 signals:
     void finished(bool result) const;

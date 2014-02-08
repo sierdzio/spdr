@@ -1,0 +1,6 @@
+#ifndef SPDRLOG_CLEAN_H
+#define SPDRLOG_CLEAN_H
+
+#include "spdrlog.h"
+
+#endif // SPDRLOG_CLEAN_H

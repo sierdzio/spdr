@@ -65,7 +65,7 @@
 /*!
   Constructs the SpdrBase object, sets default values.
  */
-SpdrBase::SpdrBase(QObject *parent) : QObject(parent), d_ptr(new SpdrBasePrivate(this))
+SpdrBase::SpdrBase(QObject *parent) : SpdrLog(parent), d_ptr(new SpdrBasePrivate(this))
 {
     Q_D(SpdrBase);
 
@@ -206,71 +206,9 @@ void SpdrBase::setUpdateMode(Spdr::UpdateMode newUpdateMode)
 }
 
 /*!
-  Returns the current Spdr::LogLevel.
- */
-Spdr::LogLevel SpdrBase::logLevel() const
-{
-    Q_D(const SpdrBase);
-    return d->mLog.logLevel();
-}
-
-/*!
-  Sets the Spdr::LogLevel to \a newLevel.
- */
-void SpdrBase::setLogLevel(Spdr::LogLevel newLevel)
-{
-    Q_D(SpdrBase);
-    log(tr("Log level changed to: %1").arg(Spdr::logLevelToString(newLevel)), Spdr::Debug);
-    d->mLog.setLogLevel(newLevel);
-}
-
-/*!
-  Returns true if Spdr is using the log file.
- */
-bool SpdrBase::isUsingLogFile() const
-{
-    Q_D(const SpdrBase);
-    return d->mLog.isUsingLogFile();
-}
-
-/*!
-  Sets the log file path to \a logFilePath. If \a logFilePath is empty, Spdr will
-  push all log messages to stdout.
- */
-void SpdrBase::setLogFile(const QString &logFilePath)
-{
-    Q_D(SpdrBase);
-    d->mLog.setLogFilePath(logFilePath);
-    log(tr("Now using log file: %1").arg(d->mLog.isUsingLogFile()? d->mLog.logFilePath() : "stdout"), Spdr::Debug);
-}
-
-/*!
-  Returns the path to the log file used by Spdr. An empty string means that stdout is
-  being used to display the log messages.
- */
-QString SpdrBase::logFile() const
-{
-    Q_D(const SpdrBase);
-    return d->mLog.logFilePath();
-}
-
-/*!
-  Prints the log \a message using \a logLevelToUse. Please note that if the log
-  level is set to a higher value than \a logLevelToUse, this method will not
-  print anything.
-
-  \sa setLogLevel, setLogFile
- */
-void SpdrBase::log(const QString &message, Spdr::LogLevel logLevelToUse) const
-{
-    Q_D(const SpdrBase);
-    d->mLog.log(message, logLevelToUse);
-}
-
-/*!
   PIMPL constructor. Please ignore.
  */
-SpdrBase::SpdrBase(SpdrBasePrivate &dd, QObject *parent) : QObject(parent), d_ptr(&dd)
+SpdrBase::SpdrBase(SpdrBasePrivate &dd, QObject *parent) : SpdrLog(parent), d_ptr(&dd)
 {
     Q_D(SpdrBase);
     Q_UNUSED(d);

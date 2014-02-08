@@ -1,4 +1,4 @@
-#include "spdrlog.h"
+#include "spdrlog_p.h"
 
 #include <QFile>
 
@@ -12,10 +12,12 @@
 /*!
   Sets default values.
   */
-SpdrLog::SpdrLog()
+SpdrLog::SpdrLog(QObject *parent) : QObject(parent), d_ptr(new SpdrLogPrivate(this))
 {
-    mLogLevel = Spdr::Error;
-    mIsLogFileSet = false;
+    Q_D(SpdrLog);
+
+    d->mLogLevel = Spdr::Error;
+    d->mIsLogFileSet = false;
 }
 
 /*!
@@ -24,7 +26,8 @@ SpdrLog::SpdrLog()
   */
 bool SpdrLog::isUsingLogFile() const
 {
-    return mIsLogFileSet;
+    Q_D(const SpdrLog);
+    return d->mIsLogFileSet;
 }
 
 /*!
@@ -34,7 +37,8 @@ bool SpdrLog::isUsingLogFile() const
   */
 Spdr::LogLevel SpdrLog::logLevel() const
 {
-    return mLogLevel;
+    Q_D(const SpdrLog);
+    return d->mLogLevel;
 }
 
 /*!
@@ -42,16 +46,18 @@ Spdr::LogLevel SpdrLog::logLevel() const
   */
 void SpdrLog::setLogLevel(Spdr::LogLevel newLevel)
 {
-    mLogLevel = newLevel;
+    Q_D(SpdrLog);
+    d->mLogLevel = newLevel;
 }
 
 /*!
   Returns the path to currently used log file. If the path is empty, log
   messages are printed on stdout.
   */
-QString SpdrLog::logFilePath() const
+QString SpdrLog::logFile() const
 {
-    return mLogFilePath;
+    Q_D(const SpdrLog);
+    return d->mLogFilePath;
 }
 
 /*!
@@ -60,16 +66,17 @@ QString SpdrLog::logFilePath() const
 
   \sa isUsingLogFile, logFilePath
   */
-void SpdrLog::setLogFilePath(const QString &filePath)
+void SpdrLog::setLogFile(const QString &filePath)
 {
-    mLogFilePath = filePath;
-    mIsLogFileSet = !mLogFilePath.isEmpty();
+    Q_D(SpdrLog);
+    d->mLogFilePath = filePath;
+    d->mIsLogFileSet = !d->mLogFilePath.isEmpty();
 
-    if (mIsLogFileSet) {
-        QFile file(mLogFilePath);
+    if (d->mIsLogFileSet) {
+        QFile file(d->mLogFilePath);
         if (!file.open(QFile::Text | QFile::WriteOnly)) {
-            QString logFile(mLogFilePath);
-            setLogFilePath(QString::null);
+            QString logFile(d->mLogFilePath);
+            setLogFile(QString::null);
             log(QString("Log file %1 could not be opened for writing! Reverting to stdout").arg(logFile));
         }
 
@@ -82,10 +89,14 @@ void SpdrLog::setLogFilePath(const QString &filePath)
   used to notify how important the \a message is. SpdrLog will only print messages
   that have a lower or equal log level to currently set logLevel.
 
+  WARNING! Do not connect SpdrLog::logMessage() signal to this slot!
+
   \sa setLogLevel, logLevel, Spdr::LogLevel
   */
 void SpdrLog::log(const QString &message, Spdr::LogLevel logLevelToUse) const
 {
+    Q_D(const SpdrLog);
+
     if (logLevel() == Spdr::NoLogging) {
         return;
     }
@@ -94,21 +105,38 @@ void SpdrLog::log(const QString &message, Spdr::LogLevel logLevelToUse) const
         return;
     }
 
-    if (mIsLogFileSet) {
-        QFile file(mLogFilePath);
+    if (d->mIsLogFileSet) {
+        QFile file(d->mLogFilePath);
         if (file.open(QFile::Text | QFile::WriteOnly | QFile::Append)) {
             file.write(message.toUtf8().append("\n"));
 
             if(logLevelToUse == Spdr::Critical || logLevelToUse == Spdr::Error) {
                 qDebug(message.toLocal8Bit().constData(), NULL);
+                emit error(message, (logLevelToUse == Spdr::Critical));
+            } else {
+                emit logMessage(message, logLevelToUse);
             }
+
+            file.close();
+            return;
         } else {
-            //QString logFile(mLogFilePath);
-            //setLogFilePath(QString::null);
-            //log(QString("Log file %1 could not be opened for writing! Reverting to stdout").arg(logFile));
-            qDebug("Log file could not be opened for writing!");
+            QString badPath("Log file could not be opened for writing!");
+            qDebug(badPath.toLocal8Bit().constData(), NULL);
+            emit error(badPath, false);
+            return;
         }
     } else {
         qDebug(message.toLocal8Bit().constData(), NULL);
+        emit logMessage(message, logLevelToUse);
+        return;
     }
+}
+
+/*!
+  PIMPL constructor. Please ignore.
+ */
+SpdrLog::SpdrLog(SpdrLogPrivate &dd, QObject *parent) : QObject(parent), d_ptr(&dd)
+{
+    Q_D(SpdrLog);
+    Q_UNUSED(d);
 }
