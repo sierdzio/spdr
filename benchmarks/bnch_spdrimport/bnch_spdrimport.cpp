@@ -5,6 +5,19 @@
 #include <QDebug>
 #include <QTest>
 
+/*!
+  \addtogroup benchmarks Spdr library benchmarks
+
+  \brief Spdr comes bundled with a set of benchmarks that (should) show the differences
+  between using various import/ synchronization settings.
+  */
+
+/*!
+  \ingroup benchmarks
+
+  Benchmark for SpdrImport. Currently it is more than basic - it does not test
+  anything much.
+ */
 class BnchSpdrImport : public QObject
 {
     Q_OBJECT

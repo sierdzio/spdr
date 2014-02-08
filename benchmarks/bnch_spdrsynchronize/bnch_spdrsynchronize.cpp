@@ -7,6 +7,15 @@
 #include <QFile>
 #include <QDir>
 
+/*!
+  \ingroup benchmarks
+
+  Benchmark for SpdrSynchronize: it tests the time differences when synchronizing
+  medium various amounts of files (currently: 150) with different settings.
+
+  Particularly interesting are the differences between using Deep Search and
+  normal search, and between running a simulation and a real synchronization.
+ */
 class BnchSpdrSynchronize : public QObject
 {
     Q_OBJECT

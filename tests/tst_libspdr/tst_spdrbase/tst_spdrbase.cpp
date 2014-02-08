@@ -7,6 +7,23 @@
 #include <QTest>
 #include <QSignalSpy>
 
+/*!
+  \addtogroup tests Spdr library tests
+
+  \brief Spdr comes bundled with a set of tests for all of it's library public
+  classes and functionality.
+
+  The test suite is being kept fairly up to date with the rest of the development
+  efforts and when it runs successfuly it should mean that Spdr is fully
+  operational.
+  */
+
+/*!
+  \ingroup tests
+
+  Test for SpdrBase. It verifies the operation of all SpdrBase properties
+  and methods.
+ */
 class TstSpdrBase : public QObject
 {
     Q_OBJECT

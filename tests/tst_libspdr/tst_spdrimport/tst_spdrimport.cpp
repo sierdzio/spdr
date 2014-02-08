@@ -11,6 +11,12 @@
 #include <QDir>
 #include <QDate>
 
+/*!
+  \ingroup tests
+
+  Test for SpdrImport. It verifies the operation of all SpdrImport properties,
+  and makes sure that importing works correctly.
+ */
 class TstSpdrImport : public QObject
 {
     Q_OBJECT

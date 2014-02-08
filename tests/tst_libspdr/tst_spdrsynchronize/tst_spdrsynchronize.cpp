@@ -10,6 +10,15 @@
 #include <QDir>
 #include <QFile>
 
+/*!
+  \ingroup tests
+
+  Test for SpdrSynchronize. It verifies the operation of all SpdrSynchronize
+  properties and makes sure the synchronization works correctly.
+
+  It tests multiple synchronization scenarios, and thus can take a bit longer
+  than the rest.
+ */
 class TstSpdrSynchronize : public QObject
 {
     Q_OBJECT
