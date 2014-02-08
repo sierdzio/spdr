@@ -12,7 +12,8 @@ INCLUDEPATH += src
 SOURCES += \
     main.cpp \
     spdrguimainwindow.cpp \
-    spdrguibasicinputform.cpp
+    spdrguibasicinputform.cpp \
+    spdrguilineedit.cpp
 
 TRANSLATIONS += locale/spdr_pl.ts
 
@@ -22,7 +23,8 @@ FORMS += \
 
 HEADERS += \
     spdrguimainwindow.h \
-    spdrguibasicinputform.h
+    spdrguibasicinputform.h \
+    spdrguilineedit.h
 
 mac {
     QMAKE_POST_LINK = ln -f $${BUILDDIR}/../spdr/libspdr.0.dylib $${BUILDDIR}/$${TARGET}.app/Contents/MacOS/
