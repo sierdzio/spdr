@@ -1,0 +1,13 @@
+/*!
+  \page changelog Changelog
+
+  \ref index "Got to main page"
+
+  All changes to Spdr can be taken from git repository log. Since that log is
+  long, full of technical jargon and abbreviations, the project also maintains
+  a separate CHANGELOG file. It contains important, user-visible changes to
+  Spdr library and applications.
+
+  \include CHANGELOG.txt
+*/
+

@@ -1,0 +1,10 @@
+/*!
+  \page license License
+
+  \ref index "Got to main page"
+
+  Spdr is distributed under WTFPL license. Below is the whole text of the LICENSE
+  file.
+
+  \include LICENSE.txt
+*/
