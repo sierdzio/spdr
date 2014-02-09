@@ -5,7 +5,21 @@ CHANGELOG
 This is a CHANGELOG for spdr.
 Project’s GIT repo: https://github.com/sierdzio/spdar
 
-2014-01 and 2014-02:
+2014-02:
+ - the rewrite is completed
+ - both Import and Synchronize operations are supported, most functionality is
+   implemented
+ - all classes are unit-tested
+ - benchmarks are available
+ - various intensive developer tests were performed
+ - standalone library, command line tool and a GUI are all available
+ - code is documented, and doxygen docs are available (even online! See
+   http://www.sierdzio.com/spdr)
+ - what is not yet ready: Spdr::Ask functionality, EXIF and DIFF comparisons
+   (but even without them, the project works fine and picks up updated files
+   correctly)
+
+2014-01:
  - start a general rewrite of the codebase with use of PIMPL and friends
  - spdr is divided into a core library, a GUI, a CLI, and a set of tests
    and benchmarks

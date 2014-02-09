@@ -1,6 +1,11 @@
-/*! \mainpage
+/*!
+
+\mainpage
 
   Spdr library and tools: readme
+
+\brief This file contains a basic description of what Spdr is and how it can be
+used.
 
 \section links Other important documents
 
@@ -9,49 +14,48 @@
 
 \section readme Readme
 
-spdr
 Copyright (C) 2014  Tomasz Siekierda
-
-This is an on-line README for spdr.
 Project’s GIT repo: https://github.com/sierdzio/spdr
 
-WARNING: spdr is in the process of being rewritten with different functionality
-in mind!
+Spdr is be a tool for merging (intelligent syncing) of folders, for example when
+copying large collection of files between computers. It detects what changes
+have been made and tries to bring the output directory up to date.
 
-As of  12.01.2014, the plan is to completely rewrite sPDaR. Project will change
-it's name to spdr, license will from now on be WTFPL. Spdr will be a tool for
-merging (intelligent syncing) of folders, for example when copying large
-collection of files between computers. It will detect what changes have been
-made and try to bring the output directory up to date.
+Core functionality is located in a standalone library: libspdr. On top of that
+library, Spdr provides a Command Line application, as well as a GUI (using Qt
+Widgets.
 
-Core functionality will be moved into a library: libspdr. On top of that library,
-a Command Line application will be written, as well as a GUI (using Qt Widgets,
-and possibly also another one using Qt Quick 2).
+Spdr offers two major features:
+ - importing a directory
+ - synchronizing two directories
 
-Current sPDaR functionality will be renamed to "Import directory" and be just
-a small part of the whole project. The code will be analysed and reviewed, as
-currently it's rather old and rusty.
+Both operations share a host of common properties: input and output files need
+to be specified, there is an option of logging, etc.
 
-All new code will be (hopefully) unit tested. Also, benchmarks will be implemented
-to test how well spdr fares under certain conditions. The whole project must
-have a comprehensive logging capabilities, be easy to install (configure file),
-etc.
+Import operation works by copying all files from input directory to the output,
+and sorting them according to specified formatting options (based on date and
+time). See documentation for SpdrImport for more information.
 
-Support for Qt4 will be dropped, because the new spdr will use some of the new
-features present in Qt 5.2 (QCommandLine, QRegularExpression,
-QDir:removeRecursively() maybe qCDebug and friends). As an additional experiment,
-spdr might also include QBS and CMake build configuration.
+Synchronize operation is the core functionality of Spdr. The aim is to make sure
+that after synchronization, the output folder and file structure is exactly the
+same as in the input folder, and to do it will as little effor as possible. If
+you have ever tried to manually copy your movie or foto collection into an
+archive, you probably know how hard and error-prone that can be. Spdr will do it
+for you automatically and fast. The algorithm optimizes the whole operation by
+skipping updates for unchanged files and minimizing the file operations that
+need to be performed on the hard drive. See documentation for SpdrSynchronize
+for more information.
 
-Overview of the algorithm:
- - scan output, put it into local cache (comprising of data hash and file path)
- - for every file in input, see if MD5/ SHA can be matched. If not, try matching
-   by file path and file name. The last resort is to try and find the file by
-   content (that would be very CPU-consuming, though!)
+Directory renames are part of standard file copying logic, so you do not need to
+worry about that.
 
-Directory renames will be part of standard file copying logic. Logging should
-be extensive, support various output levels, and every message should be timed.
+Spdr comes with serious logging capabilities, it supports various output levels.
+Logs are sent to stdout by default, but you can choose to save them in a file
+(errors and critical errors will be sent to both stdout and the log file).
 
-The GUI will support Drag & Drop for getting input and output folders.
+The GUI supports Drag & Drop for getting input and output folders (and the
+log file, too). Just drag the folder from your file explorer and drop in onto
+input, output or log file paths control.
 
 \section cmdln Command Line Tool
 
@@ -92,15 +96,20 @@ Arguments:
 \section requirements System requirements
 any working PC/ Mac or other device that Qt runs on, Qt 5.2 installed (minimum).
 
+The Spdr library and CLI both depend only on QtCore module. Spdr GUI requires
+QtCore, QtGui and QtWidgets to work.
+
 \section authors Authors
 
 \include AUTHORS.txt
 
 \section todolist Project's TODO
- - a LOT :-)
+ - implement Spdr::Ask
+ - timestamp log messages
  - use EXIF comparison
  - use DIFF comparison
- - move SpdrFileData to a separate (private) header: it can be useful for SpdrImport, too
- - combine recursive reading of directories with recursive reading of files: it can be done
-   in a single function by detecting directories on the fly
+ - move SpdrFileData to a separate (private) header: it can be useful for
+   SpdrImport, too
+ - combine recursive reading of directories with recursive reading of files:
+   it can be done in a single function by detecting directories on the fly
 */
