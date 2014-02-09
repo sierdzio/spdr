@@ -13,6 +13,7 @@
 // TODO: test UpdateMode properly
 // TODO: test copied files in output
 // TODO: test modified files
+// TODO: expand tests to really analyse the output directory for correctness
 
 /*!
   \ingroup tests
