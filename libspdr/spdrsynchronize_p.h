@@ -3,7 +3,7 @@
 
 #include "spdrsynchronize.h"
 
-#include <QHash>
+#include <QMultiHash>
 #include <QByteArray>
 #include <QString>
 #include <QDateTime>
@@ -80,14 +80,14 @@ public:
     SpdrSynchronize *q_ptr;
 
     bool readDirectoryFileData(const QString &directoryPath,
-                               QHash<QByteArray, SpdrFileData> *fileHashTable) const;
+                               QMultiHash<QByteArray, SpdrFileData> *fileHashTable) const;
     bool readFileData(const QString &filePath,
-                      QHash<QByteArray, SpdrFileData> *fileHashTable) const;
+                      QMultiHash<QByteArray, SpdrFileData> *fileHashTable) const;
 
     bool synchronizeDirectory(const QString &directoryPath,
-                              QHash<QByteArray, SpdrFileData> *fileHashTable) const;
+                              QMultiHash<QByteArray, SpdrFileData> *fileHashTable) const;
     bool synchronizeFile(const QString &filePath,
-                         QHash<QByteArray, SpdrFileData> *fileHashTable) const;
+                         QMultiHash<QByteArray, SpdrFileData> *fileHashTable) const;
 
     bool removeEmptyDirectories(const QString &rootDirectoryPath) const;
     bool removeEmptyDirectory(const QString &directoryPath) const;

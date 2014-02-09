@@ -254,7 +254,7 @@ SpdrSynchronize::SpdrSynchronize(SpdrSynchronizePrivate &dd, QObject *parent)
   \sa readFileData
   */
 bool SpdrSynchronizePrivate::readDirectoryFileData(const QString &directoryPath,
-                                                   QHash<QByteArray, SpdrFileData> *fileHashTable) const
+                                                   QMultiHash<QByteArray, SpdrFileData> *fileHashTable) const
 {
     QDir inputDirectory(directoryPath);
 
@@ -281,12 +281,12 @@ bool SpdrSynchronizePrivate::readDirectoryFileData(const QString &directoryPath,
   Data can be read later from \a fileHashTable.
   */
 bool SpdrSynchronizePrivate::readFileData(const QString &filePath,
-                                          QHash<QByteArray, SpdrFileData> *fileHashTable) const
+                                          QMultiHash<QByteArray, SpdrFileData> *fileHashTable) const
 {
     SpdrFileData fileData = getFileData(filePath);
 
     if (fileData.isValid) {
-        fileHashTable->insert(fileData.checksumMd5, fileData);
+        fileHashTable->insertMulti(fileData.checksumMd5, fileData);
     } else {
         return false;
     }
@@ -301,7 +301,7 @@ bool SpdrSynchronizePrivate::readFileData(const QString &filePath,
   files. Returns true if successful.
   */
 bool SpdrSynchronizePrivate::synchronizeDirectory(const QString &directoryPath,
-                                                  QHash<QByteArray, SpdrFileData> *fileHashTable) const
+                                                  QMultiHash<QByteArray, SpdrFileData> *fileHashTable) const
 {
     QDir inputDirectory(directoryPath);
 
@@ -329,7 +329,7 @@ bool SpdrSynchronizePrivate::synchronizeDirectory(const QString &directoryPath,
   scan information about output files. Returns true if successful.
   */
 bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
-                                             QHash<QByteArray, SpdrFileData> *fileHashTable) const
+                                             QMultiHash<QByteArray, SpdrFileData> *fileHashTable) const
 {
     Q_Q(const SpdrSynchronize);
 
@@ -353,7 +353,7 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
             if (inputFileData.isValid && inputFileData.isEqual(outputFileData)) {
                 q->log(q->tr("SKIP: Files %1 and %2 are identical")
                        .arg(filePath).arg(outputFileMirrorPath), Spdr::ExcessiveLogging);
-                fileHashTable->remove(inputFileData.checksumMd5);
+                fileHashTable->remove(inputFileData.checksumMd5, outputFileData);
                 return true;
             }
         }
@@ -367,7 +367,6 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
     // do it all in one go).
     if (fileHashTable->contains(inputFileData.checksumMd5))
     {
-        //SpdrFileData outputData = fileHashTable.value(inputFileData.checksumMd5);
         SpdrFileData outputData = fileHashTable->take(inputFileData.checksumMd5);
 
         if (inputFileData.isMoved(outputData)) {
