@@ -23,6 +23,18 @@ public:
     QDateTime creationDate;
     qint64 size;
 
+    bool operator ==(const SpdrFileData &other) const
+    {
+        if ((isValid == other.isValid) && (name == other.name) && (path == other.path)
+                && (absoluteFilePath == other.absoluteFilePath)
+                && (checksumMd5 == other.checksumMd5) && (checksumSha == other.checksumSha)
+                && (creationDate == other.creationDate) && (size == other.size)) {
+            return true;
+        }
+
+        return false;
+    }
+
     /*!
       Returns a nicely formatted information about the file.
       */

@@ -11,6 +11,8 @@
 #include <QFile>
 
 // TODO: test UpdateMode properly
+// TODO: test copied files in output
+// TODO: test modified files
 
 /*!
   \ingroup tests

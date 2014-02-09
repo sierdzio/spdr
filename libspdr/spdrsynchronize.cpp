@@ -1,6 +1,7 @@
 #include "spdrsynchronize_p.h"
 
 #include <QByteArray>
+#include <QList>
 #include <QStringList>
 #include <QCryptographicHash>
 #include <QFile>
@@ -130,7 +131,7 @@ bool SpdrSynchronize::synchronize() const
     log(tr("Simulation: %1").arg(simulate()), Spdr::ExcessiveLogging);
 
     log(tr("Building output folder structure database"), Spdr::MildLogging);
-    QHash<QByteArray, SpdrFileData> outputFileData;
+    QMultiHash<QByteArray, SpdrFileData> outputFileData;
     if (!d->readDirectoryFileData(outputPath(), &outputFileData)) {
         log(tr("Could not read file information from output directory"),
             Spdr::Error);
@@ -159,7 +160,7 @@ bool SpdrSynchronize::synchronize() const
             Spdr::MildLogging);
 
         foreach (const SpdrFileData &data, outputFileData) {
-            QString fileToRemove(outputPath() + "/" + data.path);
+            QString fileToRemove(outputPath() + "/" + data.path); // TODO: data.absoluteFilePath
 
             bool result = false;
             QString operation;
@@ -182,6 +183,8 @@ bool SpdrSynchronize::synchronize() const
                 return false;
             }
         }
+
+        outputFileData.clear();
     }
 
     if (options() & RemoveEmptyDirectories) {
@@ -286,7 +289,7 @@ bool SpdrSynchronizePrivate::readFileData(const QString &filePath,
     SpdrFileData fileData = getFileData(filePath);
 
     if (fileData.isValid) {
-        fileHashTable->insertMulti(fileData.checksumMd5, fileData);
+        fileHashTable->insert(fileData.checksumMd5, fileData);
     } else {
         return false;
     }
@@ -362,44 +365,49 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
     // Fast track has not found the output file location. We need to traverse
     // the fileHashTable in order to find a candidate.
 
-    // Let us first try to find by hash. Potentially suboptimal!
+    // Let us first try to find by hash.
     // TODO: optimize! Don't try with contains() and then extract the value,
     // do it all in one go).
     if (fileHashTable->contains(inputFileData.checksumMd5))
     {
-        SpdrFileData outputData = fileHashTable->take(inputFileData.checksumMd5);
+        QList<SpdrFileData> existingFiles = fileHashTable->values(inputFileData.checksumMd5);
 
-        if (inputFileData.isMoved(outputData)) {
-            QString localCopyPath(outputBase + outputData.path);
-            QString localDestinationPath(outputBase + inputFileData.path);
-            QDir(q->outputPath()).mkpath(QFileInfo(localDestinationPath).absolutePath());
+        foreach (const SpdrFileData &outputData, existingFiles) {
+            //SpdrFileData outputData = fileHashTable->take(inputFileData.checksumMd5);
 
-            bool result = false;
-            QString operation;
+            if (inputFileData.isMoved(outputData)) {
+                fileHashTable->remove(inputFileData.checksumMd5, outputData);
+                QString localCopyPath(outputBase + outputData.path);
+                QString localDestinationPath(outputBase + inputFileData.path);
+                QDir(q->outputPath()).mkpath(QFileInfo(localDestinationPath).absolutePath());
 
-            if (q->simulate()) {
-                result = true;
-                operation = "SIMULATE";
-            } else {
-                if (q->options() & SpdrSynchronize::RemoveMissingFiles) {
-                    result = QFile::rename(localCopyPath, localDestinationPath);
-                    operation = "MOVE";
+                bool result = false;
+                QString operation;
+
+                if (q->simulate()) {
+                    result = true;
+                    operation = "SIMULATE";
                 } else {
-                    result = QFile::copy(localCopyPath, localDestinationPath);
-                    operation = "COPY";
+                    if (q->options() & SpdrSynchronize::RemoveMissingFiles) {
+                        result = QFile::rename(localCopyPath, localDestinationPath);
+                        operation = "MOVE";
+                    } else {
+                        result = QFile::copy(localCopyPath, localDestinationPath);
+                        operation = "COPY";
+                    }
                 }
+
+                q->log(q->tr("%1 (%2): Already existing file from %3 to %4").arg(operation)
+                       .arg(Spdr::getOperationStatusFromBool(result))
+                       .arg(localCopyPath).arg(localDestinationPath),
+                       result? Spdr::MediumLogging : Spdr::Critical);
+
+                if (!result) {
+                    return false;
+                }
+
+                return true;
             }
-
-            q->log(q->tr("%1 (%2): Already existing file from %3 to %4").arg(operation)
-                   .arg(Spdr::getOperationStatusFromBool(result))
-                   .arg(localCopyPath).arg(localDestinationPath),
-                   result? Spdr::MediumLogging : Spdr::Critical);
-
-            if (!result) {
-                return false;
-            }
-
-            return true;
         }
     }
 
@@ -428,6 +436,8 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
             operation = "SIMULATE COPY";
         } else {
             if (outputFileInfo.exists()) {
+                fileHashTable->remove(inputFileData.checksumMd5, getFileData(outputFilePath));
+
                 if (q->updateMode() == Spdr::Overwrite) {
                     QFile::remove(outputFilePath);
                     result = QFile::copy(filePath, outputFilePath);
