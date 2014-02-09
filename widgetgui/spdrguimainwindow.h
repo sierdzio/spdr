@@ -4,6 +4,8 @@
 #include "spdrguibasicinputform.h"
 #include "spdrglobal.h"
 
+#include <QString>
+#include <QVariant>
 #include <QThread>
 #include <QMainWindow>
 
@@ -24,6 +26,8 @@ private slots:
     void on_pushButtonImport_clicked();
     void on_actionAboutSpdr_triggered();
     void on_actionAboutQt_triggered();
+    void on_actionResetSettings_triggered();
+    void on_actionQuit_triggered();
 
     void synchronizationFinished(bool result);
     void importFinished(bool result);
@@ -31,12 +35,18 @@ private slots:
     void messageLogSynchronize(const QString &message, Spdr::LogLevel logLevel);
 
 private:
+    void readSettings();
+    void saveSettings();
+    void saveSettingValue(const QString &tag, const QVariant &value);
+
     Ui::SpdrGuiMainWindow *ui;
     SpdrGuiBasicInputForm *importForm;
     SpdrGuiBasicInputForm *synchronizeForm;
 
     QThread importThread;
     QThread synchronizeThread;
+
+    QString settingsPath;
 };
 
 #endif // SPDRGUIMAINWINDOW_H

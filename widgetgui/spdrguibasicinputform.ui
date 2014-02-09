@@ -71,7 +71,7 @@
       <item row="0" column="0" colspan="2">
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
-         <widget class="QLabel" name="labelSynchronizeLogLevel">
+         <widget class="QLabel" name="labelLogLevel">
           <property name="enabled">
            <bool>true</bool>
           </property>
@@ -100,7 +100,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QComboBox" name="comboBoxSynchronizeLogLevel">
+         <widget class="QComboBox" name="comboBoxLogLevel">
           <property name="enabled">
            <bool>true</bool>
           </property>
@@ -237,7 +237,7 @@
       <item row="4" column="0" colspan="2">
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QLabel" name="labelSynchronizeUpdateMode">
+         <widget class="QLabel" name="labelUpdateMode">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -263,7 +263,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QComboBox" name="comboBoxSynchronizeUpdateMode">
+         <widget class="QComboBox" name="comboBoxUpdateMode">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
             <horstretch>0</horstretch>

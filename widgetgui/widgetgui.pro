@@ -24,7 +24,8 @@ FORMS += \
 HEADERS += \
     spdrguimainwindow.h \
     spdrguibasicinputform.h \
-    spdrguilineedit.h
+    spdrguilineedit.h \
+    spdrguitags.h
 
 mac {
     QMAKE_POST_LINK = ln -f $${BUILDDIR}/../spdr/libspdr.0.dylib $${BUILDDIR}/$${TARGET}.app/Contents/MacOS/

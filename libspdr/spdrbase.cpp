@@ -71,6 +71,7 @@ SpdrBase::SpdrBase(QObject *parent) : SpdrLog(parent), d_ptr(new SpdrBasePrivate
 
     d->mSimulate = false;
     d->mUpdateMode = Spdr::Ask;
+    Spdr::registerMetatypes();
 }
 
 /*!

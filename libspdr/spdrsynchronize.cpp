@@ -126,8 +126,10 @@ bool SpdrSynchronize::synchronize() const
         Spdr::ExcessiveLogging);
     log(tr("Input path: %1").arg(inputPath()), Spdr::ExcessiveLogging);
     log(tr("Output path: %1").arg(outputPath()), Spdr::ExcessiveLogging);
+    log(tr("Update mode: %1").arg(Spdr::updateModeToString(updateMode())), Spdr::ExcessiveLogging);
     log(tr("Simulation: %1").arg(simulate()), Spdr::ExcessiveLogging);
 
+    log(tr("Building output folder structure database"), Spdr::MildLogging);
     QHash<QByteArray, SpdrFileData> outputFileData;
     if (!d->readDirectoryFileData(outputPath(), &outputFileData)) {
         log(tr("Could not read file information from output directory"),
@@ -136,7 +138,7 @@ bool SpdrSynchronize::synchronize() const
         return false;
     }
 
-    log(tr("Output file structure has been successfully analyzed"),
+    log(tr("Output file structure has been successfully analysed"),
         Spdr::MildLogging);
     log(tr("%1 files have been found and indexed").arg(outputFileData.count()),
         Spdr::MildLogging);
@@ -426,8 +428,24 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
             result = true;
             operation = "SIMULATE COPY";
         } else {
+            if (outputFileInfo.exists()) {
+                if (q->updateMode() == Spdr::Overwrite) {
+                    QFile::remove(outputFilePath);
+                    result = QFile::copy(filePath, outputFilePath);
+                    operation = "OVERWRITE";
+                } else if (q->updateMode() == Spdr::Ignore) {
+                    result = true;
+                    operation = "IGNORE";
+                } else if (q->updateMode() == Spdr::Ask) {
+                    result = false;
+                    operation = "ASK";
+                    q->log(q->tr("Ask operation is not implemented yet, sorry!"), Spdr::Critical);
+                    return false;
+                }
+            } else {
             result = QFile::copy(filePath, outputFilePath);
             operation = "COPY";
+            }
         }
 
         q->log(q->tr("%1 (%2): %3 to %4").arg(operation)

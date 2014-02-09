@@ -10,6 +10,8 @@
 #include <QDir>
 #include <QFile>
 
+// TODO: test UpdateMode properly
+
 /*!
   \ingroup tests
 
