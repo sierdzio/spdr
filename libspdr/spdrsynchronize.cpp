@@ -436,7 +436,12 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
             operation = "SIMULATE COPY";
         } else {
             if (outputFileInfo.exists()) {
-                fileHashTable->remove(inputFileData.checksumMd5, getFileData(outputFilePath));
+                // If the input file was modified, the old copy is still present
+                // in the hashTable: so we need to remove it
+                {
+                    SpdrFileData oldFileData = getFileData(outputFilePath);
+                    fileHashTable->remove(oldFileData.checksumMd5, oldFileData);
+                }
 
                 if (q->updateMode() == Spdr::Overwrite) {
                     QFile::remove(outputFilePath);

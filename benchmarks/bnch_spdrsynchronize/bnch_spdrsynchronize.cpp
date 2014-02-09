@@ -84,7 +84,7 @@ int BnchSpdrSynchronize::createTestFiles(const QString &basePath, bool simplifie
         QDir().mkdir(outputPath + "/emptyDir2");
     }
 
-    int numberOfFiles = 150;
+    int numberOfFiles = 1500;
 
     for (int i = 0; i < numberOfFiles; i++) {
         QString filename(QString("file%1.txt").arg(QString::number(i)));
@@ -99,7 +99,11 @@ int BnchSpdrSynchronize::createTestFiles(const QString &basePath, bool simplifie
         QString fileContent("Content of file number: ");
         fileContent += QString::number(i);
         fileContent += ". Random data: ";
-        fileContent += QString::number(qrand());
+
+        for (int j = 0; j < (i / 2); ++j) {
+            fileContent += QString::number(qrand());
+        }
+
         file.write(fileContent.toUtf8());
         file.close();
 
