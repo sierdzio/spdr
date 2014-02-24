@@ -1,6 +1,7 @@
 #include "spdrlog_p.h"
 
 #include <QFile>
+#include <QDateTime>
 
 /*!
   \class SpdrLog
@@ -105,16 +106,19 @@ void SpdrLog::log(const QString &message, Spdr::LogLevel logLevelToUse) const
         return;
     }
 
+    QString toPrint(QDateTime::currentDateTime().toString(Qt::ISODate)
+                    + ": " + message);
+
     if (d->mIsLogFileSet) {
         QFile file(d->mLogFilePath);
         if (file.open(QFile::Text | QFile::WriteOnly | QFile::Append)) {
-            file.write(message.toUtf8().append("\n"));
+            file.write(toPrint.toUtf8().append("\n"));
 
             if(logLevelToUse == Spdr::Critical || logLevelToUse == Spdr::Error) {
-                qDebug(message.toLocal8Bit().constData(), NULL);
-                emit error(message, (logLevelToUse == Spdr::Critical));
+                qDebug(toPrint.toLocal8Bit().constData(), NULL);
+                emit error(toPrint, (logLevelToUse == Spdr::Critical));
             } else {
-                emit logMessage(message, logLevelToUse);
+                emit logMessage(toPrint, logLevelToUse);
             }
 
             file.close();
@@ -126,8 +130,8 @@ void SpdrLog::log(const QString &message, Spdr::LogLevel logLevelToUse) const
             return;
         }
     } else {
-        qDebug(message.toLocal8Bit().constData(), NULL);
-        emit logMessage(message, logLevelToUse);
+        qDebug(toPrint.toLocal8Bit().constData(), NULL);
+        emit logMessage(toPrint, logLevelToUse);
         return;
     }
 }

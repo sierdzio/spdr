@@ -3,6 +3,9 @@
 
 #include "spdrlog.h"
 
+/*!
+  \internal
+  */
 class SpdrLogPrivate
 {
     Q_DECLARE_PUBLIC(SpdrLog)

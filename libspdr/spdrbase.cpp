@@ -207,6 +207,8 @@ void SpdrBase::setUpdateMode(Spdr::UpdateMode newUpdateMode)
 }
 
 /*!
+  \internal
+
   PIMPL constructor. Please ignore.
  */
 SpdrBase::SpdrBase(SpdrBasePrivate &dd, QObject *parent) : SpdrLog(parent), d_ptr(&dd)

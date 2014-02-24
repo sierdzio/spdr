@@ -2,6 +2,7 @@
 #define SPDRSYNCHRONIZE_H
 
 #include "SpdrBase"
+#include "spdrfiledata.h"
 
 #include <QString>
 #include <QObject>

@@ -161,6 +161,9 @@ void SpdrImport::registerMetatypes()
     qRegisterMetaType<SpdrImport::CopyMode>("SpdrImport::CopyMode");
 }
 
+/*!
+  \internal
+  */
 SpdrImport::SpdrImport(SpdrImportPrivate &dd, QObject *parent) : SpdrBase(parent), d_ptr(&dd)
 {
     Q_D(SpdrImport);
@@ -168,6 +171,8 @@ SpdrImport::SpdrImport(SpdrImportPrivate &dd, QObject *parent) : SpdrBase(parent
 }
 
 /*!
+  \internal
+
   Performs the requested file operation based on CopyMode and UpdateMode settings.
 
   Returns true if successful.
@@ -217,6 +222,8 @@ bool SpdrImportPrivate::performFileOperation(const QString &inputFile, const QSt
 }
 
 /*!
+  \internal
+
   Returns true if file names for \a input and \a output are the same.
  */
 bool SpdrImportPrivate::areFilesTheSame(const QString &input, const QString &output) const
@@ -235,6 +242,8 @@ bool SpdrImportPrivate::areFilesTheSame(const QString &input, const QString &out
 }
 
 /*!
+  \internal
+
   Recursively imports a directory specified by \a directoryPath. Internally,
   this method also calls importFile() for every file it encounters.
 
@@ -263,6 +272,8 @@ bool SpdrImportPrivate::importDirectory(const QString &directoryPath) const
 }
 
 /*!
+  \internal
+
   Imports the file specified by \a filePath. File destination is acquired
   automatically based on output path.
   */
@@ -274,6 +285,8 @@ bool SpdrImportPrivate::importFile(const QString &filePath) const
 }
 
 /*!
+  \internal
+
   Constructs the output file path based on formatting tags specified in output
   path property.
   */
@@ -310,6 +323,8 @@ QString SpdrImportPrivate::getOutputFilePath(const QString &inputFilePath) const
 }
 
 /*!
+  \internal
+
   Use this to replace all occurences of '*' with directory candidates (if applicable).
 
   This method will not work correctly when date tags are still present in path.
@@ -365,6 +380,8 @@ QString SpdrImportPrivate::substituteStarsInPath(const QString &outputFilePath) 
 }
 
 /*!
+  \internal
+
   Returns true if both the format and the file path are valid.
  */
 bool SpdrImportPrivate::checkFormat(const QString &format) const
@@ -403,6 +420,8 @@ bool SpdrImportPrivate::checkFormat(const QString &format) const
 }
 
 /*!
+  \internal
+
   Returns the number of times \a characterToCount can be found in
   \a stringToSearchThrough.
   */

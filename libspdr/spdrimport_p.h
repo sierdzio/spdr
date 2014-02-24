@@ -7,6 +7,9 @@
 
 class QChar;
 
+/*!
+  \internal
+  */
 class SpdrImportPrivate
 {
     Q_DECLARE_PUBLIC(SpdrImport)

@@ -23,7 +23,8 @@ SOURCES += \
     spdrimport.cpp \
     spdrsynchronize.cpp \
     spdrlog.cpp \
-    spdrbase.cpp
+    spdrbase.cpp \
+    spdrfiledata.cpp
 
 HEADERS += \
     Spdr \
@@ -39,4 +40,5 @@ HEADERS += \
     spdrlog.h \
     spdrbase.h \
     spdrbase_p.h \
-    spdrlog_p.h
+    spdrlog_p.h \
+    spdrfiledata.h

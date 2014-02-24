@@ -6,6 +6,9 @@
 
 #include <QString>
 
+/*!
+  \internal
+  */
 class SpdrBasePrivate
 {
     Q_DECLARE_PUBLIC(SpdrBase)

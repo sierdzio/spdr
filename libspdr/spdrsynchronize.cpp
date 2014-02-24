@@ -109,7 +109,7 @@ void SpdrSynchronize::setSplit(uint split)
 }
 
 /*!
-  Performs the synchrnization based on all settings. Input path is treated as
+  Performs the synchronization based on all settings. Input path is treated as
   the reference directory, and when synchronization is finished, output path
   should have exactly the same data inside, arranged in the same way.
   */
@@ -241,6 +241,8 @@ QString SpdrSynchronize::synchronizationOptionsToString(SynchronizationOptions o
 }
 
 /*!
+  \internal
+
   Private constructor. Best ignore it.
   */
 SpdrSynchronize::SpdrSynchronize(SpdrSynchronizePrivate &dd, QObject *parent)
@@ -251,6 +253,8 @@ SpdrSynchronize::SpdrSynchronize(SpdrSynchronizePrivate &dd, QObject *parent)
 }
 
 /*!
+  \internal
+
   Recursively reads file data in given \a directoryPath and all subdirectories.
   Returns true when successful. Resulting data can be read from \a fileHashTable.
 
@@ -280,6 +284,8 @@ bool SpdrSynchronizePrivate::readDirectoryFileData(const QString &directoryPath,
 }
 
 /*!
+  \internal
+
   Reads data from a single file given in \a filePath. Returns true if successful.
   Data can be read later from \a fileHashTable.
   */
@@ -298,6 +304,8 @@ bool SpdrSynchronizePrivate::readFileData(const QString &filePath,
 }
 
 /*!
+  \internal
+
   Performs synchronization on a single directory given in \a directoryPath (from
   input!), then recursively for all subdirectories. Returns true if everything
   went fine. Uses \a fileHashTable to read the information about output directory
@@ -327,6 +335,8 @@ bool SpdrSynchronizePrivate::synchronizeDirectory(const QString &directoryPath,
 }
 
 /*!
+  \internal
+
   Decides how a single file should be synchronized. File given in \a filePath
   should come from the input directory structure. \a fileHashTable is used to
   scan information about output files. Returns true if successful.
@@ -476,6 +486,8 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
 }
 
 /*!
+  \internal
+
   Recursively removes all emppty directories found in \a rootDirectoryPath. Returns true
   if successful.
   */
@@ -506,6 +518,8 @@ bool SpdrSynchronizePrivate::removeEmptyDirectories(const QString &rootDirectory
 }
 
 /*!
+  \internal
+
   Removes a single specified directory (\a directoryPath). Returns true if successful.
  */
 bool SpdrSynchronizePrivate::removeEmptyDirectory(const QString &directoryPath) const
@@ -532,6 +546,8 @@ bool SpdrSynchronizePrivate::removeEmptyDirectory(const QString &directoryPath) 
 }
 
 /*!
+  \internal
+
   Reads file data from a single file given in \a filePath, and returns it.
   */
 SpdrFileData SpdrSynchronizePrivate::getFileData(const QString &filePath) const
@@ -592,6 +608,8 @@ SpdrFileData SpdrSynchronizePrivate::getFileData(const QString &filePath) const
 }
 
 /*!
+  \internal
+
   Gets the relative path to file specified by \a absoluteFilePath. Returns a path
   that is relative to either input or output directory (depending on where the
   given file is coming from).
