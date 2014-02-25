@@ -116,6 +116,7 @@ void TstSpdrSynchronize::testAdvancedSynchronization()
     SpdrSynchronize testObject;
     testObject.setLogFile(logFilePath);
     testObject.setLogLevel(Spdr::Debug);
+    testObject.setUpdateMode(Spdr::Overwrite);
     testObject.setOptions(SpdrSynchronize::RemoveMissingFiles
                           | SpdrSynchronize::RemoveEmptyDirectories);
     testObject.setSimulate(false);
@@ -138,7 +139,7 @@ int TstSpdrSynchronize::createTestFiles(const QString &basePath, bool simplified
         QDir().mkdir(outputPath + "/emptyDir2");
     }
 
-    int numberOfFiles = 10;
+    int numberOfFiles = 20;
 
     for (int i = 0; i < numberOfFiles; i++) {
         QString filename(QString("file%1.txt").arg(QString::number(i)));
@@ -160,7 +161,7 @@ int TstSpdrSynchronize::createTestFiles(const QString &basePath, bool simplified
         if (i != 0) { // file0.txt is no copied to output at all
             QString outputFilePath(outputPath + "/" + filename);
 
-            if ((!simplified) && ((i == 1) || (i == 2) || (i == 3) || (i == 4))) {
+            if ((!simplified) && ((i == 1) || (i == 2) || (i == 3) || (i == 4) || (i == 5))) {
                 if (i == 1) {
                     // Moved input file
                     QDir().mkpath(inputPath + "/moved");
@@ -179,6 +180,19 @@ int TstSpdrSynchronize::createTestFiles(const QString &basePath, bool simplified
                     QFile::copy(inputFilePath, outputFilePath);
                     QFile::copy(inputFilePath, inputPath + "/anotherFile4.txt");
                     QFile::copy(inputFilePath, inputPath + "/zanotherFile4.txt");
+                } else if (i == 5) {
+                    // Modified input file
+                    QFile::copy(inputFilePath, outputFilePath);
+                    QFile file(inputFilePath);
+
+                    if (!file.open(QFile::Text | QFile::WriteOnly | QFile::Append)) {
+                        continue;
+                    }
+
+                    QString fileContent("Additional data for file. More random data: ");
+                    fileContent += QString::number(qrand());
+                    file.write(fileContent.toUtf8());
+                    file.close();
                 }
             } else {
                 QFile::copy(inputFilePath, outputFilePath);

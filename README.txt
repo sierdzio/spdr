@@ -108,7 +108,6 @@ QtCore, QtGui and QtWidgets to work.
    of synchronization accuracy
  - more deep tests for SpdrSynchronize
  - implement Spdr::Ask
- - timestamp log messages
  - use EXIF comparison
  - use DIFF comparison
  - combine recursive reading of directories with recursive reading of files:
