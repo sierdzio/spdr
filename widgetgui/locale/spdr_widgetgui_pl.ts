@@ -6,129 +6,133 @@
     <message>
         <location filename="../spdrguibasicinputform.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formularz</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="20"/>
         <source>Input directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Folder wejściowy</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="33"/>
         <source>Type in the directory holding your up-to-date data</source>
-        <translation type="unfinished"></translation>
+        <translation>Wpisz ścieżkę folderu, w którym znajdują się aktualne dane</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="40"/>
         <source>Browse to directory holding your up-to-date data</source>
-        <translation type="unfinished"></translation>
+        <translation>Wybierz folder w którym znajdują się aktualne dane</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="43"/>
         <location filename="../spdrguibasicinputform.ui" line="73"/>
         <location filename="../spdrguibasicinputform.ui" line="231"/>
         <source>Select dir</source>
-        <translation type="unfinished"></translation>
+        <translation>Wybierz folder</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="50"/>
         <source>Output directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Folder wyjściowy</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="63"/>
         <source>Specify the directory that should be brought up to date with the input directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Podaj folder który powinien być zaktualizowany do stanu w jakim jest folder wejściowy</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="70"/>
         <source>Browse to directory that should be brought up to date with the input directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Wybierz folder który powinien być zaktualizowany do stanu w jakim jest folder wejściowy</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="80"/>
         <source>Basic options</source>
-        <translation type="unfinished"></translation>
+        <translation>Podstawowe ustawienia</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="97"/>
         <source>Log level</source>
-        <translation type="unfinished"></translation>
+        <translation>Poziom logowania</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="132"/>
         <source>Use this control to specify how much log data do you want to see. Options range from no logging to debug logging (this one will log absolutely everything it does; it&apos;s not useful unless you want to report bugs or debug the application).
 
 Setting 3 - mild logging is recommended.</source>
-        <translation type="unfinished"></translation>
+        <translation>Użyj tej kontrolki by sprecyzować jak wiele widomości chesz widzieć w logu. Dostępne opcje przechodzą od braku logowania do logowania trybu debug (w tym trybie Spdr dodaje do logu informacje o wszystkich operacjach, jakie wykonuje. W praktyce oznacza to ogromną ilość danych: prawdopodobnie przydatne tylko do raportowania błędów i debugowania).
+
+Opcja 3 - podstawowe logowanie jest domyślna.</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="141"/>
         <source>0 - no logging</source>
-        <translation type="unfinished"></translation>
+        <translation>0 - brak logowania</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="146"/>
         <source>1 - only critical errors</source>
-        <translation type="unfinished"></translation>
+        <translation>1 - tylko błędy krytyczne</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="151"/>
         <source>2 - only errors</source>
-        <translation type="unfinished"></translation>
+        <translation>2 - tylko błędy</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="156"/>
         <source>3 - mild logging</source>
-        <translation type="unfinished"></translation>
+        <translation>3 - podstawowe logowanie</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="161"/>
         <source>4 - medium logging</source>
-        <translation type="unfinished"></translation>
+        <translation>4 - średnie logowanie</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="166"/>
         <source>5 - excessive logging</source>
-        <translation type="unfinished"></translation>
+        <translation>5 - znaczne logowanie</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="171"/>
         <source>6 - log everything (debug output)</source>
-        <translation type="unfinished"></translation>
+        <translation>6 - loguj wszystko (debug)</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="187"/>
         <source>When checked, Spdr will print all log messages to a log file, instead of using standard output/ standard error channels.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jeśli zaznaczone, Spdr umieści wszystkie wiadomości log w pliku, zamiast drukować je do stdout lub stderr.</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="190"/>
         <source>Use log file</source>
-        <translation type="unfinished"></translation>
+        <translation>Użyj pliku log</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="218"/>
         <location filename="../spdrguibasicinputform.ui" line="228"/>
         <source>Specify the file you wish to use as a log file</source>
-        <translation type="unfinished"></translation>
+        <translation>Podaj plik, który chesz używać jako plik logu</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="246"/>
         <source>When checked, Spdr will simulate it&apos;s usual workflow. What that means is that it will perform all the operations as usual, print all the log messages, etc. but it will not actually make any changes to the file system.
 
 Simulation mode can be used to see if Spdr works correctly without risking any lasting changes to the data. It is best combined with using a high log level.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jeśli zaznaczone, Spdr będzie symulował swoje zwykłe działanie. To znaczy, że wykona wszelkie operacje tak jak zwykle, będzie drukował logi itd. ale tak naprawdę nie dokona żadnych zmian w systemie plików.
+
+Symulacja może służyć do sprawdzenia, czy Spdr działa poprawnie, bez ryzykowania zmiany danych na dysku. Najlepiej połączyć symulację z ustawieniem wysokiego poziomu logowania.</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="251"/>
         <source>Simulate</source>
-        <translation type="unfinished"></translation>
+        <translation>Symuluj</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="279"/>
         <source>Update mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Tryb nadpisywania</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="305"/>
@@ -136,37 +140,40 @@ Simulation mode can be used to see if Spdr works correctly without risking any l
  - overwrite - will overwrite the file in output with the version from input
  - ignore - will skip the file
  - ask - will ask what to do (&lt;b&gt;NOT IMPLEMENTED YET!&lt;/b&gt;)</source>
-        <translation type="unfinished"></translation>
+        <translation>Użyj tej kontrolki by określić, co ma się wydarzyć, gdy Spdr natknie się w folderze wyjściowym już istniejący plik o tej samej nazwie. Jeśli pliki są identyczne, Spdr po prostu go zignoruje. Ale jeśli dane się różnią, &lt;b&gt;Tryb nadpisywania&lt;/b&gt; określa, jak Spdr ma zadziałać:
+ - nadpisz - nadpisze plik wyjściowy tym znajdującym się w folderze wejściowym
+ - ignoruj - plik zostanie pominięty
+ - pytaj - Spdr zapyta się użytkownika, co zrobić (&lt;b&gt;TA FUNKCJA NIE JEST JESZCZE DOSTĘPNA&lt;/b&gt;)</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="315"/>
         <source>Ask</source>
-        <translation type="unfinished"></translation>
+        <translation>Pytaj</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="320"/>
         <source>Overwrite</source>
-        <translation type="unfinished"></translation>
+        <translation>Nadpisz</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.ui" line="325"/>
         <source>Ignore</source>
-        <translation type="unfinished"></translation>
+        <translation>Zignoruj</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.cpp" line="49"/>
         <source>Specify the input folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Podaj folder wejściowy</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.cpp" line="54"/>
         <source>Specify the output folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Podaj folder wyjściowy</translation>
     </message>
     <message>
         <location filename="../spdrguibasicinputform.cpp" line="59"/>
         <source>Specify the log file</source>
-        <translation type="unfinished"></translation>
+        <translation>Podaj plik logowania</translation>
     </message>
 </context>
 <context>
@@ -174,7 +181,7 @@ Simulation mode can be used to see if Spdr works correctly without risking any l
     <message>
         <location filename="../spdrguilineedit.cpp" line="14"/>
         <source>/some/example/path (you can drag &amp; drop here)</source>
-        <translation type="unfinished"></translation>
+        <translation>/jakaś/przykładowa/ścieżka (możesz tu przenieść i opuścić folder)</translation>
     </message>
 </context>
 <context>
@@ -182,30 +189,32 @@ Simulation mode can be used to see if Spdr works correctly without risking any l
     <message>
         <location filename="../spdrguimainwindow.ui" line="14"/>
         <source>MainWindow</source>
-        <translation type="unfinished"></translation>
+        <translation>Okno główne</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.ui" line="25"/>
         <source>Synchronize</source>
-        <translation type="unfinished"></translation>
+        <translation>Synchronizacja</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.ui" line="54"/>
         <location filename="../spdrguimainwindow.ui" line="158"/>
         <source>Advanced options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opcje zaawansowane</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.ui" line="60"/>
         <source>&lt;b&gt;Default:&lt;/b&gt; checked
 
 During the synchronization, it may happen that some folders in the output folder become empty (due to files being moved, renamed, or removed). If this ontrol is checked, they will be removed</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Domyślnie:&lt;/b&gt; zaznaczone
+
+Podczas synchronizacji może się zdarzyć, że niektóre foldery w folderze wyjściowym staną się puste (z powodu tego, że pliki zostały przeniesione, zmieniono ich nazwę lub je usunięto). Jeśli ta kontrolka jest zaznaczona, te foldery zostaną usunięte</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.ui" line="65"/>
         <source>Remove empty directories</source>
-        <translation type="unfinished"></translation>
+        <translation>Usuń puste foldery</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.ui" line="75"/>
