@@ -5,6 +5,8 @@
 #include <QString>
 #include <QDateTime>
 
+class SpdrLog;
+
 /*!
   \internal
 
@@ -14,6 +16,9 @@
 class SpdrFileData
 {
 public:
+    SpdrFileData(const QString &filePath, const QString &relativePathBase,
+                 bool deepSearch = false, const SpdrLog *logger = 0);
+
     bool isValid;
     QString name;
     QString path;
@@ -24,8 +29,10 @@ public:
     qint64 size;
 
     bool operator ==(const SpdrFileData &other) const;
-    bool isEqual(const SpdrFileData &other);
-    bool isMoved(const SpdrFileData &other);
+    bool isEqual(const SpdrFileData &other) const;
+    bool isMoved(const SpdrFileData &other) const;
+    bool readFileData(const QString &filePath, const QString &relativePathBase,
+                      bool deepSearch = false, const SpdrLog *logger = 0);
     QString toString() const;
 };
 

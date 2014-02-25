@@ -3,7 +3,7 @@
 #include <QByteArray>
 #include <QList>
 #include <QStringList>
-#include <QCryptographicHash>
+//#include <QCryptographicHash>
 #include <QFile>
 #include <QFileInfo>
 #include <QFileInfoList>
@@ -292,7 +292,9 @@ bool SpdrSynchronizePrivate::readDirectoryFileData(const QString &directoryPath,
 bool SpdrSynchronizePrivate::readFileData(const QString &filePath,
                                           QMultiHash<QByteArray, SpdrFileData> *fileHashTable) const
 {
-    SpdrFileData fileData = getFileData(filePath);
+    Q_Q(const SpdrSynchronize);
+    SpdrFileData fileData(filePath, getRelativePathBase(QFileInfo(filePath).absoluteFilePath()),
+                          q->options() & SpdrSynchronize::DeepSearch, q);
 
     if (fileData.isValid) {
         fileHashTable->insert(fileData.checksumMd5, fileData);
@@ -348,7 +350,8 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
 
     // TODO: implement all flags.
     // TODO: implement benchmarks.
-    SpdrFileData inputFileData = getFileData(filePath);
+    SpdrFileData inputFileData(filePath, getRelativePathBase(QFileInfo(filePath).absoluteFilePath()),
+                               q->options() & SpdrSynchronize::DeepSearch, q);;
     QString outputBase(q->outputPath() + "/");
 
     if (!inputFileData.isValid) {
@@ -361,7 +364,8 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
         QFileInfo outputFileMirrorInfo(outputFileMirrorPath);
 
         if (outputFileMirrorInfo.exists()) {
-            SpdrFileData outputFileData = getFileData(outputFileMirrorPath);
+            SpdrFileData outputFileData(outputFileMirrorPath, getRelativePathBase(QFileInfo(outputFileMirrorPath).absoluteFilePath()),
+                                        q->options() & SpdrSynchronize::DeepSearch, q);
 
             if (inputFileData.isValid && inputFileData.isEqual(outputFileData)) {
                 q->log(q->tr("SKIP: Files %1 and %2 are identical")
@@ -449,7 +453,8 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
                 // If the input file was modified, the old copy is still present
                 // in the hashTable: so we need to remove it
                 {
-                    SpdrFileData oldFileData = getFileData(outputFilePath);
+                    SpdrFileData oldFileData(outputFilePath, getRelativePathBase(QFileInfo(outputFilePath).absoluteFilePath()),
+                                             q->options() & SpdrSynchronize::DeepSearch, q);
                     fileHashTable->remove(oldFileData.checksumMd5, oldFileData);
                 }
 
@@ -545,67 +550,67 @@ bool SpdrSynchronizePrivate::removeEmptyDirectory(const QString &directoryPath) 
     return result;
 }
 
-/*!
-  \internal
+///*!
+//  \internal
 
-  Reads file data from a single file given in \a filePath, and returns it.
-  */
-SpdrFileData SpdrSynchronizePrivate::getFileData(const QString &filePath) const
-{
-    Q_Q(const SpdrSynchronize);
+//  Reads file data from a single file given in \a filePath, and returns it.
+//  */
+//SpdrFileData SpdrSynchronizePrivate::getFileData(const QString &filePath) const
+//{
+//    Q_Q(const SpdrSynchronize);
 
-    QFileInfo fileInfo(filePath);
-    SpdrFileData fileData;
-    fileData.isValid = true;
-    fileData.name = fileInfo.fileName();
-    fileData.path = getRelativeFilePath(fileInfo.absoluteFilePath());
-    fileData.absoluteFilePath = fileInfo.absoluteFilePath();
-    fileData.creationDate = fileInfo.created();
-    fileData.size = fileInfo.size();
+//    QFileInfo fileInfo(filePath);
+//    SpdrFileData fileData;
+//    fileData.isValid = true;
+//    fileData.name = fileInfo.fileName();
+//    fileData.path = getRelativeFilePath(fileInfo.absoluteFilePath());
+//    fileData.absoluteFilePath = fileInfo.absoluteFilePath();
+//    fileData.creationDate = fileInfo.created();
+//    fileData.size = fileInfo.size();
 
-    QString fileReadError(q->tr("File could not be opened for reading while attempting to create a hash! %1")
-                          .arg(fileData.path));
+//    QString fileReadError(q->tr("File could not be opened for reading while attempting to create a hash! %1")
+//                          .arg(fileData.path));
 
-    QString fileHashingError(q->tr("Could not create an %1 hash for file %2"));
+//    QString fileHashingError(q->tr("Could not create an %1 hash for file %2"));
 
-    QFile fileMd5(filePath);
-    if (fileMd5.open(QFile::ReadOnly)) {
-        QCryptographicHash md5(QCryptographicHash::Md5);
+//    QFile fileMd5(filePath);
+//    if (fileMd5.open(QFile::ReadOnly)) {
+//        QCryptographicHash md5(QCryptographicHash::Md5);
 
-        if (md5.addData(&fileMd5)) {
-            fileData.checksumMd5 = md5.result();
-        } else {
-            q->log(fileHashingError.arg("MD5").arg(fileData.path), Spdr::Critical);
-            fileData.isValid = false;
-            return fileData;
-        }
-    } else {
-        q->log(fileReadError, Spdr::Critical);
-        fileData.isValid = false;
-        return fileData;
-    }
+//        if (md5.addData(&fileMd5)) {
+//            fileData.checksumMd5 = md5.result();
+//        } else {
+//            q->log(fileHashingError.arg("MD5").arg(fileData.path), Spdr::Critical);
+//            fileData.isValid = false;
+//            return fileData;
+//        }
+//    } else {
+//        q->log(fileReadError, Spdr::Critical);
+//        fileData.isValid = false;
+//        return fileData;
+//    }
 
-    fileMd5.close();
+//    fileMd5.close();
 
-    if (q->options() & SpdrSynchronize::DeepSearch) {
-        QFile fileSha(filePath);
-        if (fileSha.open(QFile::ReadOnly)) {
-            QCryptographicHash sha(QCryptographicHash::Sha1);
+//    if (q->options() & SpdrSynchronize::DeepSearch) {
+//        QFile fileSha(filePath);
+//        if (fileSha.open(QFile::ReadOnly)) {
+//            QCryptographicHash sha(QCryptographicHash::Sha1);
 
-            if (sha.addData(&fileSha)) {
-                fileData.checksumMd5 = sha.result();
-            } else {
-                q->log(fileHashingError.arg("SHA").arg(fileData.path), Spdr::Error);
-            }
-        } else {
-            q->log(fileReadError, Spdr::Critical);
-        }
+//            if (sha.addData(&fileSha)) {
+//                fileData.checksumMd5 = sha.result();
+//            } else {
+//                q->log(fileHashingError.arg("SHA").arg(fileData.path), Spdr::Error);
+//            }
+//        } else {
+//            q->log(fileReadError, Spdr::Critical);
+//        }
 
-        fileSha.close();
-    }
+//        fileSha.close();
+//    }
 
-    return fileData;
-}
+//    return fileData;
+//}
 
 /*!
   \internal
@@ -614,16 +619,19 @@ SpdrFileData SpdrSynchronizePrivate::getFileData(const QString &filePath) const
   that is relative to either input or output directory (depending on where the
   given file is coming from).
   */
-QString SpdrSynchronizePrivate::getRelativeFilePath(const QString &absoluteFilePath) const
+QString SpdrSynchronizePrivate::getRelativePathBase(const QString &absoluteFilePath) const
 {
     Q_Q(const SpdrSynchronize);
 
-    QDir absoluteDir;
+    //QDir absoluteDir;
 
     if (absoluteFilePath.contains(q->outputPath())) {
-        absoluteDir = QDir(q->outputPath());
+        //absoluteDir = QDir(q->outputPath());
+        return q->outputPath();
     } else {
-        absoluteDir = QDir(q->inputPath());
+        //absoluteDir = QDir(q->inputPath());
+        return q->inputPath();
     }
-    return absoluteDir.relativeFilePath(absoluteFilePath);
+
+    //return absoluteDir.relativeFilePath(absoluteFilePath);
 }
