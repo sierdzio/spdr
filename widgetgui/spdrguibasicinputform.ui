@@ -29,10 +29,16 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="toolTip">
+      <string>Type in the directory holding your up-to-date data</string>
+     </property>
     </widget>
    </item>
    <item row="1" column="1">
     <widget class="QPushButton" name="pushButtonInput">
+     <property name="toolTip">
+      <string>Browse to directory holding your up-to-date data</string>
+     </property>
      <property name="text">
       <string>Select dir</string>
      </property>
@@ -53,10 +59,16 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="toolTip">
+      <string>Specify the directory that should be brought up to date with the input directory</string>
+     </property>
     </widget>
    </item>
    <item row="3" column="1">
     <widget class="QPushButton" name="pushButtonOutput">
+     <property name="toolTip">
+      <string>Browse to directory that should be brought up to date with the input directory</string>
+     </property>
      <property name="text">
       <string>Select dir</string>
      </property>
@@ -116,6 +128,11 @@
             <height>16777215</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Use this control to specify how much log data do you want to see. Options range from no logging to debug logging (this one will log absolutely everything it does; it's not useful unless you want to report bugs or debug the application).
+
+Setting 3 - mild logging is recommended.</string>
+          </property>
           <property name="currentIndex">
            <number>3</number>
           </property>
@@ -166,6 +183,9 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="toolTip">
+         <string>When checked, Spdr will print all log messages to a log file, instead of using standard output/ standard error channels.</string>
+        </property>
         <property name="text">
          <string>Use log file</string>
         </property>
@@ -194,12 +214,18 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="toolTip">
+           <string>Specify the file you wish to use as a log file</string>
+          </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="pushButtonLog">
           <property name="enabled">
            <bool>false</bool>
+          </property>
+          <property name="toolTip">
+           <string>Specify the file you wish to use as a log file</string>
           </property>
           <property name="text">
            <string>Select dir</string>
@@ -215,6 +241,11 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>When checked, Spdr will simulate it's usual workflow. What that means is that it will perform all the operations as usual, print all the log messages, etc. but it will not actually make any changes to the file system.
+
+Simulation mode can be used to see if Spdr works correctly without risking any lasting changes to the data. It is best combined with using a high log level.</string>
         </property>
         <property name="text">
          <string>Simulate</string>
@@ -269,6 +300,12 @@
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>Use this control to specify what should be done when Spdr encounters an already existing file with the same name present in output. If files are identical, Spdr will simply skip that file. But if the contents are different, &lt;b&gt;Update mode&lt;/b&gt; will kick in:
+ - overwrite - will overwrite the file in output with the version from input
+ - ignore - will skip the file
+ - ask - will ask what to do (&lt;b&gt;NOT IMPLEMENTED YET!&lt;/b&gt;)</string>
           </property>
           <property name="currentIndex">
            <number>1</number>

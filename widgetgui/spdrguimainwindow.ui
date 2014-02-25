@@ -56,6 +56,11 @@
           <layout class="QVBoxLayout" name="verticalLayout">
            <item>
             <widget class="QCheckBox" name="checkBoxRemoveEmptyDirectiories">
+             <property name="toolTip">
+              <string>&lt;b&gt;Default:&lt;/b&gt; checked
+
+During the synchronization, it may happen that some folders in the output folder become empty (due to files being moved, renamed, or removed). If this ontrol is checked, they will be removed</string>
+             </property>
              <property name="text">
               <string>Remove empty directories</string>
              </property>
@@ -66,6 +71,11 @@
            </item>
            <item>
             <widget class="QCheckBox" name="checkBoxRemoveMissingFiles">
+             <property name="toolTip">
+              <string>&lt;b&gt;Default:&lt;/b&gt; checked
+
+It may happen that a file is found in the output folder, which has no counterpart in the input folder (Spdr also checks for renamed, moved and updated files, don't worry!). If that control is checked, those files will be removed.</string>
+             </property>
              <property name="text">
               <string>Remove missing files</string>
              </property>
@@ -76,6 +86,11 @@
            </item>
            <item>
             <widget class="QCheckBox" name="checkBoxDeepSearch">
+             <property name="toolTip">
+              <string>&lt;b&gt;Default:&lt;/b&gt; checked
+
+Spdr checks whether files are identical using numerous techniques. One of them is Md5 checksums. It may happen - although it is extremely unlikely - that 2 different files generate the same checksum. In that case, Spdr may erroneously treat them as similar. To avoid this, you can enable Deep Search: it will make Spdr check all files using a both Md5 and Sha1 checksums, thus minimizing the possibility of a mistake</string>
+             </property>
              <property name="text">
               <string>Perform deep search</string>
              </property>
@@ -104,6 +119,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="pushButtonSynchronize">
+            <property name="toolTip">
+             <string>Performs the synchronization when clicked. This may take a while</string>
+            </property>
             <property name="text">
              <string>Synchronize!</string>
             </property>
@@ -164,6 +182,9 @@
              </item>
              <item>
               <widget class="QComboBox" name="comboBoxCopyMode">
+               <property name="toolTip">
+                <string>Use this control to specify whether the files from input folder should be copied to the output directory (&lt;b&gt;default&lt;/b&gt;) or moved (&lt;b&gt;Be careful!&lt;/b&gt; This option means that the file will be completely removed from input folder!).</string>
+               </property>
                <item>
                 <property name="text">
                  <string>Copy</string>
@@ -198,6 +219,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="pushButtonImport">
+            <property name="toolTip">
+             <string>Performs the import operation when clicked</string>
+            </property>
             <property name="text">
              <string>Import!</string>
             </property>

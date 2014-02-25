@@ -15,7 +15,7 @@ SOURCES += \
     spdrguibasicinputform.cpp \
     spdrguilineedit.cpp
 
-TRANSLATIONS += locale/spdr_pl.ts
+TRANSLATIONS += locale/spdr_widgetgui_pl.ts
 
 FORMS += \
     spdrguimainwindow.ui \

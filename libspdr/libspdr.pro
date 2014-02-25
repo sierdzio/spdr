@@ -17,6 +17,8 @@ static {
 #  message("Library building in shared mode")
 }
 
+TRANSLATIONS += locale/libspdr_pl.ts
+
 INCLUDEPATH += src
 
 SOURCES += \

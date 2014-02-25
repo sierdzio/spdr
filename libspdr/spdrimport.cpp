@@ -1,6 +1,7 @@
 #include "spdrimport_p.h"
 #include "spdrfiledata.h"
 
+#include <QCoreApplication>
 #include <QChar>
 #include <QStringList>
 #include <QRegularExpression>
@@ -185,7 +186,7 @@ bool SpdrImportPrivate::performFileOperation(const QString &inputFile, const QSt
     bool result = true;
 
     if (areFilesTheSame(inputFile, outputFile)) {
-        q->log(q->tr("COPY: Skipping copying %1 to %2: files are identical")
+        q->log(QCoreApplication::translate("SpdrImportPrivate", "COPY: Skipping copying %1 to %2: files are identical")
                .arg(inputFile).arg(outputFile), Spdr::MediumLogging);
     } else {
         if (!q->simulate()) {
@@ -197,7 +198,7 @@ bool SpdrImportPrivate::performFileOperation(const QString &inputFile, const QSt
                 } else if (q->updateMode() == Spdr::Ignore) {
                     skip = true;
                 } else if (q->updateMode() == Spdr::Ask) { // TODO: implement Spdr::Ask
-                    q->log(q->tr("This feature has not been implemented yet: Spdr::%1")
+                    q->log(QCoreApplication::translate("SpdrImportPrivate", "This feature has not been implemented yet: Spdr::%1")
                            .arg(Spdr::updateModeToString(Spdr::Ask)), Spdr::Critical);
                     return false;
                 }
@@ -215,7 +216,7 @@ bool SpdrImportPrivate::performFileOperation(const QString &inputFile, const QSt
             }
         }
 
-        q->log(q->tr("COPY: Copying %1 to %2 has: %3").arg(inputFile).arg(outputFile)
+        q->log(QCoreApplication::translate("SpdrImportPrivate", "COPY: Copying %1 to %2 has: %3").arg(inputFile).arg(outputFile)
                .arg(Spdr::getOperationStatusFromBool(result)), Spdr::MediumLogging);
     }
 
@@ -364,14 +365,14 @@ QString SpdrImportPrivate::substituteStarsInPath(const QString &outputFilePath) 
 
             QString regExpString(segment); // "*" + dirName + "*"
             QRegularExpression regExp(regExpString);
-            q->log(q->tr("Star matching regular expression set to: %1").arg(regExpString), Spdr::Debug);
+            q->log(QCoreApplication::translate("SpdrImportPrivate", "Star matching regular expression set to: %1").arg(regExpString), Spdr::Debug);
 
             foreach (const QFileInfo &dirInfo, dirs) {
                 QString dirName(dirInfo.fileName());
 
                 if (regExp.match(dirName).hasMatch()) {
                     pathBuilder.append(dirName);
-                    q->log(q->tr("An existing directory that matches wildcard has been found: %1")
+                    q->log(QCoreApplication::translate("SpdrImportPrivate", "An existing directory that matches wildcard has been found: %1")
                            .arg(dirName), Spdr::ExcessiveLogging);
                     break;
                 }
@@ -408,15 +409,15 @@ bool SpdrImportPrivate::checkFormat(const QString &format) const
             continue;
         } else if (lessThanIndex == -1 || greaterThanIndex == -1) {
             result = false;
-            q->log(q->tr("Missing tag enclosure: < or >: %1").arg(segment), Spdr::Critical);
+            q->log(QCoreApplication::translate("SpdrImportPrivate", "Missing tag enclosure: < or >: %1").arg(segment), Spdr::Critical);
             break;
         } else if (lessThanIndex > -1 && (lessThanIndex >= greaterThanIndex)) {
             result = false;
-            q->log(q->tr("Date format tag is closed before it is opened: %1").arg(segment), Spdr::Critical);
+            q->log(QCoreApplication::translate("SpdrImportPrivate", "Date format tag is closed before it is opened: %1").arg(segment), Spdr::Critical);
             break;
         } else if (countOccurences(segment, '<') != countOccurences(segment, '>')) {
             result = false;
-            q->log(q->tr("Too many date formatting tags: %1").arg(segment), Spdr::Critical);
+            q->log(QCoreApplication::translate("SpdrImportPrivate", "Too many date formatting tags: %1").arg(segment), Spdr::Critical);
             break;
         }
     }

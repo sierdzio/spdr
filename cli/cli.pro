@@ -7,6 +7,8 @@ TEMPLATE = app
 include(../libraryIncludes.pri)
 include(../definitions.pri)
 
+TRANSLATIONS += locale/spdr_cli_pl.ts
+
 SOURCES += \
     main.cpp \
     spdrcliparser.cpp \

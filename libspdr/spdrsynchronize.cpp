@@ -1,5 +1,6 @@
 #include "spdrsynchronize_p.h"
 
+#include <QCoreApplication>
 #include <QByteArray>
 #include <QList>
 #include <QStringList>
@@ -336,7 +337,7 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
                                         q->options() & SpdrSynchronize::DeepSearch, q);
 
             if (inputFileData.isValid && inputFileData.isEqual(outputFileData)) {
-                q->log(q->tr("SKIP: Files %1 and %2 are identical")
+                q->log(QCoreApplication::translate("SpdrSynchronizePrivate", "SKIP: Files %1 and %2 are identical")
                        .arg(filePath).arg(outputFileMirrorPath), Spdr::ExcessiveLogging);
                 fileHashTable->remove(inputFileData.checksumMd5, outputFileData);
                 return true;
@@ -379,7 +380,7 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
                     }
                 }
 
-                q->log(q->tr("%1 (%2): Already existing file from %3 to %4").arg(operation)
+                q->log(QCoreApplication::translate("SpdrSynchronizePrivate", "%1 (%2): Already existing file from %3 to %4").arg(operation)
                        .arg(Spdr::getOperationStatusFromBool(result))
                        .arg(localCopyPath).arg(localDestinationPath),
                        result? Spdr::MediumLogging : Spdr::Critical);
@@ -397,7 +398,7 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
     // TODO: this needs to be done!
     // TODO: diff and EXIF comparison
     if (q->options() & SpdrSynchronize::DeepSearch) {
-        //q->log(q->tr("No file match using standard search. Performing deep search"),
+        //q->log(QCoreApplication::translate("No file match using standard search. Performing deep search"),
         //       Spdr::MildLogging);
     }
 
@@ -436,7 +437,7 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
                 } else if (q->updateMode() == Spdr::Ask) {
                     result = false;
                     operation = "ASK";
-                    q->log(q->tr("Ask operation is not implemented yet, sorry!"), Spdr::Critical);
+                    q->log(QCoreApplication::translate("SpdrSynchronizePrivate", "Ask operation is not implemented yet, sorry!"), Spdr::Critical);
                     return false;
                 }
             } else {
@@ -445,7 +446,7 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
             }
         }
 
-        q->log(q->tr("%1 (%2): %3 to %4").arg(operation)
+        q->log(QCoreApplication::translate("SpdrSynchronizePrivate", "%1 (%2): %3 to %4").arg(operation)
                .arg(Spdr::getOperationStatusFromBool(result))
                .arg(filePath).arg(outputFilePath),
                result? Spdr::MediumLogging : Spdr::Critical);
@@ -510,7 +511,7 @@ bool SpdrSynchronizePrivate::removeEmptyDirectory(const QString &directoryPath) 
         result = QDir(directoryPath + "/../").rmdir(directoryPath);
     }
 
-    q->log(q->tr("%1 (%2): Empty directory %3").arg(operation)
+    q->log(QCoreApplication::translate("SpdrSynchronizePrivate", "%1 (%2): Empty directory %3").arg(operation)
            .arg(Spdr::getOperationStatusFromBool(result))
            .arg(directoryPath),
            result? Spdr::MediumLogging : Spdr::Critical);

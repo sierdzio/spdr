@@ -1,6 +1,7 @@
 #include "spdrfiledata.h"
 #include "SpdrLog"
 
+#include <QCoreApplication>
 #include <QCryptographicHash>
 #include <QFile>
 #include <QFileInfo>
@@ -116,10 +117,10 @@ bool SpdrFileData::readFileData(const QString &filePath,
     QString fileHashingError;
 
     if (isLogging) {
-        fileReadError = logger->tr("File could not be opened for reading while attempting to create a hash! %1")
+        fileReadError = QCoreApplication::translate("SpdrFileData", "File could not be opened for reading while attempting to create a hash! %1")
                       .arg(path);
 
-        fileHashingError = logger->tr("Could not create an %1 hash for file %2");
+        fileHashingError = QCoreApplication::translate("SpdrFileData", "Could not create an %1 hash for file %2");
     }
 
     QFile fileMd5(filePath);
@@ -168,7 +169,7 @@ bool SpdrFileData::readFileData(const QString &filePath,
         if (logger->logLevel() == Spdr::Debug) {
             logger->log(toString(), Spdr::Debug);
         } else {
-            logger->log(logger->tr("DB: Successfully added file %1 to the database").arg(path), Spdr::ExcessiveLogging);
+            logger->log(QCoreApplication::translate("SpdrFileData", "DB: Successfully added file %1 to the database").arg(path), Spdr::ExcessiveLogging);
         }
     }
 
