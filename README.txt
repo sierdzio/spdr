@@ -104,12 +104,12 @@ QtCore, QtGui and QtWidgets to work.
 \include AUTHORS.txt
 
 \section todolist Project's TODO
+ - add "quick" search: skip calculating Md5 to improve performance at the expense
+   of synchronization accuracy
  - implement Spdr::Ask
  - timestamp log messages
  - use EXIF comparison
  - use DIFF comparison
- - move SpdrFileData to a separate (private) header: it can be useful for
-   SpdrImport, too
  - combine recursive reading of directories with recursive reading of files:
    it can be done in a single function by detecting directories on the fly
 */

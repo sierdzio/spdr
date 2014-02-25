@@ -6,6 +6,21 @@
 #include <QFileInfo>
 #include <QDir>
 
+/*!
+  \class SpdrFileData
+  \internal
+
+  Used to cache the information about a file. Can be used to compare two files
+  and dump file info. This class is not exported in Spdr library, is intentionally
+  kept lightweight (does not inherit any other classes) to allow it to be instantiated
+  in large quantities without too much overhead.
+ */
+
+/*!
+  Simple initializing constructor, useful as an easier equivalent to:
+  SpdrFileData data;
+  data.readFileData(filePath, relativePathBase, deepSearch, logger);
+ */
 SpdrFileData::SpdrFileData(const QString &filePath, const QString &relativePathBase, bool deepSearch, const SpdrLog *logger)
 {
     readFileData(filePath, relativePathBase, deepSearch, logger);
@@ -73,6 +88,14 @@ bool SpdrFileData::isMoved(const SpdrFileData &other) const
     return false;
 }
 
+/*!
+  Populates the object with all required data. Returns true if all required operations
+  were successful. Use \a filePath to specify the file. \a relativePathBase is
+  used to help Spdr determine the absolute path to the file (in case \a filePath
+  is relative). When \a deepSearch is set, Spdr will calculate Sha1 checksum in
+  addition to Md5. When \a logger is present, this method will print out log
+  information using that object.
+ */
 bool SpdrFileData::readFileData(const QString &filePath,
                                 const QString &relativePathBase,
                                 bool deepSearch, const SpdrLog *logger)
@@ -139,6 +162,14 @@ bool SpdrFileData::readFileData(const QString &filePath,
         }
 
         fileSha.close();
+    }
+
+    if (isLogging) {
+        if (logger->logLevel() == Spdr::Debug) {
+            logger->log(toString(), Spdr::Debug);
+        } else {
+            logger->log(logger->tr("DB: Successfully added file %1 to the database").arg(path), Spdr::ExcessiveLogging);
+        }
     }
 
     return true;

@@ -32,7 +32,6 @@ public:
     bool removeEmptyDirectories(const QString &rootDirectoryPath) const;
     bool removeEmptyDirectory(const QString &directoryPath) const;
 
-    SpdrFileData getFileData(const QString &filePath) const;
     QString getRelativePathBase(const QString &absoluteFilePath) const;
 
     SpdrSynchronize::SynchronizationOptions mOptions;

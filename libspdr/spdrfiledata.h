@@ -7,12 +7,6 @@
 
 class SpdrLog;
 
-/*!
-  \internal
-
-  Used to cache the information about a file. Can be used to compare two files
-  and dump file info. This class is not exported in Spdr library.
- */
 class SpdrFileData
 {
 public:

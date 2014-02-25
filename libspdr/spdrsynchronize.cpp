@@ -550,88 +550,20 @@ bool SpdrSynchronizePrivate::removeEmptyDirectory(const QString &directoryPath) 
     return result;
 }
 
-///*!
-//  \internal
-
-//  Reads file data from a single file given in \a filePath, and returns it.
-//  */
-//SpdrFileData SpdrSynchronizePrivate::getFileData(const QString &filePath) const
-//{
-//    Q_Q(const SpdrSynchronize);
-
-//    QFileInfo fileInfo(filePath);
-//    SpdrFileData fileData;
-//    fileData.isValid = true;
-//    fileData.name = fileInfo.fileName();
-//    fileData.path = getRelativeFilePath(fileInfo.absoluteFilePath());
-//    fileData.absoluteFilePath = fileInfo.absoluteFilePath();
-//    fileData.creationDate = fileInfo.created();
-//    fileData.size = fileInfo.size();
-
-//    QString fileReadError(q->tr("File could not be opened for reading while attempting to create a hash! %1")
-//                          .arg(fileData.path));
-
-//    QString fileHashingError(q->tr("Could not create an %1 hash for file %2"));
-
-//    QFile fileMd5(filePath);
-//    if (fileMd5.open(QFile::ReadOnly)) {
-//        QCryptographicHash md5(QCryptographicHash::Md5);
-
-//        if (md5.addData(&fileMd5)) {
-//            fileData.checksumMd5 = md5.result();
-//        } else {
-//            q->log(fileHashingError.arg("MD5").arg(fileData.path), Spdr::Critical);
-//            fileData.isValid = false;
-//            return fileData;
-//        }
-//    } else {
-//        q->log(fileReadError, Spdr::Critical);
-//        fileData.isValid = false;
-//        return fileData;
-//    }
-
-//    fileMd5.close();
-
-//    if (q->options() & SpdrSynchronize::DeepSearch) {
-//        QFile fileSha(filePath);
-//        if (fileSha.open(QFile::ReadOnly)) {
-//            QCryptographicHash sha(QCryptographicHash::Sha1);
-
-//            if (sha.addData(&fileSha)) {
-//                fileData.checksumMd5 = sha.result();
-//            } else {
-//                q->log(fileHashingError.arg("SHA").arg(fileData.path), Spdr::Error);
-//            }
-//        } else {
-//            q->log(fileReadError, Spdr::Critical);
-//        }
-
-//        fileSha.close();
-//    }
-
-//    return fileData;
-//}
-
 /*!
   \internal
 
-  Gets the relative path to file specified by \a absoluteFilePath. Returns a path
-  that is relative to either input or output directory (depending on where the
+  Gets the relative base path for file specified by \a absoluteFilePath. Returns
+  a path that is relative to either input or output directory (depending on where the
   given file is coming from).
   */
 QString SpdrSynchronizePrivate::getRelativePathBase(const QString &absoluteFilePath) const
 {
     Q_Q(const SpdrSynchronize);
 
-    //QDir absoluteDir;
-
     if (absoluteFilePath.contains(q->outputPath())) {
-        //absoluteDir = QDir(q->outputPath());
         return q->outputPath();
     } else {
-        //absoluteDir = QDir(q->inputPath());
         return q->inputPath();
     }
-
-    //return absoluteDir.relativeFilePath(absoluteFilePath);
 }
