@@ -1,4 +1,5 @@
 #include "spdrimport_p.h"
+#include "spdrfiledata.h"
 
 #include <QChar>
 #include <QStringList>
@@ -228,13 +229,17 @@ bool SpdrImportPrivate::performFileOperation(const QString &inputFile, const QSt
  */
 bool SpdrImportPrivate::areFilesTheSame(const QString &input, const QString &output) const
 {
-    QFileInfo inputInfo(input);
-    QFileInfo outputInfo(output);
+    Q_Q(const SpdrImport);
 
-    if (inputInfo.fileName() == outputInfo.fileName()
-            && inputInfo.size() == outputInfo.size()
-            && inputInfo.created() == outputInfo.created())
-    {
+    QFileInfo outputInfo(output);
+    if (!outputInfo.exists()) {
+        return false;
+    }
+
+    SpdrFileData inputData(input, q->inputPath(), false, q);
+    SpdrFileData outputData(output, q->inputPath(), false, q);
+
+    if (inputData.isEqual(outputData)) {
         return true;
     }
 

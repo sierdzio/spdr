@@ -13,7 +13,6 @@ class SPDR_DLLSPEC SpdrSynchronize : public SpdrBase {
 
     Q_OBJECT
     Q_FLAGS(SynchronizationOptions)
-    Q_PROPERTY(int split READ split WRITE setSplit NOTIFY splitChanged)
 
 public:
     SpdrSynchronize(QObject *parent = 0);
@@ -30,9 +29,6 @@ public:
     Q_INVOKABLE void setOptions(SynchronizationOptions options);
     static QString synchronizationOptionsToString(SynchronizationOptions optionSet);
 
-    Q_INVOKABLE int split() const;
-    Q_INVOKABLE void setSplit(uint split);
-
     static void registerMetatypes();
 
 public slots:
@@ -40,7 +36,6 @@ public slots:
 
 signals:
     void optionsChanged(SpdrSynchronize::SynchronizationOptions newOptions) const;
-    void splitChanged(int newSplit) const;
 
 protected:
     SpdrSynchronize(SpdrSynchronizePrivate &dd, QObject *parent = 0);

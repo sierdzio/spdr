@@ -53,7 +53,6 @@ void TstSpdrSynchronize::testDefaults()
     SpdrSynchronize testObject;
     QCOMPARE(testObject.options(), SpdrSynchronize::RemoveEmptyDirectories
              | SpdrSynchronize::RemoveMissingFiles);
-    QCOMPARE(testObject.split(), 0);
 }
 
 void TstSpdrSynchronize::testSetters()
@@ -63,15 +62,6 @@ void TstSpdrSynchronize::testSetters()
 
     testObject.setOptions(options);
     QCOMPARE(testObject.options(), options);
-
-    int propertyTestValue = 8;
-    testObject.setSplit(propertyTestValue);
-    QCOMPARE(testObject.split(), propertyTestValue);
-
-    propertyTestValue = 3;
-    testObject.setProperty("split", propertyTestValue);
-    QCOMPARE(testObject.split(), propertyTestValue);
-    QCOMPARE(testObject.property("split").toInt(), propertyTestValue);
 }
 
 void TstSpdrSynchronize::testSignals()
@@ -79,16 +69,9 @@ void TstSpdrSynchronize::testSignals()
     SpdrSynchronize::registerMetatypes();
     SpdrSynchronize testObject;
     QSignalSpy spyOptions(&testObject, SIGNAL(optionsChanged(SpdrSynchronize::SynchronizationOptions)));
-    QSignalSpy spySplit(&testObject, SIGNAL(splitChanged(int)));
 
     testObject.setOptions(SpdrSynchronize::DeepSearch);
     QCOMPARE(spyOptions.count(), 1);
-
-    testObject.setSplit(5);
-    testObject.setProperty("split", 7);
-    QCOMPARE(spySplit.count(), 2);
-    QList<QVariant> arguments = spySplit.takeLast();
-    QCOMPARE(arguments.at(0).toInt(), 7);
 }
 
 /*!

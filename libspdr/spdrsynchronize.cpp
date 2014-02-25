@@ -3,7 +3,6 @@
 #include <QByteArray>
 #include <QList>
 #include <QStringList>
-//#include <QCryptographicHash>
 #include <QFile>
 #include <QFileInfo>
 #include <QFileInfoList>
@@ -74,37 +73,6 @@ void SpdrSynchronize::setOptions(SynchronizationOptions options)
         log(tr("Synchronization options changed to: %1").arg(synchronizationOptionsToString(options)), Spdr::Debug);
 
         emit optionsChanged(options);
-    }
-}
-
-/*!
-  WARNING: currently not used.
-
-  Returns the split (number of concurrent jobs) that Spdr will use during
-  synchronization.
-  */
-int SpdrSynchronize::split() const
-{
-    Q_D(const SpdrSynchronize);
-    return d->mSplit;
-}
-
-/*!
-  WARNING: currently not used.
-
-  Set number (\a split) of concurrent jobs Spdr should use when performing
-  synchronization.
-  */
-void SpdrSynchronize::setSplit(uint split)
-{
-    Q_D(SpdrSynchronize);
-
-    if (split != d->mSplit) {
-        d->mSplit = split;
-
-        log(tr("Split changed to: %1").arg(split), Spdr::Debug);
-
-        emit splitChanged(split);
     }
 }
 

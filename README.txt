@@ -106,6 +106,7 @@ QtCore, QtGui and QtWidgets to work.
 \section todolist Project's TODO
  - add "quick" search: skip calculating Md5 to improve performance at the expense
    of synchronization accuracy
+ - more deep tests for SpdrSynchronize
  - implement Spdr::Ask
  - timestamp log messages
  - use EXIF comparison
