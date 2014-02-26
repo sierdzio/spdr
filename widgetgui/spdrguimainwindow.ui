@@ -280,7 +280,7 @@ Spdr checks whether files are identical using numerous techniques. One of them i
      <x>0</x>
      <y>0</y>
      <width>621</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuAbout">
@@ -298,7 +298,16 @@ Spdr checks whether files are identical using numerous techniques. One of them i
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
+   <widget class="QMenu" name="menuLanguage">
+    <property name="toolTip">
+     <string>Select application language from a list of available languages. Changes require application restart to take effect.</string>
+    </property>
+    <property name="title">
+     <string>Language</string>
+    </property>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuLanguage"/>
    <addaction name="menuAbout"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

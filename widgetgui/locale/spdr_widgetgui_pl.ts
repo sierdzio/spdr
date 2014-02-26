@@ -300,45 +300,55 @@ Spdr sprawdza, czy pliki są identyczne na wiele sposobów. Jednym z nich jest z
         <translation>Plik</translation>
     </message>
     <message>
-        <location filename="../spdrguimainwindow.ui" line="307"/>
-        <location filename="../spdrguimainwindow.cpp" line="229"/>
+        <location filename="../spdrguimainwindow.ui" line="303"/>
+        <source>Select application language from a list of available languages. Changes require application restart to take effect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../spdrguimainwindow.ui" line="306"/>
+        <source>Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../spdrguimainwindow.ui" line="316"/>
+        <location filename="../spdrguimainwindow.cpp" line="261"/>
         <source>About Spdr</source>
         <translation>O Spdr</translation>
     </message>
     <message>
-        <location filename="../spdrguimainwindow.ui" line="312"/>
+        <location filename="../spdrguimainwindow.ui" line="321"/>
         <source>About Qt</source>
         <translation>O Qt</translation>
     </message>
     <message>
-        <location filename="../spdrguimainwindow.ui" line="317"/>
+        <location filename="../spdrguimainwindow.ui" line="326"/>
         <source>Reset settings</source>
         <translation>Resetuj ustawienia</translation>
     </message>
     <message>
-        <location filename="../spdrguimainwindow.ui" line="322"/>
+        <location filename="../spdrguimainwindow.ui" line="331"/>
         <source>Quit</source>
         <translation>Wyjście</translation>
     </message>
     <message>
-        <location filename="../spdrguimainwindow.cpp" line="125"/>
-        <location filename="../spdrguimainwindow.cpp" line="139"/>
+        <location filename="../spdrguimainwindow.cpp" line="129"/>
+        <location filename="../spdrguimainwindow.cpp" line="143"/>
         <source>Success</source>
         <translation>Sukces</translation>
     </message>
     <message>
-        <location filename="../spdrguimainwindow.cpp" line="127"/>
-        <location filename="../spdrguimainwindow.cpp" line="141"/>
+        <location filename="../spdrguimainwindow.cpp" line="131"/>
+        <location filename="../spdrguimainwindow.cpp" line="145"/>
         <source>Error: see the log</source>
         <translation>Błąd: sprawdź log</translation>
     </message>
     <message>
-        <location filename="../spdrguimainwindow.cpp" line="227"/>
+        <location filename="../spdrguimainwindow.cpp" line="259"/>
         <source>Spdr is a file hierarchy management toolkit</source>
         <translation>Spdr jest programem zarządzającym strukturą plików i katalogów</translation>
     </message>
     <message>
-        <location filename="../spdrguimainwindow.cpp" line="234"/>
+        <location filename="../spdrguimainwindow.cpp" line="266"/>
         <source>About Qt framework being used in Spdr</source>
         <translation>Informacje o bibliotekach Qt używanych przez Spdr</translation>
     </message>

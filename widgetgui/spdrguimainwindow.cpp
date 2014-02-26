@@ -6,11 +6,13 @@
 #include "SpdrImport"
 #include "SpdrSynchronize"
 
+#include <QDir>
 #include <QFile>
 #include <QSettings>
 
 #include <QApplication>
 #include <QMessageBox>
+#include <QAction>
 
 /*!
   \class SpdrGuiMainWindow
@@ -30,6 +32,8 @@ SpdrGuiMainWindow::SpdrGuiMainWindow(QWidget *parent) : QMainWindow(parent),
 
     ui->gridLayoutImport->addWidget(importForm, 0, 0);
     ui->gridLayoutSynchronize->addWidget(synchronizeForm, 0, 0);
+
+    getAvailableLanguages();
 
     settingsPath = qApp->applicationDirPath() + "/spdr-gui-settings.ini";
     readSettings();
@@ -172,6 +176,19 @@ void SpdrGuiMainWindow::readSettings()
     QSettings settings(settingsPath, QSettings::IniFormat, this);
     restoreGeometry(settings.value(Tags::windowGeometry, geometry()).toByteArray());
 
+    QString language(settings.value(Tags::language).toString());
+    if (language.isEmpty()) {
+        language = "en";
+    }
+
+    QList<QAction *> actions = ui->menuLanguage->actions();
+    foreach (QAction *action, actions) {
+        if (action->text() == language) {
+            action->setChecked(true);
+            break;
+        }
+    }
+
     importForm->lineEditInput->setText(settings.value(Tags::inputPathImport).toString());
     importForm->lineEditOutput->setText(settings.value(Tags::outputPathImport).toString());
     importForm->lineEditLog->setText(settings.value(Tags::logPathImport).toString());
@@ -196,6 +213,13 @@ void SpdrGuiMainWindow::readSettings()
 void SpdrGuiMainWindow::saveSettings()
 {
     saveSettingValue(Tags::windowGeometry, geometry());
+    QList<QAction *> actions = ui->menuLanguage->actions();
+    foreach (QAction *action, actions) {
+        if (action->isChecked()) {
+            saveSettingValue(Tags::language, action->text());
+            break;
+        }
+    }
 
     saveSettingValue(Tags::inputPathImport, importForm->lineEditInput->text());
     saveSettingValue(Tags::outputPathImport, importForm->lineEditOutput->text());
@@ -222,10 +246,39 @@ void SpdrGuiMainWindow::saveSettingValue(const QString &tag, const QVariant &val
     settings.setValue(tag, value);
 }
 
+void SpdrGuiMainWindow::getAvailableLanguages()
+{
+    QDir localeDir(qApp->applicationDirPath() + "/locale");
+    QStringList qmFiles(localeDir.entryList(QDir::Files));
+
+    QStringList languages;
+    languages.append("en");
+
+    foreach (const QString &file, qmFiles) {
+        if (file.contains(".qm")) {
+            QString locale(file);
+
+            locale.chop(3);
+            locale.remove("libspdr_");
+            locale.remove("spdr_widgetgui_");
+            locale.remove("spdr_cli_");
+
+            if (!languages.contains(locale)) {
+                languages.append(locale);
+            }
+        }
+    }
+
+    foreach (const QString &language, languages) {
+        QAction *action = ui->menuLanguage->addAction(language);
+        action->setCheckable(true);
+        connect(action, SIGNAL(triggered()), this, SLOT(languageActionTriggered()));
+    }
+}
+
 void SpdrGuiMainWindow::on_actionAboutSpdr_triggered()
 {
     QString aboutText(tr("Spdr is a file hierarchy management toolkit"));
-
     QMessageBox::about(this, tr("About Spdr"), aboutText);
 }
 
@@ -247,4 +300,14 @@ void SpdrGuiMainWindow::on_actionQuit_triggered()
 {
     deleteLater();
     qApp->quit();
+}
+
+void SpdrGuiMainWindow::languageActionTriggered()
+{
+    QList<QAction *> actions = ui->menuLanguage->actions();
+    foreach (QAction *action, actions) {
+        if (action->isChecked() && action != sender()) {
+            action->setChecked(false);
+        }
+    }
 }

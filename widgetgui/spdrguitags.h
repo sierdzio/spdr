@@ -5,6 +5,7 @@
 
 struct Tags {
     static QString const windowGeometry;
+    static QString const language;
 
     static QString const inputPathImport;
     static QString const outputPathImport;
@@ -26,6 +27,7 @@ struct Tags {
 };
 
 QString const Tags::windowGeometry = "windowGeometry";
+QString const Tags::language = "language";
 
 QString const Tags::inputPathImport = "inputPathImport";
 QString const Tags::outputPathImport = "outputPathImport";

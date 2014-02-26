@@ -28,6 +28,7 @@ private slots:
     void on_actionAboutQt_triggered();
     void on_actionResetSettings_triggered();
     void on_actionQuit_triggered();
+    void languageActionTriggered();
 
     void synchronizationFinished(bool result);
     void importFinished(bool result);
@@ -38,6 +39,7 @@ private:
     void readSettings();
     void saveSettings();
     void saveSettingValue(const QString &tag, const QVariant &value);
+    void getAvailableLanguages();
 
     Ui::SpdrGuiMainWindow *ui;
     SpdrGuiBasicInputForm *importForm;
