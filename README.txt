@@ -112,4 +112,7 @@ QtCore, QtGui and QtWidgets to work.
  - use DIFF comparison
  - combine recursive reading of directories with recursive reading of files:
    it can be done in a single function by detecting directories on the fly
+ - add configure script
+ - add automated localisation deployment script
+ - add automated deployment script
 */

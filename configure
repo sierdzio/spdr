@@ -1,0 +1,75 @@
+#!/bin/sh
+# Usage: configure [flags]
+#
+# Configure script prepares project for building with make. Additionally, it
+# helps during deployment and translation generation.
+# It offers several flags that help getting desired output.
+#
+# Use ./configure --help to get more info (or look at the code!)
+set -e
+
+IS_STATIC=false
+
+for OPTION in "$@"
+do
+  if [ "$OPTION" = "-h" ] || [ "$OPTION" = "--help" ]; then
+    echo "configure script for Spdr. Copyright (c) 2014, Tomasz Siekierda."
+    echo "Please see LICENSE file or display it here with -l flag."
+    echo "This is free software uder WTFPL license."
+    echo
+    echo "Usage: configure [flags]"
+    echo
+    echo "Configure script prepares project for building with make."
+    echo "Additionally, it helps during deployment and translation generation."
+    echo "It offers several flags that help getting desired output."
+    echo "Prerequisites for build: qmake in PATH, Qt 5 module installed."
+    echo
+    echo "Flags:"
+    echo " - -h, --help - display this message"
+    echo " - -l, --license - display license text (requires 'less' to be in PATH)"
+    echo " - -t, --translate - deploy translations"
+    echo " - -d, --deploy - deploy all apps"
+    echo
+    echo "Configure cleans the project (make clean) before it runs qmake."
+    return 0
+  elif [ "$OPTION" = "-l" ] || [ "$OPTION" = "--license" ]; then
+    less LICENSE.txt
+    return 0
+  elif [ "$OPTION" = "-t" ] || [ "$OPTION" = "--translate" ]; then
+    echo "Generating TS files..."
+    lupdate spdr.pro
+    echo "Generating QM files..."
+    lrelease spdr.pro
+    echo "Copying QM files to destination directories:"
+    echo "  Spdr library"
+    cp libspdr/locale/*.qm build/spdr/locale/
+    cp libspdr/locale/*.qm build/spdr-cli/locale/
+    cp libspdr/locale/*.qm build/spdr-gui/locale/
+    rm libspdr/locale/*.qm
+    echo "  Spdr Command Line Tool"
+    mv cli/locale/*.qm build/spdr/spdr-cli/locale/
+    echo "  Spdr Widget GUI"
+    mv widgetgui/locale/*.qm build/spdr/spdr-gui/locale/
+    echo "Done"
+    return 0
+  elif [ "$OPTION" = "-d" ] || [ "$OPTION" = "--deploy" ]; then
+    echo "Operation not supported yet"
+    return 0
+  fi
+done
+
+COMMAND="qmake"
+PROJECT_FILE=" spdr.pro"
+FLAGS=" -r CONFIG+=release"
+
+RESULT=$COMMAND$PROJECT_FILE$FLAGS
+
+echo "Cleaning old build."
+make clean
+echo Building with options: $RESULT
+$RESULT
+echo "Done generating Makefiles. You can now use 'make' to compile your project."
+echo "make install is not supperted or tested."
+echo "Results can be found in build/ directory."
+
+
