@@ -10,5 +10,6 @@ Release/
 Makefile*
 .qmake.stash
 *.rc
+*.qm
 .DS_Store
 

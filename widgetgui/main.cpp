@@ -1,4 +1,5 @@
 #include <QApplication>
+#include <QTranslator>
 
 #include "spdrguimainwindow.h"
 
@@ -20,6 +21,13 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     app.setApplicationName("Spdr Widget GUI");
     app.setApplicationVersion("0.1.0");
+
+    /*
+    QTranslator translator;
+    translator.load(app.applicationDirPath() + "/libspdr_pl");
+    translator.load(app.applicationDirPath() + "/spdr_widgetgui_pl");
+    app.installTranslator(&translator);
+    */
 
     SpdrGuiMainWindow mainWindow;
     mainWindow.show();
