@@ -221,122 +221,126 @@ Podczas synchronizacji może się zdarzyć, że niektóre foldery w folderze wyj
         <source>&lt;b&gt;Default:&lt;/b&gt; checked
 
 It may happen that a file is found in the output folder, which has no counterpart in the input folder (Spdr also checks for renamed, moved and updated files, don&apos;t worry!). If that control is checked, those files will be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Domyślnie:&lt;/b&gt; zaznaczone
+
+Może się zdażyć, że plik znajdujący się w folderze wyjściowym nie ma odpowiednika w folderze wejściowym (Spdr sprawdza pliki pod kontem nazswy, ścieżki i zawartości, wykrywa pliki zaktualizowane, przeniesione i te o zmienionej nazwie. Jeśli jednak plik został usunięty w folderze wjeściowym, nie uda się znaleźć odpowiednika). Jeśli ta kontrolka jest zaznaczone, pliki te zostaną usunięte.</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.ui" line="80"/>
         <source>Remove missing files</source>
-        <translation type="unfinished"></translation>
+        <translation>Usuń pliki, których nie ma w folderze wejściowym</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.ui" line="90"/>
         <source>&lt;b&gt;Default:&lt;/b&gt; checked
 
 Spdr checks whether files are identical using numerous techniques. One of them is Md5 checksums. It may happen - although it is extremely unlikely - that 2 different files generate the same checksum. In that case, Spdr may erroneously treat them as similar. To avoid this, you can enable Deep Search: it will make Spdr check all files using a both Md5 and Sha1 checksums, thus minimizing the possibility of a mistake</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Domyślnie:&lt;/b&gt; zaznaczone
+
+Spdr sprawdza, czy pliki są identyczne na wiele sposobów. Jednym z nich jest zastosowanie sum kontrolnych Md5. Może się zdarzyć - choć jest to bardzo mało prawdopodobne - że 2 różne pliki wygenerują tę samą sumę kontrolną. W tym przypadku Spdr może je błędnie uznać za podobne. Aby tego uniknąć, można włączyć głębokie szukanie: sprawi, że Spdr będzie obliczał dla każdego pliku zarówno sumę kontrolną Md5, jak i Sha1. Prawdopodobieństwo, że obie sumy również dadzą ten sam błędny wynik, jest bliskie zeru</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.ui" line="95"/>
         <source>Perform deep search</source>
-        <translation type="unfinished"></translation>
+        <translation>Głębokie szukanie</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.ui" line="123"/>
         <source>Performs the synchronization when clicked. This may take a while</source>
-        <translation type="unfinished"></translation>
+        <translation>Po kliknięciu, Spdr rozpoczyna synchronizację. To może długo potrwać</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.ui" line="126"/>
         <source>Synchronize!</source>
-        <translation type="unfinished"></translation>
+        <translation>Synchronizuj!</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.ui" line="152"/>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Import</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.ui" line="166"/>
         <source>Copy mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Tryb kopiowania</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.ui" line="186"/>
         <source>Use this control to specify whether the files from input folder should be copied to the output directory (&lt;b&gt;default&lt;/b&gt;) or moved (&lt;b&gt;Be careful!&lt;/b&gt; This option means that the file will be completely removed from input folder!).</source>
-        <translation type="unfinished"></translation>
+        <translation>Użyj tej kontrolki by określić, czy pliki z folderu wejściowego powinny być skopiowane (&lt;b&gt;domyślne&lt;/b&gt;) lub przeniesione (&lt;b&gt;Uwaga!&lt;/b&gt; Ta opcja spowoduje usunięcie pliku w folderze wejściowym!) do folderu wyjściowego.</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.ui" line="190"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiuj</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.ui" line="195"/>
         <source>Move</source>
-        <translation type="unfinished"></translation>
+        <translation>Przenieś</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.ui" line="223"/>
         <source>Performs the import operation when clicked</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozpoczyna import plików</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.ui" line="226"/>
         <source>Import!</source>
-        <translation type="unfinished"></translation>
+        <translation>Importuj!</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.ui" line="288"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>O programie</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.ui" line="295"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Plik</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.ui" line="307"/>
         <location filename="../spdrguimainwindow.cpp" line="229"/>
         <source>About Spdr</source>
-        <translation type="unfinished"></translation>
+        <translation>O Spdr</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.ui" line="312"/>
         <source>About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>O Qt</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.ui" line="317"/>
         <source>Reset settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Resetuj ustawienia</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.ui" line="322"/>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Wyjście</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.cpp" line="125"/>
         <location filename="../spdrguimainwindow.cpp" line="139"/>
         <source>Success</source>
-        <translation type="unfinished"></translation>
+        <translation>Sukces</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.cpp" line="127"/>
         <location filename="../spdrguimainwindow.cpp" line="141"/>
         <source>Error: see the log</source>
-        <translation type="unfinished"></translation>
+        <translation>Błąd: sprawdź log</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.cpp" line="227"/>
         <source>Spdr is a file hierarchy management toolkit</source>
-        <translation type="unfinished"></translation>
+        <translation>Spdr jest programem zarządzającym strukturą plików i katalogów</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.cpp" line="234"/>
         <source>About Qt framework being used in Spdr</source>
-        <translation type="unfinished"></translation>
+        <translation>Informacje o bibliotekach Qt używanych przez Spdr</translation>
     </message>
 </context>
 </TS>
