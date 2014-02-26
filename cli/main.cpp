@@ -1,4 +1,5 @@
 #include <QCoreApplication>
+#include <QTranslator>
 #include <QTimer>
 
 #include "spdrcliparser.h"
@@ -24,6 +25,13 @@ int main(int argc, char *argv[])
     QCoreApplication app(argc, argv);
     app.setApplicationName("Spdr Command Line Tool");
     app.setApplicationVersion("0.1.0");
+
+    /*
+    QTranslator translator;
+    translator.load(app.applicationDirPath() + "/libspdr_pl");
+    translator.load(app.applicationDirPath() + "/spdr_cli_pl");
+    app.installTranslator(&translator);
+    */
 
     SpdrCliParser parser;
     parser.parse();
