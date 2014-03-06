@@ -8,7 +8,12 @@
 
 Import operation works by copying all files from input directory to the output,
 and sorting them according to specified formatting options (based on date and
-time).
+time). If Move is used as the CopyMode, Spdr will move the files instead (meaning:
+they will be remmoved from the input folder).
+
+Examples in documentation talk mostly about importing photos and videos from
+cameras, but that is just to help in understanding the ideas. Spdr can be used
+to import any kind of files.
 
 Formatting tags follow a very simple syntax. If you want the files to be put
 in a folder named after the year they were created in, use this tag: <yyyy>.
@@ -43,4 +48,15 @@ path, like this:
 If you run the import using that as the output folder, Spdr will detect, that
 photos for 2014-01-01 and 2014-01-15 already exist, and will copy any new files
 created that day into those folders.
+
+To actually perform the import operation, Spdr needs to know:
+ - the input folder (where to import *from*)
+ - the output folder (where the data should be put; this includes the formatting
+   tags)
+
+There are also some additional settings that can be set:
+ - CopyMode can be changed move the files instead of copying them
+ - simulation mode can be turned on
+ - logging can be enabled
+ - log file can be specified
  */

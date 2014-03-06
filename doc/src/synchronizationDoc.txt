@@ -11,7 +11,30 @@ folders so that the output folder and file structure is exactly the
 same as in the input folder, and to do it will as little effort as possible. If
 you have ever tried to manually copy your movie or foto collection into an
 archive, you probably know how hard and error-prone that can be. Spdr will do it
-for you automatically and fast. The algorithm optimizes the whole operation by
-skipping updates for unchanged files and minimizing the file operations that
-need to be performed on the hard drive.
+for you automatically and fast.
+
+The algorithm optimizes the whole operation by skipping updates for unchanged
+files and minimizing the file operations that need to be performed on the hard
+drive. Spdr also automatically renames files and folders, and cleans up old data.
+
+Examples in documentation talk mostly about synchronizing photos and videos,
+but that is just to help in understanding the ideas. Spdr can be used
+to synchronize any kind of files.
+
+To actually perform the synchronization, Spdr needs to know:
+ - the input folder (where to get the data *from*)
+ - the output folder (where to copy the data *to*)
+
+There are also some additional settings that can be set:
+ - Spdr can remove the directories that have become empty during synchronization
+   (in the output folder! Spdr does not modify the content of the input dir)
+ - Spdr can remove the files that are present in the output folder, but can not
+   be found in the input folder
+ - Spdr can run a deep search, which minimizes the possibility of errors, but at
+   a price of requiring more memory an time to finish the synchronization. This
+   is rarely required, but turned on by default nonetheless. See documentation
+   for SpdrSynchronize::SynchronizationOption for more information
+ - simulation mode can be turned on
+ - logging can be enabled
+ - log file can be specified
  */
