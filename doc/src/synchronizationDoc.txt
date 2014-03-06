@@ -1,0 +1,15 @@
+/*!
+  \page synchronizationOverview Synchronization Overview
+
+  \ref index "Got to main page"
+  \ref importOverview "More info on importing"
+
+Synchronize operation is the core functionality of Spdr. The aim is to merge the
+folders so that the output folder and file structure is exactly the
+same as in the input folder, and to do it will as little effort as possible. If
+you have ever tried to manually copy your movie or foto collection into an
+archive, you probably know how hard and error-prone that can be. Spdr will do it
+for you automatically and fast. The algorithm optimizes the whole operation by
+skipping updates for unchanged files and minimizing the file operations that
+need to be performed on the hard drive.
+ */

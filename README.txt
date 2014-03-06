@@ -26,25 +26,25 @@ library, Spdr provides a Command Line application, as well as a GUI (using Qt
 Widgets.
 
 Spdr offers two major features:
- - importing a directory
- - synchronizing two directories
+ - importing a directory (detailed description - to be added later)
+ - synchronizing two directories (\ref synchronizationOverview "detailed description")
 
 Both operations share a host of common properties: input and output files need
 to be specified, there is an option of logging, etc.
 
 Import operation works by copying all files from input directory to the output,
 and sorting them according to specified formatting options (based on date and
-time). See documentation for SpdrImport for more information.
+time). See \ref importOverview "documentation" for SpdrImport for more information.
 
-Synchronize operation is the core functionality of Spdr. The aim is to make sure
-that after synchronization, the output folder and file structure is exactly the
-same as in the input folder, and to do it will as little effor as possible. If
+Synchronize operation is the core functionality of Spdr. The aim is to merge the
+folders so that the output folder and file structure is exactly the
+same as in the input folder, and to do it will as little effort as possible. If
 you have ever tried to manually copy your movie or foto collection into an
 archive, you probably know how hard and error-prone that can be. Spdr will do it
 for you automatically and fast. The algorithm optimizes the whole operation by
 skipping updates for unchanged files and minimizing the file operations that
-need to be performed on the hard drive. See documentation for SpdrSynchronize
-for more information.
+need to be performed on the hard drive. See \ref synchronizationOverview "documentation"
+for SpdrSynchronize for more information.
 
 Directory renames are part of standard file copying logic, so you do not need to
 worry about that.

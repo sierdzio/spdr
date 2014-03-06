@@ -1,0 +1,10 @@
+/*!
+  \page importOverview Import Overview
+
+  \ref index "Got to main page"
+  \ref synchronizationOverview "More info on synchronization"
+
+Import operation works by copying all files from input directory to the output,
+and sorting them according to specified formatting options (based on date and
+time).
+ */

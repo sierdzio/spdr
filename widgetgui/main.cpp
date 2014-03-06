@@ -5,7 +5,6 @@
 #include <QFile>
 
 #include "spdrguimainwindow.h"
-//#include "spdrguitags.h"
 
 /*!
   \addtogroup wigetgui Spdr Widget GUI

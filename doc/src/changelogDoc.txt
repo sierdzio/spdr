@@ -1,7 +1,7 @@
 /*!
   \page changelog Changelog
 
-  \ref index "Got to main page"
+  \ref index "Go to the main page"
 
   All changes to Spdr can be taken from git repository log. Since that log is
   long, full of technical jargon and abbreviations, the project also maintains

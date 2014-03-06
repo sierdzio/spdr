@@ -1,9 +1,10 @@
-spdr
-
 CHANGELOG
 
 This is a CHANGELOG for spdr.
 Project’s GIT repo: https://github.com/sierdzio/spdar
+
+2014-04:
+ - documentation updates
 
 2014-02:
  - the rewrite is completed
