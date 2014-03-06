@@ -7,7 +7,7 @@
   \class SpdrLog
   \ingroup libspdr
 
-  Simple class used for log messages throughout Spdr.
+  \brief Simple class used for logging messages throughout Spdr.
   */
 
 /*!

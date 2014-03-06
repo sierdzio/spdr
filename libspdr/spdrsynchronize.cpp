@@ -13,7 +13,7 @@
   \class SpdrSynchronize
   \ingroup libspdr
 
-  This class can be used to synchronize 2 directories.
+  \brief Can be used to intelligently synchronize 2 directories.
 
   The folder specified in input path is considered to be more "up-to-date" and
   more important. The files it contains will not be changed unless you run

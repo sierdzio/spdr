@@ -1,10 +1,46 @@
 /*!
   \page importOverview Import Overview
 
-  \ref index "Got to main page"
-  \ref synchronizationOverview "More info on synchronization"
+  \brief A more detailed description of how importing works
+
+  - \ref index "Got to main page"
+  - \ref synchronizationOverview "More info on synchronization"
 
 Import operation works by copying all files from input directory to the output,
 and sorting them according to specified formatting options (based on date and
 time).
+
+Formatting tags follow a very simple syntax. If you want the files to be put
+in a folder named after the year they were created in, use this tag: <yyyy>.
+If you need a deeper structure, with a month and a year, do this: <yyyy>/<MM>.
+You can also add some custom folders in-between: <yyyy>/videos/<MM>. Spdr supports
+all formatting tags of QDateTime class. See http://qt-project.org/doc/qt-5/qdatetime.html#fromString-2
+
+Spdr import can also do wildcard matching of directories. Consider this example:
+you use Spdr to download photos from your camera, using this output path:
+\verbatim
+/home/me/photos/<yyyy>/<MM>/<yyyy-MM-dd>
+\endverbatim
+
+This creates a nice file structure for you, placing every picture in a folder
+that clearly states when it was taken. The problem is, of course, that there is
+little information there. So, you later add folder names by hand, with a short
+description on what where you were on that day. For example:
+2014/
+  01/
+    2014-01-01 - new year celebratons on the Moon
+    2014-01-15 - my friend's birthday
+    etc.
+
+If you have taken more photos later, and use Spdr's import again, it will happily
+copy all the files again, creating "clean" directory names. So the result will
+be a duplication of data. To prevent this, add a wildcard star sign '*' to your
+path, like this:
+\verbatim
+/home/me/photos/<yyyy>/<MM>/<yyyy-MM-dd>*
+\endverbatim
+
+If you run the import using that as the output folder, Spdr will detect, that
+photos for 2014-01-01 and 2014-01-15 already exist, and will copy any new files
+created that day into those folders.
  */

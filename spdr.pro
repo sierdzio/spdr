@@ -3,6 +3,7 @@ TEMPLATE = subdirs
 SUBDIRS += libspdr cli widgetgui tests benchmarks
 
 OTHER_FILES += \
+    spdr.doxy \
     AUTHORS.txt \
     LICENSE.txt \
     README.txt \

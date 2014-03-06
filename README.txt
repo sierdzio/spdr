@@ -17,16 +17,16 @@ used.
 Copyright (C) 2014  Tomasz Siekierda
 Project’s GIT repo: https://github.com/sierdzio/spdr
 
-Spdr is be a tool for merging (intelligent syncing) of folders, for example when
+Spdr is a tool for merging (intelligent syncing) of folders, for example when
 copying large collection of files between computers. It detects what changes
 have been made and tries to bring the output directory up to date.
 
 Core functionality is located in a standalone library: libspdr. On top of that
 library, Spdr provides a Command Line application, as well as a GUI (using Qt
-Widgets.
+Widgets).
 
 Spdr offers two major features:
- - importing a directory (detailed description - to be added later)
+ - importing a directory (\ref importOverview "detailed description")
  - synchronizing two directories (\ref synchronizationOverview "detailed description")
 
 Both operations share a host of common properties: input and output files need

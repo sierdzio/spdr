@@ -14,7 +14,7 @@
   \class SpdrImport
   \ingroup libspdr
 
-  This class can be used to intelligently import a directory, dividing all files
+  \brief Can be used to intelligently import a directory, dividing all files
   into neatly organised set of directories.
 
   For example, you may have a directory full of unsorted photos. Then, by importing

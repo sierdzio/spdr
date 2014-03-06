@@ -1,8 +1,10 @@
 /*!
   \page synchronizationOverview Synchronization Overview
 
-  \ref index "Got to main page"
-  \ref importOverview "More info on importing"
+  \brief A more detailed description of how synchronization works
+
+  - \ref index "Got to main page"
+  - \ref importOverview "More info on importing"
 
 Synchronize operation is the core functionality of Spdr. The aim is to merge the
 folders so that the output folder and file structure is exactly the

@@ -11,7 +11,9 @@
   \class SpdrFileData
   \internal
 
-  Used to cache the information about a file. Can be used to compare two files
+  \brief Used to cache the information about a file.
+
+  Can be used to compare two files
   and dump file info. This class is not exported in Spdr library, is intentionally
   kept lightweight (does not inherit any other classes) to allow it to be instantiated
   in large quantities without too much overhead.
