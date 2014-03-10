@@ -325,7 +325,11 @@ QString SpdrImportPrivate::getOutputFilePath(const QString &inputFilePath) const
         outputPathSegments.append(resultSegment);
     }
 
-    return outputPathSegments.join("/");
+    QString result(outputPathSegments.join("/"));
+
+    q->log(QCoreApplication::translate("SpdrImportPrivate", "Output file path set to: %1").arg(result), Spdr::Debug);
+
+    return result;
 }
 
 /*!
@@ -353,10 +357,13 @@ QString SpdrImportPrivate::substituteStarsInPath(const QString &outputFilePath) 
     // Go through every segment, see if dir exists, see if there is a name match,
     // fix the segment.
     QString pathBuilder;
-    foreach(const QString &segment, outputPathSegments) { // (int i = 0; i < outputPathSegments.length(); ++i) {
+    foreach(const QString &segment, outputPathSegments) {
         if (!pathBuilder.isEmpty()) {
             pathBuilder.append("/");
         }
+//        else if (pathBuilder.isEmpty() && q->outputPath().startsWith('/')) {
+//            pathBuilder.append("/");
+//        }
 
         // Get existing directory names, look for a candidate
         if (segment.contains(star)) {
@@ -367,20 +374,33 @@ QString SpdrImportPrivate::substituteStarsInPath(const QString &outputFilePath) 
             QRegularExpression regExp(regExpString);
             q->log(QCoreApplication::translate("SpdrImportPrivate", "Star matching regular expression set to: %1").arg(regExpString), Spdr::Debug);
 
+            bool found = false;
             foreach (const QFileInfo &dirInfo, dirs) {
                 QString dirName(dirInfo.fileName());
 
                 if (regExp.match(dirName).hasMatch()) {
                     pathBuilder.append(dirName);
+                    found = true;
                     q->log(QCoreApplication::translate("SpdrImportPrivate", "An existing directory that matches wildcard has been found: %1")
                            .arg(dirName), Spdr::ExcessiveLogging);
                     break;
                 }
             }
+
+            if (!found) {
+                QString plainDir(segment);
+                pathBuilder.append(plainDir.remove('*'));
+            }
         } else {
             pathBuilder.append(segment);
         }
     }
+
+    if (q->outputPath().startsWith('/') && !pathBuilder.startsWith('/')) {
+        pathBuilder.prepend('/');
+    }
+
+    q->log(QCoreApplication::translate("SpdrImportPrivate", "Path builder result: %1").arg(pathBuilder), Spdr::Debug);
 
     return pathBuilder;
 }
