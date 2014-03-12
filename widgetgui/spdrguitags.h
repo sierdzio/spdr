@@ -3,6 +3,14 @@
 
 #include <QString>
 
+/*!
+  \ingroup wigetgui
+
+  \brief Struct containing tags used to explicitly describe, in a shortened form,
+  various application functions.
+
+  This is used to read and write Spdr GUI settings.
+  */
 struct Tags {
     static QString const windowGeometry;
     static QString const language;

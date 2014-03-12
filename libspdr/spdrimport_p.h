@@ -8,6 +8,7 @@
 class QChar;
 
 /*!
+  \ingroup libspdr
   \internal
   */
 class SpdrImportPrivate

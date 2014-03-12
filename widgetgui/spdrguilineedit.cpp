@@ -8,6 +8,13 @@
 #include <QFileInfo>
 #include <QUrl>
 
+/*!
+  \class SpdrGuiLineEdit
+  \ingroup wigetgui
+
+  \brief An extended QLineEdit, adds drag and drop support for directory and file paths
+ */
+
 SpdrGuiLineEdit::SpdrGuiLineEdit(QWidget *parent) : QLineEdit(parent)
 {
     setAcceptDrops(true);

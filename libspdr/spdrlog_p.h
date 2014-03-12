@@ -4,6 +4,7 @@
 #include "spdrlog.h"
 
 /*!
+  \ingroup libspdr
   \internal
   */
 class SpdrLogPrivate

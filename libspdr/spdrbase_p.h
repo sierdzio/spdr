@@ -7,6 +7,7 @@
 #include <QString>
 
 /*!
+  \ingroup libspdr
   \internal
   */
 class SpdrBasePrivate

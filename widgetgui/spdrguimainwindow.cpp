@@ -18,7 +18,7 @@
   \class SpdrGuiMainWindow
   \ingroup wigetgui
 
-  Class used to display the main user interface.
+  \brief Class used to display the main user interface.
  */
 
 SpdrGuiMainWindow::SpdrGuiMainWindow(QWidget *parent) : QMainWindow(parent),

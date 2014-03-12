@@ -3,8 +3,9 @@ CHANGELOG
 This is a CHANGELOG for spdr.
 Project’s GIT repo: https://github.com/sierdzio/spdar
 
-2014-04:
+2014-03:
  - documentation updates
+ - fix SpdrImport path building
 
 2014-02:
  - the rewrite is completed

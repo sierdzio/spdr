@@ -9,6 +9,7 @@
 
 /*!
   \class SpdrFileData
+  \ingroup libspdr
   \internal
 
   \brief Used to cache the information about a file.
