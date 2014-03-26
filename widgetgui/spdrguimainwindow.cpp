@@ -298,7 +298,7 @@ void SpdrGuiMainWindow::on_actionResetSettings_triggered()
 
 void SpdrGuiMainWindow::on_actionQuit_triggered()
 {
-    deleteLater();
+    //deleteLater();
     qApp->quit();
 }
 
