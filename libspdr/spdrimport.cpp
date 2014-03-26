@@ -1,10 +1,10 @@
 #include "spdrimport_p.h"
 #include "spdrfiledata.h"
 
-#include <QCoreApplication>
 #include <QChar>
+#include <QString>
 #include <QStringList>
-#include <QRegularExpression>
+#include <QCoreApplication>
 #include <QDateTime>
 #include <QFileInfo>
 #include <QFileInfoList>
@@ -41,7 +41,7 @@ SpdrImport::SpdrImport(QObject *parent) : SpdrBase(parent), d_ptr(new SpdrImport
 {
     Q_D(SpdrImport);
 
-    d->mPathSeparatorRegularExpression = "[\\\\]|[/]";
+    d->mPathSeparatorRegularExpression.setPattern("[\\\\]|[/]");
     d->mCopyMode = Copy;
 }
 
@@ -186,7 +186,8 @@ bool SpdrImportPrivate::performFileOperation(const QString &inputFile, const QSt
     bool result = true;
 
     if (areFilesTheSame(inputFile, outputFile)) {
-        q->log(QCoreApplication::translate("SpdrImportPrivate", "COPY: Skipping copying %1 to %2: files are identical")
+        q->log(QCoreApplication::translate("SpdrImportPrivate",
+                                           "COPY: Skipping copying %1 to %2: files are identical")
                .arg(inputFile).arg(outputFile), Spdr::MediumLogging);
     } else {
         if (!q->simulate()) {
@@ -198,7 +199,8 @@ bool SpdrImportPrivate::performFileOperation(const QString &inputFile, const QSt
                 } else if (q->updateMode() == Spdr::Ignore) {
                     skip = true;
                 } else if (q->updateMode() == Spdr::Ask) { // TODO: implement Spdr::Ask
-                    q->log(QCoreApplication::translate("SpdrImportPrivate", "This feature has not been implemented yet: Spdr::%1")
+                    q->log(QCoreApplication::translate("SpdrImportPrivate",
+                                                       "This feature has not been implemented yet: Spdr::%1")
                            .arg(Spdr::updateModeToString(Spdr::Ask)), Spdr::Critical);
                     return false;
                 }
@@ -216,7 +218,7 @@ bool SpdrImportPrivate::performFileOperation(const QString &inputFile, const QSt
             }
         }
 
-        q->log(QCoreApplication::translate("SpdrImportPrivate", "COPY: Copying %1 to %2 has: %3").arg(inputFile).arg(outputFile)
+        q->log(QCoreApplication::translate("SpdrImportPrivate", "COPY: Copying %1 to %2 was a: %3").arg(inputFile).arg(outputFile)
                .arg(Spdr::getOperationStatusFromBool(result)), Spdr::MediumLogging);
     }
 
@@ -302,10 +304,10 @@ QString SpdrImportPrivate::getOutputFilePath(const QString &inputFilePath) const
 
     // TODO: allow to change the input file name, too!
     QFileInfo fileInfo(inputFilePath);
-    QDateTime creationDate(fileInfo.created());
+    QDateTime creationDate(fileInfo.lastModified());
 
     // Reads both Unix and Windows paths
-    QStringList pathSegments(q->outputPath().split(QRegularExpression(mPathSeparatorRegularExpression),
+    QStringList pathSegments(q->outputPath().split(mPathSeparatorRegularExpression,
                                                    QString::KeepEmptyParts));
     pathSegments.append(fileInfo.fileName());
     QStringList outputPathSegments;
@@ -351,7 +353,7 @@ QString SpdrImportPrivate::substituteStarsInPath(const QString &outputFilePath) 
         return outputFilePath;
     }
 
-    QStringList outputPathSegments(outputFilePath.split(QRegularExpression(mPathSeparatorRegularExpression),
+    QStringList outputPathSegments(outputFilePath.split(mPathSeparatorRegularExpression,
                                                         QString::KeepEmptyParts));
 
     // Go through every segment, see if dir exists, see if there is a name match,
@@ -417,7 +419,7 @@ bool SpdrImportPrivate::checkFormat(const QString &format) const
     bool result = true;
 
     // Reads both Unix and Windows paths
-    QStringList pathSegments(format.split(QRegularExpression(mPathSeparatorRegularExpression),
+    QStringList pathSegments(format.split(mPathSeparatorRegularExpression,
                                           QString::SkipEmptyParts));
 
     foreach (const QString &segment, pathSegments) {

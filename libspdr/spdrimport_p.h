@@ -2,10 +2,10 @@
 #define SPDRIMPORT_P_H
 
 #include "spdrimport.h"
-
-#include <QString>
+#include <QRegularExpression>
 
 class QChar;
+class QString;
 
 /*!
   \ingroup libspdr
@@ -30,7 +30,7 @@ public:
     bool checkFormat(const QString &format) const;
     int countOccurences(const QString &stringToSearchThrough, const QChar &characterToCount) const;
 
-    QString mPathSeparatorRegularExpression;
+    QRegularExpression mPathSeparatorRegularExpression;
     SpdrImport::CopyMode mCopyMode;
 };
 
