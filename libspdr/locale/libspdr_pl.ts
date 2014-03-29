@@ -17,42 +17,42 @@
 <context>
     <name>SpdrBase</name>
     <message>
-        <location filename="../spdrbase.cpp" line="99"/>
+        <location filename="../spdrbase.cpp" line="100"/>
         <source>Input directory path does not exist</source>
         <translation>Folder wejściowy nie istnieje</translation>
     </message>
     <message>
-        <location filename="../spdrbase.cpp" line="104"/>
+        <location filename="../spdrbase.cpp" line="105"/>
         <source>WARNING: Input path set to root directory: this can be dangerous</source>
         <translation>UWAGA: Folder wejściowy ustawiony na root: to może być niebezpieczne</translation>
     </message>
     <message>
-        <location filename="../spdrbase.cpp" line="108"/>
+        <location filename="../spdrbase.cpp" line="109"/>
         <source>Input path changed to: %1</source>
         <translation>Ścieżkę wejściową zmieniono na %1</translation>
     </message>
     <message>
-        <location filename="../spdrbase.cpp" line="138"/>
+        <location filename="../spdrbase.cpp" line="139"/>
         <source>Output directory path does not exist</source>
         <translation>Folder wyjściowy nie istnieje</translation>
     </message>
     <message>
-        <location filename="../spdrbase.cpp" line="143"/>
+        <location filename="../spdrbase.cpp" line="144"/>
         <source>WARNING: Output path set to root directory: this can be dangerous</source>
         <translation>UWAGA: Ścieżka wyjściowa ustawiona na root: to może być niebezpieczne</translation>
     </message>
     <message>
-        <location filename="../spdrbase.cpp" line="152"/>
+        <location filename="../spdrbase.cpp" line="153"/>
         <source>Output path changed to: %1</source>
         <translation>Ścieżkę wyjściową zmieniono na: %1</translation>
     </message>
     <message>
-        <location filename="../spdrbase.cpp" line="179"/>
+        <location filename="../spdrbase.cpp" line="180"/>
         <source>Simulation is now: %1</source>
         <translation>Symulacja jest teraz: %1</translation>
     </message>
     <message>
-        <location filename="../spdrbase.cpp" line="203"/>
+        <location filename="../spdrbase.cpp" line="204"/>
         <source>Update mode changed to: %1</source>
         <translation>Tryb uaktualniania zmieniono na: %1</translation>
     </message>
@@ -60,17 +60,17 @@
 <context>
     <name>SpdrFileData</name>
     <message>
-        <location filename="../spdrfiledata.cpp" line="120"/>
+        <location filename="../spdrfiledata.cpp" line="123"/>
         <source>File could not be opened for reading while attempting to create a hash! %1</source>
         <translation>Nie udało się otworzyć pliku do odczytania podczas próby stworzenia sumy kontrolnej! %1</translation>
     </message>
     <message>
-        <location filename="../spdrfiledata.cpp" line="123"/>
+        <location filename="../spdrfiledata.cpp" line="126"/>
         <source>Could not create an %1 hash for file %2</source>
         <translation>Nie udało się utworzyć sumy kontrolnej %1 dla pliku %2</translation>
     </message>
     <message>
-        <location filename="../spdrfiledata.cpp" line="172"/>
+        <location filename="../spdrfiledata.cpp" line="175"/>
         <source>DB: Successfully added file %1 to the database</source>
         <translation>DB: Pomyślnie dodano plik %1 do bazy danych</translation>
     </message>
@@ -96,37 +96,51 @@
         <translation>KOPIA: Pomijam kopiowanie %1 do %2: pliki są identyczne</translation>
     </message>
     <message>
-        <location filename="../spdrimport.cpp" line="201"/>
+        <location filename="../spdrimport.cpp" line="202"/>
         <source>This feature has not been implemented yet: Spdr::%1</source>
         <translation>Ta funkcja jeszcze nie została zaimplementowana: Spdr::%1</translation>
     </message>
     <message>
-        <location filename="../spdrimport.cpp" line="219"/>
         <source>COPY: Copying %1 to %2 has: %3</source>
+        <translation type="vanished">KOPIA: Kopiowanie %1 do %2 zakończyło się: %3</translation>
+    </message>
+    <message>
+        <location filename="../spdrimport.cpp" line="221"/>
+        <source>COPY: Copying %1 to %2 was a: %3</source>
         <translation>KOPIA: Kopiowanie %1 do %2 zakończyło się: %3</translation>
     </message>
     <message>
-        <location filename="../spdrimport.cpp" line="368"/>
+        <location filename="../spdrimport.cpp" line="332"/>
+        <source>Output file path set to: %1</source>
+        <translation>Plik wyjściowy zmieniono na: %1</translation>
+    </message>
+    <message>
+        <location filename="../spdrimport.cpp" line="377"/>
         <source>Star matching regular expression set to: %1</source>
         <translation>Dopasowywanie wieloznacznika (gwiazdki) do wyrażenia regularnego zmieniono na: %1</translation>
     </message>
     <message>
-        <location filename="../spdrimport.cpp" line="375"/>
+        <location filename="../spdrimport.cpp" line="386"/>
         <source>An existing directory that matches wildcard has been found: %1</source>
         <translation>Znaleziono folder pasujący do wieloznacznika (gwiazdki): %1</translation>
     </message>
     <message>
-        <location filename="../spdrimport.cpp" line="412"/>
+        <location filename="../spdrimport.cpp" line="405"/>
+        <source>Path builder result: %1</source>
+        <translation>Rezultat budowania ścieżki: %1</translation>
+    </message>
+    <message>
+        <location filename="../spdrimport.cpp" line="434"/>
         <source>Missing tag enclosure: &lt; or &gt;: %1</source>
         <translation>Brakuje zamknięcia tagu: &lt; lub &gt;: %1</translation>
     </message>
     <message>
-        <location filename="../spdrimport.cpp" line="416"/>
+        <location filename="../spdrimport.cpp" line="438"/>
         <source>Date format tag is closed before it is opened: %1</source>
         <translation>Tag formatujący datę został zamknięty zanim został otwarty: %1</translation>
     </message>
     <message>
-        <location filename="../spdrimport.cpp" line="420"/>
+        <location filename="../spdrimport.cpp" line="442"/>
         <source>Too many date formatting tags: %1</source>
         <translation>Zbyt wiele tagów formatujących: %1</translation>
     </message>

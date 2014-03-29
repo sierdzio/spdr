@@ -43,18 +43,14 @@ do
     lrelease cli/cli.pro
     lrelease widgetgui/widgetgui.pro
     echo "Copying QM files to destination directories:"
-    mkdir -p build/spdr/locale
-    mkdir -p build/spdr-cli/locale
-    mkdir -p build/spdr-gui/locale
+    mkdir -p bin/locale
     echo "  Spdr library"
-    cp libspdr/locale/*.qm build/spdr/locale
-    cp libspdr/locale/*.qm build/spdr-cli/locale
-    cp libspdr/locale/*.qm build/spdr-gui/locale
+    cp libspdr/locale/*.qm bin/locale
     rm libspdr/locale/*.qm
     echo "  Spdr Command Line Tool"
-    mv cli/locale/*.qm build/spdr-cli/locale
+    mv cli/locale/*.qm bin/locale
     echo "  Spdr Widget GUI"
-    mv widgetgui/locale/*.qm build/spdr-gui/locale
+    mv widgetgui/locale/*.qm bin/locale
     echo "Done"
     return 0
   elif [ "$OPTION" = "-d" ] || [ "$OPTION" = "--deploy" ]; then

@@ -3,6 +3,7 @@
 *.pro.user
 *.kate-swp
 *~
+bin/
 build/
 doc/html
 Debug/

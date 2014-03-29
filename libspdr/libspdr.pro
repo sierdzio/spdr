@@ -19,6 +19,8 @@ static {
 
 TRANSLATIONS += locale/libspdr_pl.ts
 
+QMAKE_POST_LINK = lupdate libspdr.pro && lrelease libspdr.pro
+
 INCLUDEPATH += src
 
 SOURCES += \

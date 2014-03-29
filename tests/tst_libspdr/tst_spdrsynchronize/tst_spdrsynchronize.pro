@@ -1,9 +1,9 @@
-include(../../../libraryIncludes.pri)
-include(../../../definitions.pri)
-
 QT = core testlib
 
 CONFIG += testcase
+
+include(../../../libraryIncludes.pri)
+include(../../../definitions.pri)
 
 SOURCES += tst_spdrsynchronize.cpp
 

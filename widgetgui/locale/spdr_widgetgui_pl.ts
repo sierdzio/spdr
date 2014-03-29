@@ -179,7 +179,7 @@ Symulacja może służyć do sprawdzenia, czy Spdr działa poprawnie, bez ryzyko
 <context>
     <name>SpdrGuiLineEdit</name>
     <message>
-        <location filename="../spdrguilineedit.cpp" line="14"/>
+        <location filename="../spdrguilineedit.cpp" line="21"/>
         <source>/some/example/path (you can drag &amp; drop here)</source>
         <translation>/jakaś/przykładowa/ścieżka (możesz tu przenieść i opuścić folder)</translation>
     </message>
@@ -302,16 +302,16 @@ Spdr sprawdza, czy pliki są identyczne na wiele sposobów. Jednym z nich jest z
     <message>
         <location filename="../spdrguimainwindow.ui" line="303"/>
         <source>Select application language from a list of available languages. Changes require application restart to take effect.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wybierz język aplikacji z listy dostępnych języków. Zmiana języka wymaga zrestartowania aplikacji.</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.ui" line="306"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Język</translation>
     </message>
     <message>
         <location filename="../spdrguimainwindow.ui" line="316"/>
-        <location filename="../spdrguimainwindow.cpp" line="261"/>
+        <location filename="../spdrguimainwindow.cpp" line="282"/>
         <source>About Spdr</source>
         <translation>O Spdr</translation>
     </message>
@@ -343,12 +343,12 @@ Spdr sprawdza, czy pliki są identyczne na wiele sposobów. Jednym z nich jest z
         <translation>Błąd: sprawdź log</translation>
     </message>
     <message>
-        <location filename="../spdrguimainwindow.cpp" line="259"/>
+        <location filename="../spdrguimainwindow.cpp" line="281"/>
         <source>Spdr is a file hierarchy management toolkit</source>
         <translation>Spdr jest programem zarządzającym strukturą plików i katalogów</translation>
     </message>
     <message>
-        <location filename="../spdrguimainwindow.cpp" line="266"/>
+        <location filename="../spdrguimainwindow.cpp" line="287"/>
         <source>About Qt framework being used in Spdr</source>
         <translation>Informacje o bibliotekach Qt używanych przez Spdr</translation>
     </message>

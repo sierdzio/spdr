@@ -17,6 +17,8 @@ SOURCES += \
 
 TRANSLATIONS += locale/spdr_widgetgui_pl.ts
 
+QMAKE_POST_LINK = lupdate widgetgui.pro && lrelease widgetgui.pro
+
 FORMS += \
     spdrguimainwindow.ui \
     spdrguibasicinputform.ui

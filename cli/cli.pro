@@ -9,6 +9,8 @@ include(../definitions.pri)
 
 TRANSLATIONS += locale/spdr_cli_pl.ts
 
+QMAKE_POST_LINK = lupdate cli.pro && lrelease cli.pro
+
 SOURCES += \
     main.cpp \
     spdrcliparser.cpp \
