@@ -6,6 +6,8 @@ Project’s GIT repo: https://github.com/sierdzio/spdar
 2014-03:
  - documentation updates
  - fix SpdrImport path building
+ - fix SpdrImport reading wrong date from files
+ - update the building scripts
 
 2014-02:
  - the rewrite is completed
