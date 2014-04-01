@@ -45,8 +45,7 @@ do
     echo "Copying QM files to destination directories:"
     mkdir -p bin/locale
     echo "  Spdr library"
-    cp libspdr/locale/*.qm bin/locale
-    rm libspdr/locale/*.qm
+    mv libspdr/locale/*.qm bin/locale
     echo "  Spdr Command Line Tool"
     mv cli/locale/*.qm bin/locale
     echo "  Spdr Widget GUI"
