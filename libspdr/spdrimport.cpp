@@ -9,6 +9,7 @@
 #include <QFileInfo>
 #include <QFileInfoList>
 #include <QDir>
+#include <QDirIterator>
 
 /*!
   \class SpdrImport
@@ -259,19 +260,14 @@ bool SpdrImportPrivate::areFilesTheSame(const QString &input, const QString &out
   */
 bool SpdrImportPrivate::importDirectory(const QString &directoryPath) const
 {
-    QDir inputDirectory(directoryPath);
+    // Goes through all subfolders, returns only files: briliant!
+    QDirIterator it(directoryPath, QDir::NoDotAndDotDot | QDir::Files,
+                    QDirIterator::Subdirectories);
 
-    QFileInfoList fileList(inputDirectory.entryInfoList(QDir::Files | QDir::NoDotAndDotDot));
-    QFileInfoList dirList(inputDirectory.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot));
+    while (it.hasNext()) {
+        it.next();
 
-    foreach (const QFileInfo &file, fileList) {
-        if (!importFile(file.absoluteFilePath())) {
-            return false;
-        }
-    }
-
-    foreach (const QFileInfo &dir, dirList) {
-        if (!importDirectory(dir.absoluteFilePath())) {
+        if (!importFile(it.fileInfo().absoluteFilePath())) {
             return false;
         }
     }

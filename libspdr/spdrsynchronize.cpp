@@ -8,6 +8,7 @@
 #include <QFileInfo>
 #include <QFileInfoList>
 #include <QDir>
+#include <QDirIterator>
 
 /*!
   \class SpdrSynchronize
@@ -232,19 +233,13 @@ SpdrSynchronize::SpdrSynchronize(SpdrSynchronizePrivate &dd, QObject *parent)
 bool SpdrSynchronizePrivate::readDirectoryFileData(const QString &directoryPath,
                                                    QMultiHash<QByteArray, SpdrFileData> *fileHashTable) const
 {
-    QDir inputDirectory(directoryPath);
+    QDirIterator it(directoryPath, QDir::NoDotAndDotDot | QDir::Files,
+                    QDirIterator::Subdirectories);
 
-    QFileInfoList fileList(inputDirectory.entryInfoList(QDir::Files | QDir::NoDotAndDotDot));
-    QFileInfoList dirList(inputDirectory.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot));
+    while (it.hasNext()) {
+        it.next();
 
-    foreach (const QFileInfo &file, fileList) {
-        if (!readFileData(file.absoluteFilePath(), fileHashTable)) {
-            return false;
-        }
-    }
-
-    foreach (const QFileInfo &dir, dirList) {
-        if (!readDirectoryFileData(dir.absoluteFilePath(), fileHashTable)) {
+        if (!readFileData(it.fileInfo().absoluteFilePath(), fileHashTable)) {
             return false;
         }
     }
@@ -285,19 +280,14 @@ bool SpdrSynchronizePrivate::readFileData(const QString &filePath,
 bool SpdrSynchronizePrivate::synchronizeDirectory(const QString &directoryPath,
                                                   QMultiHash<QByteArray, SpdrFileData> *fileHashTable) const
 {
-    QDir inputDirectory(directoryPath);
+    // Goes through all subfolders, returns only files: briliant!
+    QDirIterator it(directoryPath, QDir::NoDotAndDotDot | QDir::Files,
+                    QDirIterator::Subdirectories);
 
-    QFileInfoList fileList(inputDirectory.entryInfoList(QDir::Files | QDir::NoDotAndDotDot));
-    QFileInfoList dirList(inputDirectory.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot));
+    while (it.hasNext()) {
+        it.next();
 
-    foreach (const QFileInfo &file, fileList) {
-        if (!synchronizeFile(file.absoluteFilePath(), fileHashTable)) {
-            return false;
-        }
-    }
-
-    foreach (const QFileInfo &dir, dirList) {
-        if (!synchronizeDirectory(dir.absoluteFilePath(), fileHashTable)) {
+        if (!synchronizeFile(it.fileInfo().absoluteFilePath(), fileHashTable)) {
             return false;
         }
     }
