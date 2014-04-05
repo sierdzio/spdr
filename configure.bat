@@ -3,13 +3,7 @@ echo Oh, hi. Sorry to hear we are compiling on Windows...
 echo spdr is not tested on Windows as much as it is being tested on Linux, sorry
 echo .
 echo For now, only -t (--translate) flag is implemented in this script
-
-echo Generating TS files...
-rem lupdate spdr.pro
-echo Generating QM files...
-rem lrelease libspdr/libspdr.pro
-rem lrelease cli/cli.pro
-rem lrelease widgetgui/widgetgui.pro
+echo .
 echo Copying QM files to destination directories:
 mkdir bin\locale
 echo Spdr library

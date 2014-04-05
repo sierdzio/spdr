@@ -11,4 +11,6 @@ OTHER_FILES += \
     doc/src/changelogDoc.txt \
     doc/src/licenseDoc.txt \
     doc/src/synchronizationDoc.txt \
-    doc/src/importDoc.txt
+    doc/src/importDoc.txt \
+    configure \
+    configure.bat

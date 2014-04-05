@@ -36,12 +36,6 @@ do
     less LICENSE.txt
     return 0
   elif [ "$OPTION" = "-t" ] || [ "$OPTION" = "--translate" ]; then
-    echo "Generating TS files..."
-    lupdate spdr.pro
-    echo "Generating QM files..."
-    lrelease libspdr/libspdr.pro
-    lrelease cli/cli.pro
-    lrelease widgetgui/widgetgui.pro
     echo "Copying QM files to destination directories:"
     mkdir -p bin/locale
     echo "  Spdr library"
