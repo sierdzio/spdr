@@ -244,32 +244,32 @@
 <context>
     <name>SpdrSynchronizePrivate</name>
     <message>
-        <location filename="../spdrsynchronize.cpp" line="330"/>
+        <location filename="../spdrsynchronize.cpp" line="329"/>
         <source>SKIP: Files %1 and %2 are identical</source>
         <translation>POMIŃ: Plik %1 i %2 są identyczne</translation>
     </message>
     <message>
         <location filename="../spdrsynchronize.cpp" line="336"/>
-        <source>Removing file from index failed! This can be a problem. Return: %1</source>
+        <source>Removing file from index failed! Return: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../spdrsynchronize.cpp" line="384"/>
+        <location filename="../spdrsynchronize.cpp" line="381"/>
         <source>%1 (%2): Already existing file from %3 to %4</source>
         <translation>%1 (%2): Istniejący plik z %3 do %4</translation>
     </message>
     <message>
-        <location filename="../spdrsynchronize.cpp" line="442"/>
+        <location filename="../spdrsynchronize.cpp" line="439"/>
         <source>Ask operation is not implemented yet, sorry!</source>
         <translation>Operacja pytania nie jest jeszcze zaimplementowana, przepraszamy!</translation>
     </message>
     <message>
-        <location filename="../spdrsynchronize.cpp" line="451"/>
+        <location filename="../spdrsynchronize.cpp" line="448"/>
         <source>%1 (%2): %3 to %4</source>
         <translation>%1 (%2): %3 do %4</translation>
     </message>
     <message>
-        <location filename="../spdrsynchronize.cpp" line="516"/>
+        <location filename="../spdrsynchronize.cpp" line="513"/>
         <source>%1 (%2): Empty directory %3</source>
         <translation>%1 (%2): Pusty folder %3</translation>
     </message>

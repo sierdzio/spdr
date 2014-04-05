@@ -315,7 +315,6 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
         return false;
     }
 
-    // TODO: defer MD5 and SHA checking until after the fast track!
     // Fast track: if the paths match, and the hashes are the same, skip other checks
     {
         QString outputFileMirrorPath(outputBase + inputFileData.path);
@@ -329,7 +328,8 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
             if (inputFileData.isValid && inputFileData.isEqual(outputFileData)) {
                 q->log(QCoreApplication::translate("SpdrSynchronizePrivate", "SKIP: Files %1 and %2 are identical")
                        .arg(filePath).arg(outputFileMirrorPath), Spdr::ExcessiveLogging);
-                // TODO: with deferred hashing, this does not work anymore!
+
+                inputFileData.setSearchDepth(SpdrFileData::ShallowSearch, q);
                 int removed = fileHashTable->remove(inputFileData.checksumMd5, outputFileData);
 
                 if (removed != 1) {
@@ -351,15 +351,11 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
     // the fileHashTable in order to find a candidate.
 
     // Let us first try to find by hash.
-    // TODO: optimize! Don't try with contains() and then extract the value,
-    // do it all in one go).
     if (fileHashTable->contains(inputFileData.checksumMd5))
     {
         QList<SpdrFileData> existingFiles = fileHashTable->values(inputFileData.checksumMd5);
 
         foreach (const SpdrFileData &outputData, existingFiles) {
-            //SpdrFileData outputData = fileHashTable->take(inputFileData.checksumMd5);
-
             if (inputFileData.isMoved(outputData)) {
                 fileHashTable->remove(inputFileData.checksumMd5, outputData);
                 QString localCopyPath(outputBase + outputData.path);
@@ -540,6 +536,9 @@ QString SpdrSynchronizePrivate::getRelativePathBase(const QString &absoluteFileP
     }
 }
 
+/*!
+  Returns search depth expressed in values understood by SpdrFileData.
+ */
 SpdrFileData::SearchDepth SpdrSynchronizePrivate::searchDepth() const
 {
     Q_Q(const SpdrSynchronize);

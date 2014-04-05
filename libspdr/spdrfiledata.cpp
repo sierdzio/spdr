@@ -51,21 +51,6 @@ bool SpdrFileData::operator ==(const SpdrFileData &other) const
 }
 
 /*!
-  Returns a nicely formatted information about the file.
-  */
-QString SpdrFileData::toString() const
-{
-    QString result("Name: " + name + "\n");
-    result += "Relative path: " + path + "\n";
-    result += "Absolute file path: " + absoluteFilePath + "\n";
-    result += "MD5: " + checksumMd5 + "\n";
-    result += "SHA: " + checksumSha + "\n";
-    result += "Created: " + creationDate.toString("dd-MM-yyyy") + "\n";
-    result += "Size: " + QString::number(size);
-    return result;
-}
-
-/*!
   Returns true if current file is equal to \a other. That means that the names,
   creation dates, checksums and sizes are all the same.
 
@@ -99,6 +84,21 @@ bool SpdrFileData::isMoved(const SpdrFileData &other) const
     }
 
     return false;
+}
+
+/*!
+  Returns a nicely formatted information about the file.
+  */
+QString SpdrFileData::toString() const
+{
+    QString result("Name: " + name + "\n");
+    result += "Relative path: " + path + "\n";
+    result += "Absolute file path: " + absoluteFilePath + "\n";
+    result += "MD5: " + checksumMd5 + "\n";
+    result += "SHA: " + checksumSha + "\n";
+    result += "Created: " + creationDate.toString("dd-MM-yyyy") + "\n";
+    result += "Size: " + QString::number(size);
+    return result;
 }
 
 /*!
