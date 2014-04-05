@@ -9,6 +9,8 @@
 #include <QString>
 #include <QDateTime>
 
+typedef QMultiHash<QByteArray,SpdrFileData> FileDataTable;
+
 /*!
   \internal
   */
@@ -21,20 +23,19 @@ public:
     SpdrSynchronize *q_ptr;
 
     bool readDirectoryFileData(const QString &directoryPath,
-                               QMultiHash<QByteArray, SpdrFileData> *fileHashTable) const;
+                               FileDataTable *fileHashTable) const;
     bool readFileData(const QString &filePath,
-                      QMultiHash<QByteArray, SpdrFileData> *fileHashTable) const;
+                      FileDataTable *fileHashTable) const;
 
     bool synchronizeDirectory(const QString &directoryPath,
-                              QMultiHash<QByteArray, SpdrFileData> *fileHashTable) const;
+                              FileDataTable *fileHashTable) const;
     bool synchronizeFile(const QString &filePath,
-                         QMultiHash<QByteArray, SpdrFileData> *fileHashTable) const;
+                         FileDataTable *fileHashTable) const;
 
     bool removeEmptyDirectories(const QString &rootDirectoryPath) const;
     bool removeEmptyDirectory(const QString &directoryPath) const;
 
     QString getRelativePathBase(const QString &absoluteFilePath) const;
-
     SpdrFileData::SearchDepth searchDepth() const;
 
     SpdrSynchronize::SynchronizationOptions mOptions;

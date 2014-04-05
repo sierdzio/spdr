@@ -35,6 +35,7 @@ private slots:
     void testSignals();
     void testSimpleSynchronization();
     void testAdvancedSynchronization();
+    void testDeepAdvancedSynchronization();
 
 private:
     int createTestFiles(const QString &basePath, bool simplified);
@@ -111,13 +112,42 @@ void TstSpdrSynchronize::testAdvancedSynchronization()
     QString testInputPath(testDataPath + QLatin1String("/input"));
     QString testOutputPath(testDataPath + QLatin1String("/output"));
 
-    /*int numberOfFiles =*/ createTestFiles(testDataPath, false);
+    createTestFiles(testDataPath, false);
 
     SpdrSynchronize testObject;
     testObject.setLogFile(logFilePath);
     testObject.setLogLevel(Spdr::Debug);
     testObject.setUpdateMode(Spdr::Overwrite);
     testObject.setOptions(SpdrSynchronize::RemoveMissingFiles
+                          | SpdrSynchronize::RemoveEmptyDirectories);
+    testObject.setSimulate(false);
+    testObject.setInputPath(testInputPath);
+    testObject.setOutputPath(testOutputPath);
+    QCOMPARE(testObject.synchronize(), true);
+
+    QDir(testDataPath).removeRecursively();
+}
+
+/*!
+  Tests more advanced features of SpdrSynchronize: removing missing files,
+  removing empty directories, moving files about. This time using DeepSearch.
+ */
+void TstSpdrSynchronize::testDeepAdvancedSynchronization()
+{
+    QString testDataPath("testData");
+    QDir(testDataPath).removeRecursively();
+
+    QString testInputPath(testDataPath + QLatin1String("/input"));
+    QString testOutputPath(testDataPath + QLatin1String("/output"));
+
+    createTestFiles(testDataPath, false);
+
+    SpdrSynchronize testObject;
+    testObject.setLogFile(logFilePath);
+    testObject.setLogLevel(Spdr::Debug);
+    testObject.setUpdateMode(Spdr::Overwrite);
+    testObject.setOptions(SpdrSynchronize::DeepSearch
+                          | SpdrSynchronize::RemoveMissingFiles
                           | SpdrSynchronize::RemoveEmptyDirectories);
     testObject.setSimulate(false);
     testObject.setInputPath(testInputPath);

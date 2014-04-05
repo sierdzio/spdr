@@ -231,7 +231,7 @@ SpdrSynchronize::SpdrSynchronize(SpdrSynchronizePrivate &dd, QObject *parent)
   \sa readFileData
   */
 bool SpdrSynchronizePrivate::readDirectoryFileData(const QString &directoryPath,
-                                                   QMultiHash<QByteArray, SpdrFileData> *fileHashTable) const
+                                                   FileDataTable *fileHashTable) const
 {
     QDirIterator it(directoryPath, QDir::NoDotAndDotDot | QDir::Files,
                     QDirIterator::Subdirectories);
@@ -254,7 +254,7 @@ bool SpdrSynchronizePrivate::readDirectoryFileData(const QString &directoryPath,
   Data can be read later from \a fileHashTable.
   */
 bool SpdrSynchronizePrivate::readFileData(const QString &filePath,
-                                          QMultiHash<QByteArray, SpdrFileData> *fileHashTable) const
+                                          FileDataTable *fileHashTable) const
 {
     Q_Q(const SpdrSynchronize);
     SpdrFileData fileData(filePath, getRelativePathBase(QFileInfo(filePath).absoluteFilePath()),
@@ -278,7 +278,7 @@ bool SpdrSynchronizePrivate::readFileData(const QString &filePath,
   files. Returns true if successful.
   */
 bool SpdrSynchronizePrivate::synchronizeDirectory(const QString &directoryPath,
-                                                  QMultiHash<QByteArray, SpdrFileData> *fileHashTable) const
+                                                  FileDataTable *fileHashTable) const
 {
     // Goes through all subfolders, returns only files: briliant!
     QDirIterator it(directoryPath, QDir::NoDotAndDotDot | QDir::Files,
@@ -303,7 +303,7 @@ bool SpdrSynchronizePrivate::synchronizeDirectory(const QString &directoryPath,
   scan information about output files. Returns true if successful.
   */
 bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
-                                             QMultiHash<QByteArray, SpdrFileData> *fileHashTable) const
+                                             FileDataTable *fileHashTable) const
 {
     Q_Q(const SpdrSynchronize);
 
@@ -334,8 +334,10 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
 
                 if (removed != 1) {
                     q->log(QCoreApplication::translate("SpdrSynchronizePrivate",
-                                                       "Removing file from index failed! Return: %1").arg(removed)
-                           .arg(filePath).arg(outputFileMirrorPath), Spdr::Error);
+                                                       "ERROR: Removing file from index failed! Remove count: %1, filename: %2")
+                           .arg(removed).arg(outputFileData.name),
+                           Spdr::Error);
+
                     return false;
                 }
 
@@ -392,17 +394,11 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
         }
     }
 
-    // Now, let us see if we can find a file with the same name and update it.
     // TODO: this needs to be done!
     // TODO: diff and EXIF comparison
-    if (q->options() & SpdrSynchronize::DeepSearch) {
-        //q->log(QCoreApplication::translate("No file match using standard search. Performing deep search"),
-        //       Spdr::MildLogging);
-    }
 
     // Now that we have eliminated other possibilites, we can conclude that
     // the file was added!
-    //if (!q->performFileOperation(filePath, outputBase + inputFileData.path)) {
     {
         QString outputFilePath(outputBase + inputFileData.path);
 
@@ -537,6 +533,8 @@ QString SpdrSynchronizePrivate::getRelativePathBase(const QString &absoluteFileP
 }
 
 /*!
+  \internal
+
   Returns search depth expressed in values understood by SpdrFileData.
  */
 SpdrFileData::SearchDepth SpdrSynchronizePrivate::searchDepth() const

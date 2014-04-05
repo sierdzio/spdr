@@ -115,4 +115,5 @@ QtCore, QtGui and QtWidgets to work.
  - add configure script
  - add automated localisation deployment script
  - add automated deployment script
+ - add support for importing/ synchronizing hidden files. Test it!
 */

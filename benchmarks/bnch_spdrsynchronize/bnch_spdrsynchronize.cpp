@@ -66,7 +66,7 @@ void BnchSpdrSynchronize::simpleSynchronizationBenchmark()
     testObject.setSimulate(simulate);
 
     QBENCHMARK {
-        testObject.synchronize();
+        QCOMPARE(testObject.synchronize(), true);
     }
 
     QDir(testDataPath).removeRecursively();

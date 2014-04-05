@@ -186,7 +186,7 @@ bool SpdrFileData::setSearchDepth(SpdrFileData::SearchDepth searchDepth, const S
             QCryptographicHash sha(QCryptographicHash::Sha1);
 
             if (sha.addData(&fileSha)) {
-                checksumMd5 = sha.result();
+                checksumSha = sha.result();
             } else if (isLogging) {
                 logger->log(fileHashingError.arg("SHA").arg(path), Spdr::Error);
             }
@@ -200,6 +200,7 @@ bool SpdrFileData::setSearchDepth(SpdrFileData::SearchDepth searchDepth, const S
     if (searchDepth == NoChecksums) {
         checksumMd5.clear();
         checksumSha.clear();
+        isValid = true;
     }
 
     return true;
