@@ -307,8 +307,6 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
 {
     Q_Q(const SpdrSynchronize);
 
-    // TODO: implement all flags.
-    // TODO: implement benchmarks.
     SpdrFileData inputFileData(filePath, getRelativePathBase(QFileInfo(filePath).absoluteFilePath()),
                                q->options() & SpdrSynchronize::DeepSearch, q);;
     QString outputBase(q->outputPath() + "/");
@@ -317,6 +315,7 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
         return false;
     }
 
+    // TODO: defer MD5 and SHA checking until after the fast track!
     // Fast track: if the paths match, and the hashes are the same, skip other checks
     {
         QString outputFileMirrorPath(outputBase + inputFileData.path);
