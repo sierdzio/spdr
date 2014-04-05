@@ -329,13 +329,14 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
             if (inputFileData.isValid && inputFileData.isEqual(outputFileData)) {
                 q->log(QCoreApplication::translate("SpdrSynchronizePrivate", "SKIP: Files %1 and %2 are identical")
                        .arg(filePath).arg(outputFileMirrorPath), Spdr::ExcessiveLogging);
-                // TODO: with deferred hashing, this will not work anymore!
+                // TODO: with deferred hashing, this does not work anymore!
                 int removed = fileHashTable->remove(inputFileData.checksumMd5, outputFileData);
 
                 if (removed != 1) {
                     q->log(QCoreApplication::translate("SpdrSynchronizePrivate",
-                                                       "Removing file from index failed! This can be a problem. Return: %1").arg(removed)
+                                                       "Removing file from index failed! Return: %1").arg(removed)
                            .arg(filePath).arg(outputFileMirrorPath), Spdr::Error);
+                    return false;
                 }
 
                 return true;
