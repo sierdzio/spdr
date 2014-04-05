@@ -113,7 +113,7 @@ bool SpdrFileData::readFileData(const QString &filePath,
                                 const QString &relativePathBase,
                                 SearchDepth searchDepth, const SpdrLog *logger)
 {
-    bool isLogging = (logger != 0);
+    //bool isLogging = (logger != 0);
 
     QFileInfo fileInfo(filePath);
     isValid = true;
@@ -129,13 +129,13 @@ bool SpdrFileData::readFileData(const QString &filePath,
         return false;
     }
 
-    if (isLogging) {
-        if (logger->logLevel() == Spdr::Debug) {
-            logger->log(toString(), Spdr::Debug);
-        } else {
-            logger->log(QCoreApplication::translate("SpdrFileData", "DB: Successfully added file %1 to the database").arg(path), Spdr::ExcessiveLogging);
-        }
-    }
+//    if (isLogging) {
+//        if (logger->logLevel() == Spdr::Debug) {
+//            logger->log(toString(), Spdr::Debug);
+//        } else {
+//            logger->log(QCoreApplication::translate("SpdrFileData", "DB: Successfully added file %1 to the database").arg(path), Spdr::ExcessiveLogging);
+//        }
+//    }
 
     return true;
 }

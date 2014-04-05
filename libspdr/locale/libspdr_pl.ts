@@ -60,19 +60,18 @@
 <context>
     <name>SpdrFileData</name>
     <message>
-        <location filename="../spdrfiledata.cpp" line="162"/>
+        <location filename="../spdrfiledata.cpp" line="150"/>
         <source>File could not be opened for reading while attempting to create a hash! %1</source>
         <translation>Nie udało się otworzyć pliku do odczytania podczas próby stworzenia sumy kontrolnej! %1</translation>
     </message>
     <message>
-        <location filename="../spdrfiledata.cpp" line="165"/>
+        <location filename="../spdrfiledata.cpp" line="153"/>
         <source>Could not create an %1 hash for file %2</source>
         <translation>Nie udało się utworzyć sumy kontrolnej %1 dla pliku %2</translation>
     </message>
     <message>
-        <location filename="../spdrfiledata.cpp" line="148"/>
         <source>DB: Successfully added file %1 to the database</source>
-        <translation>DB: Pomyślnie dodano plik %1 do bazy danych</translation>
+        <translation type="vanished">DB: Pomyślnie dodano plik %1 do bazy danych</translation>
     </message>
 </context>
 <context>
@@ -249,27 +248,27 @@
         <translation>POMIŃ: Plik %1 i %2 są identyczne</translation>
     </message>
     <message>
-        <location filename="../spdrsynchronize.cpp" line="340"/>
+        <location filename="../spdrsynchronize.cpp" line="336"/>
         <source>ERROR: Removing file from index failed! Remove count: %1, filename: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../spdrsynchronize.cpp" line="390"/>
+        <location filename="../spdrsynchronize.cpp" line="383"/>
         <source>%1 (%2): Already existing file from %3 to %4</source>
         <translation>%1 (%2): Istniejący plik z %3 do %4</translation>
     </message>
     <message>
-        <location filename="../spdrsynchronize.cpp" line="448"/>
+        <location filename="../spdrsynchronize.cpp" line="435"/>
         <source>Ask operation is not implemented yet, sorry!</source>
         <translation>Operacja pytania nie jest jeszcze zaimplementowana, przepraszamy!</translation>
     </message>
     <message>
-        <location filename="../spdrsynchronize.cpp" line="457"/>
+        <location filename="../spdrsynchronize.cpp" line="444"/>
         <source>%1 (%2): %3 to %4</source>
         <translation>%1 (%2): %3 do %4</translation>
     </message>
     <message>
-        <location filename="../spdrsynchronize.cpp" line="522"/>
+        <location filename="../spdrsynchronize.cpp" line="509"/>
         <source>%1 (%2): Empty directory %3</source>
         <translation>%1 (%2): Pusty folder %3</translation>
     </message>
