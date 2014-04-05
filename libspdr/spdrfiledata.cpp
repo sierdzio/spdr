@@ -25,19 +25,24 @@
   SpdrFileData data;
   data.readFileData(filePath, relativePathBase, deepSearch, logger);
  */
-SpdrFileData::SpdrFileData(const QString &filePath, const QString &relativePathBase, bool deepSearch, const SpdrLog *logger)
+SpdrFileData::SpdrFileData(const QString &filePath, const QString &relativePathBase, SearchDepth searchDepth, const SpdrLog *logger)
 {
-    readFileData(filePath, relativePathBase, deepSearch, logger);
+    readFileData(filePath, relativePathBase, searchDepth, logger);
 }
 
 /*!
   Compares to files using most of available data.
+
+  Warning! To facilitate fast track comparison, this operator ignores
+  the checksums! For real equality, see isEqual
+
+  \sa isEqual
   */
 bool SpdrFileData::operator ==(const SpdrFileData &other) const
 {
     if ((isValid == other.isValid) && (name == other.name) && (path == other.path)
             && (absoluteFilePath == other.absoluteFilePath)
-            && (checksumMd5 == other.checksumMd5) && (checksumSha == other.checksumSha)
+            //&& (checksumMd5 == other.checksumMd5) && (checksumSha == other.checksumSha)
             && (creationDate == other.creationDate) && (size == other.size)) {
         return true;
     }
@@ -63,6 +68,8 @@ QString SpdrFileData::toString() const
 /*!
   Returns true if current file is equal to \a other. That means that the names,
   creation dates, checksums and sizes are all the same.
+
+  \sa isMoved
   */
 bool SpdrFileData::isEqual(const SpdrFileData &other) const
 {
@@ -79,6 +86,8 @@ bool SpdrFileData::isEqual(const SpdrFileData &other) const
 /*!
   Returns true if the current file and \a other are the same, but moved
   to some other place (and/ or renamed).
+
+  \sa isEqual
   */
 bool SpdrFileData::isMoved(const SpdrFileData &other) const
 {
@@ -102,7 +111,7 @@ bool SpdrFileData::isMoved(const SpdrFileData &other) const
  */
 bool SpdrFileData::readFileData(const QString &filePath,
                                 const QString &relativePathBase,
-                                bool deepSearch, const SpdrLog *logger)
+                                SearchDepth searchDepth, const SpdrLog *logger)
 {
     bool isLogging = (logger != 0);
 
@@ -116,43 +125,63 @@ bool SpdrFileData::readFileData(const QString &filePath,
     creationDate = fileInfo.created();
     size = fileInfo.size();
 
+    if (!setSearchDepth(searchDepth, logger)) {
+        return false;
+    }
+
+    if (isLogging) {
+        if (logger->logLevel() == Spdr::Debug) {
+            logger->log(toString(), Spdr::Debug);
+        } else {
+            logger->log(QCoreApplication::translate("SpdrFileData", "DB: Successfully added file %1 to the database").arg(path), Spdr::ExcessiveLogging);
+        }
+    }
+
+    return true;
+}
+
+bool SpdrFileData::setSearchDepth(SpdrFileData::SearchDepth searchDepth, const SpdrLog *logger)
+{
+    bool isLogging = (logger != 0);
     QString fileReadError;
     QString fileHashingError;
 
     if (isLogging) {
         fileReadError = QCoreApplication::translate("SpdrFileData", "File could not be opened for reading while attempting to create a hash! %1")
-                      .arg(path);
+                .arg(path);
 
         fileHashingError = QCoreApplication::translate("SpdrFileData", "Could not create an %1 hash for file %2");
     }
 
-    QFile fileMd5(filePath);
-    if (fileMd5.open(QFile::ReadOnly)) {
-        QCryptographicHash md5(QCryptographicHash::Md5);
+    if (searchDepth == ShallowSearch || searchDepth == DeepSearch) {
+        QFile fileMd5(absoluteFilePath);
+        if (fileMd5.open(QFile::ReadOnly)) {
+            QCryptographicHash md5(QCryptographicHash::Md5);
 
-        if (md5.addData(&fileMd5)) {
-            checksumMd5 = md5.result();
+            if (md5.addData(&fileMd5)) {
+                checksumMd5 = md5.result();
+            } else {
+                if (isLogging) {
+                    logger->log(fileHashingError.arg("MD5").arg(path), Spdr::Critical);
+                }
+
+                isValid = false;
+                return false;
+            }
         } else {
             if (isLogging) {
-                logger->log(fileHashingError.arg("MD5").arg(path), Spdr::Critical);
+                logger->log(fileReadError, Spdr::Critical);
             }
 
             isValid = false;
             return false;
         }
-    } else {
-        if (isLogging) {
-            logger->log(fileReadError, Spdr::Critical);
-        }
 
-        isValid = false;
-        return false;
+        fileMd5.close();
     }
 
-    fileMd5.close();
-
-    if (deepSearch) {
-        QFile fileSha(filePath);
+    if (searchDepth == DeepSearch) {
+        QFile fileSha(absoluteFilePath);
         if (fileSha.open(QFile::ReadOnly)) {
             QCryptographicHash sha(QCryptographicHash::Sha1);
 
@@ -168,12 +197,9 @@ bool SpdrFileData::readFileData(const QString &filePath,
         fileSha.close();
     }
 
-    if (isLogging) {
-        if (logger->logLevel() == Spdr::Debug) {
-            logger->log(toString(), Spdr::Debug);
-        } else {
-            logger->log(QCoreApplication::translate("SpdrFileData", "DB: Successfully added file %1 to the database").arg(path), Spdr::ExcessiveLogging);
-        }
+    if (searchDepth == NoChecksums) {
+        checksumMd5.clear();
+        checksumSha.clear();
     }
 
     return true;

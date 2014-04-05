@@ -2,6 +2,7 @@
 #define SPDRSYNCHRONIZE_P_H
 
 #include "spdrsynchronize.h"
+#include "spdrfiledata.h"
 
 #include <QMultiHash>
 #include <QByteArray>
@@ -33,6 +34,8 @@ public:
     bool removeEmptyDirectory(const QString &directoryPath) const;
 
     QString getRelativePathBase(const QString &absoluteFilePath) const;
+
+    SpdrFileData::SearchDepth searchDepth() const;
 
     SpdrSynchronize::SynchronizationOptions mOptions;
     uint mSplit;

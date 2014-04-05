@@ -258,7 +258,7 @@ bool SpdrSynchronizePrivate::readFileData(const QString &filePath,
 {
     Q_Q(const SpdrSynchronize);
     SpdrFileData fileData(filePath, getRelativePathBase(QFileInfo(filePath).absoluteFilePath()),
-                          q->options() & SpdrSynchronize::DeepSearch, q);
+                          searchDepth(), q);
 
     if (fileData.isValid) {
         fileHashTable->insert(fileData.checksumMd5, fileData);
@@ -308,7 +308,7 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
     Q_Q(const SpdrSynchronize);
 
     SpdrFileData inputFileData(filePath, getRelativePathBase(QFileInfo(filePath).absoluteFilePath()),
-                               q->options() & SpdrSynchronize::DeepSearch, q);;
+                               SpdrFileData::NoChecksums, q);
     QString outputBase(q->outputPath() + "/");
 
     if (!inputFileData.isValid) {
@@ -322,16 +322,28 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
         QFileInfo outputFileMirrorInfo(outputFileMirrorPath);
 
         if (outputFileMirrorInfo.exists()) {
-            SpdrFileData outputFileData(outputFileMirrorPath, getRelativePathBase(QFileInfo(outputFileMirrorPath).absoluteFilePath()),
-                                        q->options() & SpdrSynchronize::DeepSearch, q);
+            SpdrFileData outputFileData(outputFileMirrorPath,
+                                        getRelativePathBase(QFileInfo(outputFileMirrorPath).absoluteFilePath()),
+                                        SpdrFileData::NoChecksums, q);
 
             if (inputFileData.isValid && inputFileData.isEqual(outputFileData)) {
                 q->log(QCoreApplication::translate("SpdrSynchronizePrivate", "SKIP: Files %1 and %2 are identical")
                        .arg(filePath).arg(outputFileMirrorPath), Spdr::ExcessiveLogging);
-                fileHashTable->remove(inputFileData.checksumMd5, outputFileData);
+                // TODO: with deferred hashing, this will not work anymore!
+                int removed = fileHashTable->remove(inputFileData.checksumMd5, outputFileData);
+
+                if (removed != 1) {
+                    q->log(QCoreApplication::translate("SpdrSynchronizePrivate",
+                                                       "Removing file from index failed! This can be a problem. Return: %1").arg(removed)
+                           .arg(filePath).arg(outputFileMirrorPath), Spdr::Error);
+                }
+
                 return true;
             }
         }
+
+        // After the fast track is done, we need more checksum data to be present.
+        inputFileData.setSearchDepth(searchDepth(), q);
     }
 
     // Fast track has not found the output file location. We need to traverse
@@ -411,8 +423,9 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
                 // If the input file was modified, the old copy is still present
                 // in the hashTable: so we need to remove it
                 {
-                    SpdrFileData oldFileData(outputFilePath, getRelativePathBase(QFileInfo(outputFilePath).absoluteFilePath()),
-                                             q->options() & SpdrSynchronize::DeepSearch, q);
+                    SpdrFileData oldFileData(outputFilePath,
+                                             getRelativePathBase(QFileInfo(outputFilePath).absoluteFilePath()),
+                                             searchDepth(), q);
                     fileHashTable->remove(oldFileData.checksumMd5, oldFileData);
                 }
 
@@ -430,8 +443,8 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
                     return false;
                 }
             } else {
-            result = QFile::copy(filePath, outputFilePath);
-            operation = "COPY";
+                result = QFile::copy(filePath, outputFilePath);
+                operation = "COPY";
             }
         }
 
@@ -524,4 +537,17 @@ QString SpdrSynchronizePrivate::getRelativePathBase(const QString &absoluteFileP
     } else {
         return q->inputPath();
     }
+}
+
+SpdrFileData::SearchDepth SpdrSynchronizePrivate::searchDepth() const
+{
+    Q_Q(const SpdrSynchronize);
+
+    SpdrFileData::SearchDepth depth = SpdrFileData::ShallowSearch;
+
+    if (q->options() & SpdrSynchronize::DeepSearch) {
+        depth = SpdrFileData::DeepSearch;
+    }
+
+    return depth;
 }

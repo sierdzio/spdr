@@ -60,17 +60,17 @@
 <context>
     <name>SpdrFileData</name>
     <message>
-        <location filename="../spdrfiledata.cpp" line="123"/>
+        <location filename="../spdrfiledata.cpp" line="150"/>
         <source>File could not be opened for reading while attempting to create a hash! %1</source>
         <translation>Nie udało się otworzyć pliku do odczytania podczas próby stworzenia sumy kontrolnej! %1</translation>
     </message>
     <message>
-        <location filename="../spdrfiledata.cpp" line="126"/>
+        <location filename="../spdrfiledata.cpp" line="153"/>
         <source>Could not create an %1 hash for file %2</source>
         <translation>Nie udało się utworzyć sumy kontrolnej %1 dla pliku %2</translation>
     </message>
     <message>
-        <location filename="../spdrfiledata.cpp" line="175"/>
+        <location filename="../spdrfiledata.cpp" line="136"/>
         <source>DB: Successfully added file %1 to the database</source>
         <translation>DB: Pomyślnie dodano plik %1 do bazy danych</translation>
     </message>
@@ -249,22 +249,27 @@
         <translation>POMIŃ: Plik %1 i %2 są identyczne</translation>
     </message>
     <message>
-        <location filename="../spdrsynchronize.cpp" line="373"/>
+        <location filename="../spdrsynchronize.cpp" line="336"/>
+        <source>Removing file from index failed! This can be a problem. Return: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../spdrsynchronize.cpp" line="384"/>
         <source>%1 (%2): Already existing file from %3 to %4</source>
         <translation>%1 (%2): Istniejący plik z %3 do %4</translation>
     </message>
     <message>
-        <location filename="../spdrsynchronize.cpp" line="430"/>
+        <location filename="../spdrsynchronize.cpp" line="442"/>
         <source>Ask operation is not implemented yet, sorry!</source>
         <translation>Operacja pytania nie jest jeszcze zaimplementowana, przepraszamy!</translation>
     </message>
     <message>
-        <location filename="../spdrsynchronize.cpp" line="439"/>
+        <location filename="../spdrsynchronize.cpp" line="451"/>
         <source>%1 (%2): %3 to %4</source>
         <translation>%1 (%2): %3 do %4</translation>
     </message>
     <message>
-        <location filename="../spdrsynchronize.cpp" line="504"/>
+        <location filename="../spdrsynchronize.cpp" line="516"/>
         <source>%1 (%2): Empty directory %3</source>
         <translation>%1 (%2): Pusty folder %3</translation>
     </message>

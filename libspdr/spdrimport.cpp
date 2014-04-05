@@ -240,8 +240,8 @@ bool SpdrImportPrivate::areFilesTheSame(const QString &input, const QString &out
         return false;
     }
 
-    SpdrFileData inputData(input, q->inputPath(), false, q);
-    SpdrFileData outputData(output, q->inputPath(), false, q);
+    SpdrFileData inputData(input, q->inputPath(), SpdrFileData::ShallowSearch, q);
+    SpdrFileData outputData(output, q->inputPath(), SpdrFileData::ShallowSearch, q);
 
     if (inputData.isEqual(outputData)) {
         return true;
