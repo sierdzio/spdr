@@ -23,6 +23,7 @@ public:
     QString mOutputPath;
     bool mSimulate;
     Spdr::UpdateMode mUpdateMode;
+    bool mSuffixCaseSensitive;
 };
 
 #endif // SPDRBASE_P_H

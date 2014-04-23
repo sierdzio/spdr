@@ -33,12 +33,16 @@ public:
     Q_INVOKABLE Spdr::UpdateMode updateMode() const;
     Q_INVOKABLE void setUpdateMode(Spdr::UpdateMode newUpdateMode);
 
+    Q_INVOKABLE bool isSuffixCaseSensitive() const;
+    Q_INVOKABLE void setSuffixCaseSensitive(bool caseSensitive = true);
+
 signals:
     void finished(bool result) const;
     void inputPathChanged(const QString &newInputPath) const;
     void outputPathChanged(const QString &newOutputPath) const;
     void simulateChanged(bool simulationEnabled) const;
     void updateModeChanged(Spdr::UpdateMode newUpdateMode) const;
+    void suffixCaseSensitivityChanged(bool caseSensitive) const;
 
 protected:
     SpdrBase(SpdrBasePrivate &dd, QObject *parent = 0);

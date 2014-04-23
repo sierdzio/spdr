@@ -17,44 +17,49 @@
 <context>
     <name>SpdrBase</name>
     <message>
-        <location filename="../spdrbase.cpp" line="100"/>
+        <location filename="../spdrbase.cpp" line="101"/>
         <source>Input directory path does not exist</source>
         <translation>Folder wejściowy nie istnieje</translation>
     </message>
     <message>
-        <location filename="../spdrbase.cpp" line="105"/>
+        <location filename="../spdrbase.cpp" line="106"/>
         <source>WARNING: Input path set to root directory: this can be dangerous</source>
         <translation>UWAGA: Folder wejściowy ustawiony na root: to może być niebezpieczne</translation>
     </message>
     <message>
-        <location filename="../spdrbase.cpp" line="109"/>
+        <location filename="../spdrbase.cpp" line="110"/>
         <source>Input path changed to: %1</source>
         <translation>Ścieżkę wejściową zmieniono na %1</translation>
     </message>
     <message>
-        <location filename="../spdrbase.cpp" line="139"/>
+        <location filename="../spdrbase.cpp" line="140"/>
         <source>Output directory path does not exist</source>
         <translation>Folder wyjściowy nie istnieje</translation>
     </message>
     <message>
-        <location filename="../spdrbase.cpp" line="144"/>
+        <location filename="../spdrbase.cpp" line="145"/>
         <source>WARNING: Output path set to root directory: this can be dangerous</source>
         <translation>UWAGA: Ścieżka wyjściowa ustawiona na root: to może być niebezpieczne</translation>
     </message>
     <message>
-        <location filename="../spdrbase.cpp" line="153"/>
+        <location filename="../spdrbase.cpp" line="154"/>
         <source>Output path changed to: %1</source>
         <translation>Ścieżkę wyjściową zmieniono na: %1</translation>
     </message>
     <message>
-        <location filename="../spdrbase.cpp" line="180"/>
+        <location filename="../spdrbase.cpp" line="181"/>
         <source>Simulation is now: %1</source>
         <translation>Symulacja jest teraz: %1</translation>
     </message>
     <message>
-        <location filename="../spdrbase.cpp" line="204"/>
+        <location filename="../spdrbase.cpp" line="205"/>
         <source>Update mode changed to: %1</source>
         <translation>Tryb uaktualniania zmieniono na: %1</translation>
+    </message>
+    <message>
+        <location filename="../spdrbase.cpp" line="230"/>
+        <source>Suffix case sensitivity changed to: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

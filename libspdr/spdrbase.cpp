@@ -72,6 +72,7 @@ SpdrBase::SpdrBase(QObject *parent) : SpdrLog(parent), d_ptr(new SpdrBasePrivate
 
     d->mSimulate = false;
     d->mUpdateMode = Spdr::Ask;
+    d->mSuffixCaseSensitive = true;
     Spdr::registerMetatypes();
 }
 
@@ -204,6 +205,31 @@ void SpdrBase::setUpdateMode(Spdr::UpdateMode newUpdateMode)
         log(tr("Update mode changed to: %1").arg(Spdr::updateModeToString(newUpdateMode)), Spdr::Debug);
 
         emit updateModeChanged(newUpdateMode);
+    }
+}
+
+/*!
+  Returns true if file suffix comparison is performed in a case-sensitive manner.
+ */
+bool SpdrBase::isSuffixCaseSensitive() const
+{
+    Q_D(const SpdrBase);
+    return d->mSuffixCaseSensitive;
+}
+
+/*!
+  Sets the file suffix comparison mode to be \a caseSensitive or not.
+ */
+void SpdrBase::setSuffixCaseSensitive(bool caseSensitive)
+{
+    Q_D(SpdrBase);
+
+    if (caseSensitive != d->mSuffixCaseSensitive) {
+        d->mSuffixCaseSensitive = caseSensitive;
+
+        log(tr("Suffix case sensitivity changed to: %1").arg(caseSensitive), Spdr::Debug);
+
+        emit suffixCaseSensitivityChanged(caseSensitive);
     }
 }
 
