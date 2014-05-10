@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>694</width>
+    <width>605</width>
     <height>549</height>
    </rect>
   </property>
@@ -265,7 +265,7 @@ Simulation mode can be used to see if Spdr works correctly without risking any l
         </property>
        </spacer>
       </item>
-      <item row="4" column="0" colspan="2">
+      <item row="5" column="0" colspan="2">
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
          <widget class="QLabel" name="labelUpdateMode">
@@ -328,6 +328,16 @@ Simulation mode can be used to see if Spdr works correctly without risking any l
          </widget>
         </item>
        </layout>
+      </item>
+      <item row="4" column="0">
+       <widget class="QCheckBox" name="checkBoxSuffixCaseSensitivity">
+        <property name="text">
+         <string>Case sensitive file suffix comparison</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

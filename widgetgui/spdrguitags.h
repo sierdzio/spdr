@@ -21,6 +21,7 @@ struct Tags {
     static QString const logLevelImport;
     static QString const updateModeImport;
     static QString const simulateImport;
+    static QString const suffixCaseSensitivityImport;
     static QString const copyModeImport;
 
     static QString const inputPathSynchronize;
@@ -29,6 +30,7 @@ struct Tags {
     static QString const logLevelSynchronize;
     static QString const updateModeSynchronize;
     static QString const simulateSynchronize;
+    static QString const suffixCaseSensitivitySynchronize;
     static QString const removeEmptyDirsSynchronize;
     static QString const removeMissingFilesSynchronize;
     static QString const deepSearchSynchronize;
@@ -43,6 +45,7 @@ QString const Tags::logPathImport = "logPathImport";
 QString const Tags::logLevelImport = "logLevelImport";
 QString const Tags::updateModeImport = "updateModeImport";
 QString const Tags::simulateImport = "simulateImport";
+QString const Tags::suffixCaseSensitivityImport = "suffixCaseSensitivityImport";
 QString const Tags::copyModeImport = "copyModeImport";
 
 QString const Tags::inputPathSynchronize = "inputPathSynchronize";
@@ -51,6 +54,7 @@ QString const Tags::logPathSynchronize = "logPathSynchronize";
 QString const Tags::logLevelSynchronize = "logLevelSynchronize";
 QString const Tags::updateModeSynchronize = "updateModeSynchronize";
 QString const Tags::simulateSynchronize = "simulateSynchronize";
+QString const Tags::suffixCaseSensitivitySynchronize = "suffixCaseSensitivitySynchronize";
 QString const Tags::removeEmptyDirsSynchronize = "removeEmptyDirsSynchronize";
 QString const Tags::removeMissingFilesSynchronize = "removeMissingFilesSynchronize";
 QString const Tags::deepSearchSynchronize = "deepSearchSynchronize";

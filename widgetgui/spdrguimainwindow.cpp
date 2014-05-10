@@ -62,6 +62,7 @@ void SpdrGuiMainWindow::on_pushButtonSynchronize_clicked()
     synchronizer->setLogLevel((Spdr::LogLevel) synchronizeForm->ui->comboBoxLogLevel->currentIndex());
     synchronizer->setUpdateMode((Spdr::UpdateMode) synchronizeForm->ui->comboBoxUpdateMode->currentIndex());
     synchronizer->setSimulate(synchronizeForm->ui->checkBoxSimulate->isChecked());
+    synchronizer->setSuffixCaseSensitive(synchronizeForm->ui->checkBoxSuffixCaseSensitivity->isChecked());
 
     if (synchronizeForm->ui->checkBoxLog->isChecked()) {
         synchronizer->setLogFile(synchronizeForm->lineEditLog->text());
@@ -105,6 +106,7 @@ void SpdrGuiMainWindow::on_pushButtonImport_clicked()
     importer->setLogLevel((Spdr::LogLevel) importForm->ui->comboBoxLogLevel->currentIndex());
     importer->setUpdateMode((Spdr::UpdateMode) importForm->ui->comboBoxUpdateMode->currentIndex());
     importer->setSimulate(importForm->ui->checkBoxSimulate->isChecked());
+    importer->setSuffixCaseSensitive(importForm->ui->checkBoxSuffixCaseSensitivity->isChecked());
     importer->setCopyMode((SpdrImport::CopyMode) ui->comboBoxCopyMode->currentIndex());
 
     if (importForm->ui->checkBoxLog->isChecked()) {
@@ -195,6 +197,7 @@ void SpdrGuiMainWindow::readSettings()
     importForm->ui->comboBoxLogLevel->setCurrentIndex(settings.value(Tags::logLevelImport).toInt());
     importForm->ui->comboBoxUpdateMode->setCurrentIndex(settings.value(Tags::updateModeImport).toInt());
     importForm->ui->checkBoxSimulate->setChecked(settings.value(Tags::simulateImport).toBool());
+    importForm->ui->checkBoxSuffixCaseSensitivity->setChecked(settings.value(Tags::suffixCaseSensitivityImport).toBool());
     ui->comboBoxCopyMode->setCurrentIndex(settings.value(Tags::copyModeImport).toInt());
     importForm->ui->checkBoxLog->setChecked(!importForm->lineEditLog->text().isEmpty());
 
@@ -204,6 +207,7 @@ void SpdrGuiMainWindow::readSettings()
     synchronizeForm->ui->comboBoxLogLevel->setCurrentIndex(settings.value(Tags::logLevelSynchronize).toInt());
     synchronizeForm->ui->comboBoxUpdateMode->setCurrentIndex(settings.value(Tags::updateModeSynchronize).toInt());
     synchronizeForm->ui->checkBoxSimulate->setChecked(settings.value(Tags::simulateSynchronize).toBool());
+    synchronizeForm->ui->checkBoxSuffixCaseSensitivity->setChecked(settings.value(Tags::suffixCaseSensitivitySynchronize).toBool());
     ui->checkBoxRemoveEmptyDirectiories->setChecked(settings.value(Tags::removeEmptyDirsSynchronize).toBool());
     ui->checkBoxRemoveMissingFiles->setChecked(settings.value(Tags::removeMissingFilesSynchronize).toBool());
     ui->checkBoxDeepSearch->setChecked(settings.value(Tags::deepSearchSynchronize).toBool());
@@ -227,6 +231,7 @@ void SpdrGuiMainWindow::saveSettings()
     saveSettingValue(Tags::logLevelImport, importForm->ui->comboBoxLogLevel->currentIndex());
     saveSettingValue(Tags::updateModeImport, importForm->ui->comboBoxUpdateMode->currentIndex());
     saveSettingValue(Tags::simulateImport, importForm->ui->checkBoxSimulate->isChecked());
+    saveSettingValue(Tags::suffixCaseSensitivityImport, importForm->ui->checkBoxSuffixCaseSensitivity->isChecked());
     saveSettingValue(Tags::copyModeImport, ui->comboBoxCopyMode->currentIndex());
 
     saveSettingValue(Tags::inputPathSynchronize, synchronizeForm->lineEditInput->text());
@@ -235,6 +240,7 @@ void SpdrGuiMainWindow::saveSettings()
     saveSettingValue(Tags::logLevelSynchronize, synchronizeForm->ui->comboBoxLogLevel->currentIndex());
     saveSettingValue(Tags::updateModeSynchronize, synchronizeForm->ui->comboBoxUpdateMode->currentIndex());
     saveSettingValue(Tags::simulateSynchronize, synchronizeForm->ui->checkBoxSimulate->isChecked());
+    saveSettingValue(Tags::suffixCaseSensitivitySynchronize, synchronizeForm->ui->checkBoxSuffixCaseSensitivity->isChecked());
     saveSettingValue(Tags::removeEmptyDirsSynchronize, ui->checkBoxRemoveEmptyDirectiories->isChecked());
     saveSettingValue(Tags::removeMissingFilesSynchronize, ui->checkBoxRemoveMissingFiles->isChecked());
     saveSettingValue(Tags::deepSearchSynchronize, ui->checkBoxDeepSearch->isChecked());
