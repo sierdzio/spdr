@@ -36,6 +36,7 @@ private slots:
     void testSimpleSynchronization();
     void testAdvancedSynchronization();
     void testDeepAdvancedSynchronization();
+    void testSuffixCaseSensitivity();
 
 private:
     int createTestFiles(const QString &basePath, bool simplified);
@@ -155,6 +156,11 @@ void TstSpdrSynchronize::testDeepAdvancedSynchronization()
     QCOMPARE(testObject.synchronize(), true);
 
     QDir(testDataPath).removeRecursively();
+}
+
+void TstSpdrSynchronize::testSuffixCaseSensitivity()
+{
+    // TODO: add test for suffix case sensitivity
 }
 
 int TstSpdrSynchronize::createTestFiles(const QString &basePath, bool simplified)

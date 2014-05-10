@@ -29,6 +29,7 @@ private slots:
     void testFormatSetting();
     void testBasicImporting();
     void testStarSubstitutionImporting();
+    void testSuffixCaseSensitivity();
 
 private:
     int createTestFiles(const QString &basePath, bool includeSubdir = false);
@@ -213,6 +214,11 @@ void TstSpdrImport::testStarSubstitutionImporting()
     QCOMPARE(testOutputDir.entryList(QDir::Files | QDir::NoDotAndDotDot).count(), numberOfFiles);
 
     QDir(testDataPath).removeRecursively();
+}
+
+void TstSpdrImport::testSuffixCaseSensitivity()
+{
+    // TODO: add test for suffix case sensitivity
 }
 
 int TstSpdrImport::createTestFiles(const QString &basePath, bool includeSubdir)
