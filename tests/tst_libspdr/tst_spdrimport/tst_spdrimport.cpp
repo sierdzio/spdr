@@ -218,7 +218,8 @@ void TstSpdrImport::testStarSubstitutionImporting()
 
 void TstSpdrImport::testSuffixCaseSensitivity()
 {
-    // TODO: add test for suffix case sensitivity
+    // Copy the test directory
+    // Test case sensitivity
 }
 
 int TstSpdrImport::createTestFiles(const QString &basePath, bool includeSubdir)

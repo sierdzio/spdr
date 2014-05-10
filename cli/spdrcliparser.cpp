@@ -63,7 +63,7 @@ bool SpdrCliParser::parse()
                                   tr("Spdr will simulate all the actions, without actually doing any changes to the file system"));
     parser.addOption(simulateOption);
 
-    QCommandLineOption caseSensitiveOption(QStringList() << "-c" << "--case-insensitive",
+    QCommandLineOption caseSensitiveOption(QStringList() << "c" << "case-insensitive",
                                   tr("make file suffix comparison case insensitive"));
     parser.addOption(caseSensitiveOption);
 

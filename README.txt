@@ -64,33 +64,34 @@ library). Below is the list of command line flags it recognizes.
 
 \verbatim
 Options:
-  -h, --help            Displays this help.
-  -v, --version         Displays version information.
-  -i, --import          Spdr will perform import operation: it will copy all fi
-                        les from input according to formatting tags specified i
-                        n output directory path. See the documentation for more
-                         information
-  -s, --synchronize     (default) Spdr will perform file synchronization. See t
-                        he documentation for more information
-  -l, --log <path>      Log file location. If empty/ not specified, Spdr will p
-                        rint to stdout
-  --log-level <number>  Specifies how many log messages will be shown. Accepted
-                         values are 0 (no logging) to 6 (log everything, includ
-                        ing debug output). See the documentation for more infor
-                        mation.
-  -m, --move            Files will be moved from input to output (input will ch
-                        ange!). By default, Spdr copies the files (leavign inpu
-                        t intact)
-  --simulate            Spdr will simulate all the actions, without actually do
-                        ing any changes to the file system
+  -h, --help              Displays this help.
+  -v, --version           Displays version information.
+  -i, --import            Spdr will perform import operation: it will copy all
+                          files from input according to formatting tags
+                          specified in output directory path. See the
+                          documentation for more information
+  -s, --synchronize       (default) Spdr will perform file synchronization. See
+                          the documentation for more information
+  -l, --log <path>        Log file location. If empty/ not specified, Spdr will
+                          print to stdout
+  --log-level <number>    Specifies how many log messages will be shown.
+                          Accepted values are 0 (no logging) to 6 (log
+                          everything, including debug output). See the
+                          documentation for more information.
+  -m, --move              Files will be moved from input to output (input will
+                          change!). By default, Spdr copies the files (leavign
+                          input intact)
+  --simulate              Spdr will simulate all the actions, without actually
+                          doing any changes to the file system
+  -c, --case-insensitive  make file suffix comparison case insensitive
 
 Arguments:
-  input                 Input folder, usually containing updated data
-  output                Output folder, usually containing old data. When Import
-                         operation is performed, the path can contain QDateTime
-                        -style time and date tags enclosed in < and >, as well
-                        as star * wildcard matching. See the documentation for
-                        more information
+  input                   Input folder, usually containing updated data
+  output                  Output folder, usually containing old data. When
+                          Import operation is performed, the path can contain
+                          QDateTime-style time and date tags enclosed in < and
+                          >, as well as star * wildcard matching. See the
+                          documentation for more information
 \endverbatim
 
 \section requirements System requirements
@@ -108,7 +109,7 @@ QtCore, QtGui and QtWidgets to work.
    of synchronization accuracy
  - more deep tests for SpdrSynchronize
  - implement Spdr::Ask
- - add tests for file suffix case sensitivity comparisons
+ - import should handle spaces inside tags
  - add option for suffix synonyms (JPG == JPEG, etc.)
  - use EXIF comparison
  - use DIFF comparison
@@ -118,4 +119,6 @@ QtCore, QtGui and QtWidgets to work.
  - add automated localisation deployment script
  - add automated deployment script
  - add support for importing/ synchronizing hidden files. Test it!
+ - handle duplicated files and filenames better! Currently there is not even
+   a warning being raised
 */
