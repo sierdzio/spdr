@@ -18,6 +18,7 @@ class SpdrCliOptions
 public:
     bool isImport;
     bool isSimulation;
+    bool isFileSuffixCaseSensitive;
 
     Spdr::UpdateMode updateMode;
     Spdr::LogLevel logLevel;

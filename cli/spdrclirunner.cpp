@@ -35,6 +35,7 @@ void SpdrCliRunner::performActions()
         import.setSimulate(mOptions.isSimulation);
         import.setCopyMode(mOptions.copyMode);
         import.setUpdateMode(mOptions.updateMode);
+        import.setSuffixCaseSensitive(mOptions.isFileSuffixCaseSensitive);
         result = import.import();
     } else {
         SpdrSynchronize synchronize(this);
@@ -45,6 +46,7 @@ void SpdrCliRunner::performActions()
         synchronize.setSimulate(mOptions.isSimulation);
         synchronize.setUpdateMode(mOptions.updateMode);
         synchronize.setOptions(mOptions.synchronizationOptions);
+        synchronize.setSuffixCaseSensitive(mOptions.isFileSuffixCaseSensitive);
         result = synchronize.synchronize();
     }
 

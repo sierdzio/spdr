@@ -18,6 +18,7 @@ SpdrCliParser::SpdrCliParser(QObject *parent) : QObject(parent)
 {
     options.isImport = false;
     options.isSimulation = false;
+    options.isFileSuffixCaseSensitive = true;
 
     options.updateMode = Spdr::Overwrite;
     options.logLevel = Spdr::MildLogging;
@@ -62,9 +63,9 @@ bool SpdrCliParser::parse()
                                   tr("Spdr will simulate all the actions, without actually doing any changes to the file system"));
     parser.addOption(simulateOption);
 
-//    QCommandLineOption noCacheOption(QStringList() << "c" << "no-cache",
-//                                  tr("caching will not be used"));
-//    parser.addOption(noCacheOption);
+    QCommandLineOption caseSensitiveOption(QStringList() << "-c" << "--case-insensitive",
+                                  tr("make file suffix comparison case insensitive"));
+    parser.addOption(caseSensitiveOption);
 
     parser.process(QCoreApplication::instance()->arguments());
 
@@ -97,6 +98,7 @@ bool SpdrCliParser::parse()
 
     options.isImport = parser.isSet(importOption);
     options.isSimulation = parser.isSet(simulateOption);
+    options.isFileSuffixCaseSensitive = !parser.isSet(caseSensitiveOption);
 
     if (parser.isSet(moveOption)) {
         options.copyMode = SpdrImport::Move;
