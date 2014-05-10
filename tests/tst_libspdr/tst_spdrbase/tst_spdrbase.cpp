@@ -79,6 +79,20 @@ void TstSpdrBase::testSetters()
     testObject.setLogFile(randomPath);
     QCOMPARE(testObject.isUsingLogFile(), false);
     QCOMPARE(testObject.logFile(), QString(""));
+
+    // Test simulation
+    QCOMPARE(testObject.simulate(), false);
+    testObject.setSimulate(true);
+    QCOMPARE(testObject.simulate(), true);
+    testObject.setSimulate(false);
+    QCOMPARE(testObject.simulate(), false);
+
+    // Test suffix case sensitivity
+    QCOMPARE(testObject.isSuffixCaseSensitive(), true);
+    testObject.setSuffixCaseSensitive(false);
+    QCOMPARE(testObject.isSuffixCaseSensitive(), false);
+    testObject.setSuffixCaseSensitive(true);
+    QCOMPARE(testObject.isSuffixCaseSensitive(), true);
 }
 
 void TstSpdrBase::testSignals()
@@ -101,7 +115,7 @@ void TstSpdrBase::testSignals()
 
 void TstSpdrBase::testLogging()
 {
-    // TODO: perform test
+    // TODO: test logger
 }
 
 QTEST_MAIN(TstSpdrBase)

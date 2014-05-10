@@ -108,7 +108,7 @@ QtCore, QtGui and QtWidgets to work.
    of synchronization accuracy
  - more deep tests for SpdrSynchronize
  - implement Spdr::Ask
- - add option to compare file suffixes without case sensitivity
+ - add tests for file suffix case sensitivity comparisons
  - add option for suffix synonyms (JPG == JPEG, etc.)
  - use EXIF comparison
  - use DIFF comparison
