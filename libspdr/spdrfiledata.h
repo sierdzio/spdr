@@ -39,7 +39,8 @@ public:
                       SearchDepth searchDepth = ShallowSearch, const SpdrLog *logger = 0);
     bool setSearchDepth(SearchDepth searchDepth, const SpdrLog *logger = 0);
     QString toString() const;
-    bool isFileNameEqual(const QString &name, const QString &other, bool suffixCaseSensitive = true);
+    bool isFileNameEqual(const QString &name, const QString &other,
+                         bool suffixCaseSensitive = true) const;
 };
 
 #endif // SPDRFILEDATA_H

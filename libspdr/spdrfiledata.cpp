@@ -212,7 +212,8 @@ bool SpdrFileData::setSearchDepth(SpdrFileData::SearchDepth searchDepth, const S
   Returns true if file \a name and \a other are the same. Checks by file name
   and suffix (taking into account \a suffixCaseSensitive).
   */
-bool SpdrFileData::isFileNameEqual(const QString &name, const QString &other, bool suffixCaseSensitive)
+bool SpdrFileData::isFileNameEqual(const QString &name, const QString &other,
+                                   bool suffixCaseSensitive) const
 {
     if (name == other) {
         return true;

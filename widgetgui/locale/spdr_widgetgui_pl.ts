@@ -161,6 +161,11 @@ Symulacja może służyć do sprawdzenia, czy Spdr działa poprawnie, bez ryzyko
         <translation>Zignoruj</translation>
     </message>
     <message>
+        <location filename="../spdrguibasicinputform.ui" line="335"/>
+        <source>Case sensitive file suffix comparison</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../spdrguibasicinputform.cpp" line="49"/>
         <source>Specify the input folder</source>
         <translation>Podaj folder wejściowy</translation>
@@ -311,7 +316,7 @@ Spdr sprawdza, czy pliki są identyczne na wiele sposobów. Jednym z nich jest z
     </message>
     <message>
         <location filename="../spdrguimainwindow.ui" line="322"/>
-        <location filename="../spdrguimainwindow.cpp" line="282"/>
+        <location filename="../spdrguimainwindow.cpp" line="288"/>
         <source>About Spdr</source>
         <translation>O Spdr</translation>
     </message>
@@ -331,24 +336,24 @@ Spdr sprawdza, czy pliki są identyczne na wiele sposobów. Jednym z nich jest z
         <translation>Wyjście</translation>
     </message>
     <message>
-        <location filename="../spdrguimainwindow.cpp" line="129"/>
-        <location filename="../spdrguimainwindow.cpp" line="143"/>
+        <location filename="../spdrguimainwindow.cpp" line="131"/>
+        <location filename="../spdrguimainwindow.cpp" line="145"/>
         <source>Success</source>
         <translation>Sukces</translation>
     </message>
     <message>
-        <location filename="../spdrguimainwindow.cpp" line="131"/>
-        <location filename="../spdrguimainwindow.cpp" line="145"/>
+        <location filename="../spdrguimainwindow.cpp" line="133"/>
+        <location filename="../spdrguimainwindow.cpp" line="147"/>
         <source>Error: see the log</source>
         <translation>Błąd: sprawdź log</translation>
     </message>
     <message>
-        <location filename="../spdrguimainwindow.cpp" line="281"/>
+        <location filename="../spdrguimainwindow.cpp" line="287"/>
         <source>Spdr is a file hierarchy management toolkit</source>
         <translation>Spdr jest programem zarządzającym strukturą plików i katalogów</translation>
     </message>
     <message>
-        <location filename="../spdrguimainwindow.cpp" line="287"/>
+        <location filename="../spdrguimainwindow.cpp" line="293"/>
         <source>About Qt framework being used in Spdr</source>
         <translation>Informacje o bibliotekach Qt używanych przez Spdr</translation>
     </message>

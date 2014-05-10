@@ -65,12 +65,12 @@
 <context>
     <name>SpdrFileData</name>
     <message>
-        <location filename="../spdrfiledata.cpp" line="150"/>
+        <location filename="../spdrfiledata.cpp" line="152"/>
         <source>File could not be opened for reading while attempting to create a hash! %1</source>
         <translation>Nie udało się otworzyć pliku do odczytania podczas próby stworzenia sumy kontrolnej! %1</translation>
     </message>
     <message>
-        <location filename="../spdrfiledata.cpp" line="153"/>
+        <location filename="../spdrfiledata.cpp" line="155"/>
         <source>Could not create an %1 hash for file %2</source>
         <translation>Nie udało się utworzyć sumy kontrolnej %1 dla pliku %2</translation>
     </message>
@@ -263,17 +263,17 @@
         <translation>%1 (%2): Istniejący plik z %3 do %4</translation>
     </message>
     <message>
-        <location filename="../spdrsynchronize.cpp" line="435"/>
+        <location filename="../spdrsynchronize.cpp" line="434"/>
         <source>Ask operation is not implemented yet, sorry!</source>
         <translation>Operacja pytania nie jest jeszcze zaimplementowana, przepraszamy!</translation>
     </message>
     <message>
-        <location filename="../spdrsynchronize.cpp" line="444"/>
+        <location filename="../spdrsynchronize.cpp" line="443"/>
         <source>%1 (%2): %3 to %4</source>
         <translation>%1 (%2): %3 do %4</translation>
     </message>
     <message>
-        <location filename="../spdrsynchronize.cpp" line="509"/>
+        <location filename="../spdrsynchronize.cpp" line="508"/>
         <source>%1 (%2): Empty directory %3</source>
         <translation>%1 (%2): Pusty folder %3</translation>
     </message>
