@@ -40,9 +40,10 @@ SpdrFileData::SpdrFileData(const QString &filePath, const QString &relativePathB
   */
 bool SpdrFileData::operator ==(const SpdrFileData &other) const
 {
-    if ((isValid == other.isValid) && (name == other.name) && (path == other.path)
+    if ((isValid == other.isValid)
+            && (isFileNameEqual(name, other.name, true))
+            && (path == other.path)
             && (absoluteFilePath == other.absoluteFilePath)
-            //&& (checksumMd5 == other.checksumMd5) && (checksumSha == other.checksumSha)
             && (creationDate == other.creationDate) && (size == other.size)) {
         return true;
     }
@@ -56,9 +57,10 @@ bool SpdrFileData::operator ==(const SpdrFileData &other) const
 
   \sa isMoved
   */
-bool SpdrFileData::isEqual(const SpdrFileData &other) const
+bool SpdrFileData::isEqual(const SpdrFileData &other, bool suffixCaseSensitive) const
 {
-    if ((name == other.name) && (checksumMd5 == other.checksumMd5)
+    if ((isFileNameEqual(name, other.name, suffixCaseSensitive))
+            && (checksumMd5 == other.checksumMd5)
             && (checksumSha == other.checksumSha)
             && (size == other.size))
     {
@@ -204,4 +206,31 @@ bool SpdrFileData::setSearchDepth(SpdrFileData::SearchDepth searchDepth, const S
     }
 
     return true;
+}
+
+/*!
+  Returns true if file \a name and \a other are the same. Checks by file name
+  and suffix (taking into account \a suffixCaseSensitive).
+  */
+bool SpdrFileData::isFileNameEqual(const QString &name, const QString &other, bool suffixCaseSensitive)
+{
+    if (name == other) {
+        return true;
+    } else if (suffixCaseSensitive) {
+        return false;
+    }
+
+    QFileInfo one(name);
+    QFileInfo two(other);
+
+    QString oneName(one.fileName());
+    QString twoName(two.fileName());
+    QString oneSuffix(one.suffix());
+    QString twoSuffix(two.suffix());
+
+    if (oneName == twoName && oneSuffix.compare(twoSuffix, Qt::CaseInsensitive)) {
+        return true;
+    } else {
+        return false;
+    }
 }

@@ -243,7 +243,7 @@ bool SpdrImportPrivate::areFilesTheSame(const QString &input, const QString &out
     SpdrFileData inputData(input, q->inputPath(), SpdrFileData::ShallowSearch, q);
     SpdrFileData outputData(output, q->inputPath(), SpdrFileData::ShallowSearch, q);
 
-    if (inputData.isEqual(outputData)) {
+    if (inputData.isEqual(outputData, q->isSuffixCaseSensitive())) {
         return true;
     }
 

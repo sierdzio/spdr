@@ -325,7 +325,7 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
                                         getRelativePathBase(QFileInfo(outputFileMirrorPath).absoluteFilePath()),
                                         SpdrFileData::NoChecksums, q);
 
-            if (inputFileData.isValid && inputFileData.isEqual(outputFileData)) {
+            if (inputFileData.isValid && inputFileData.isEqual(outputFileData, q->isSuffixCaseSensitive())) {
                 q->log(QCoreApplication::translate("SpdrSynchronizePrivate", "SKIP: Files %1 and %2 are identical")
                        .arg(filePath).arg(outputFileMirrorPath), Spdr::ExcessiveLogging);
 
@@ -394,7 +394,6 @@ bool SpdrSynchronizePrivate::synchronizeFile(const QString &filePath,
         }
     }
 
-    // TODO: this needs to be done!
     // TODO: diff and EXIF comparison
 
     // Now that we have eliminated other possibilites, we can conclude that
