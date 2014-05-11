@@ -224,12 +224,15 @@ bool SpdrFileData::isFileNameEqual(const QString &name, const QString &other,
     QFileInfo one(name);
     QFileInfo two(other);
 
-    QString oneName(one.fileName());
-    QString twoName(two.fileName());
+    QString oneName(one.baseName());
+    QString twoName(two.baseName());
     QString oneSuffix(one.suffix());
     QString twoSuffix(two.suffix());
 
-    if (oneName == twoName && oneSuffix.compare(twoSuffix, Qt::CaseInsensitive)) {
+    //QString debug(oneName + ", " + oneSuffix + " || ## || " + twoName + ", " + twoSuffix);
+    //qDebug(debug.toLocal8Bit().data());
+
+    if (oneName == twoName && (oneSuffix.compare(twoSuffix, Qt::CaseInsensitive) == 0)) {
         return true;
     } else {
         return false;

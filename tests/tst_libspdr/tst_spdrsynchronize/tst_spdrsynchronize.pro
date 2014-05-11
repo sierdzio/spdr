@@ -4,6 +4,7 @@ CONFIG += testcase
 
 include(../../../libraryIncludes.pri)
 include(../../../definitions.pri)
+include(../testincludes.pri)
 
 SOURCES += tst_spdrsynchronize.cpp
 

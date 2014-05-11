@@ -237,7 +237,20 @@ bool SpdrImportPrivate::areFilesTheSame(const QString &input, const QString &out
 
     QFileInfo outputInfo(output);
     if (!outputInfo.exists()) {
-        return false;
+        if (q->isSuffixCaseSensitive()) {
+            return false;
+        } else {
+            SpdrFileData inputData(input, q->inputPath(), SpdrFileData::ShallowSearch, q);
+
+            // TODO: find an output file that matches the input without case
+            // sensitivity!
+
+            if (inputData.isEqual(outputData, q->isSuffixCaseSensitive())) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
     SpdrFileData inputData(input, q->inputPath(), SpdrFileData::ShallowSearch, q);

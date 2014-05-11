@@ -3,6 +3,10 @@ CHANGELOG
 This is a CHANGELOG for spdr.
 Project’s GIT repo: https://github.com/sierdzio/spdar
 
+2014-05:
+ - add support for case-insensitive comparison of suffixes
+ - expand the test suite
+
 2014-03:
  - documentation updates
  - fix SpdrImport path building

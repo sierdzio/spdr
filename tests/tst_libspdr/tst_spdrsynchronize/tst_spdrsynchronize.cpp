@@ -10,6 +10,8 @@
 #include <QDir>
 #include <QFile>
 
+#include "../testhelpers.h"
+
 // TODO: test UpdateMode properly
 // TODO: test copied files in output
 // TODO: test modified files
@@ -82,23 +84,19 @@ void TstSpdrSynchronize::testSignals()
  */
 void TstSpdrSynchronize::testSimpleSynchronization()
 {
-    QString testDataPath("testData");
-    QDir(testDataPath).removeRecursively();
+    TestHelpers::prepareTestDataDir(true);
 
-    QString testInputPath(testDataPath + QLatin1String("/input"));
-    QString testOutputPath(testDataPath + QLatin1String("/output"));
-
-    /*int numberOfFiles =*/ createTestFiles(testDataPath, true);
+    createTestFiles(TestHelpers::testDataPath, true);
 
     SpdrSynchronize testObject;
     testObject.setLogFile(logFilePath);
     testObject.setLogLevel(Spdr::Debug);
     testObject.setSimulate(true);
-    testObject.setInputPath(testInputPath);
-    testObject.setOutputPath(testOutputPath);
+    testObject.setInputPath(TestHelpers::testInputPath);
+    testObject.setOutputPath(TestHelpers::testOutputPath);
     QCOMPARE(testObject.synchronize(), true);
 
-    QDir(testDataPath).removeRecursively();
+    TestHelpers::cleanUpTestDataDir();
 }
 
 /*!
@@ -107,13 +105,9 @@ void TstSpdrSynchronize::testSimpleSynchronization()
  */
 void TstSpdrSynchronize::testAdvancedSynchronization()
 {
-    QString testDataPath("testData");
-    QDir(testDataPath).removeRecursively();
+    TestHelpers::prepareTestDataDir();
 
-    QString testInputPath(testDataPath + QLatin1String("/input"));
-    QString testOutputPath(testDataPath + QLatin1String("/output"));
-
-    createTestFiles(testDataPath, false);
+    createTestFiles(TestHelpers::testDataPath, false);
 
     SpdrSynchronize testObject;
     testObject.setLogFile(logFilePath);
@@ -122,11 +116,11 @@ void TstSpdrSynchronize::testAdvancedSynchronization()
     testObject.setOptions(SpdrSynchronize::RemoveMissingFiles
                           | SpdrSynchronize::RemoveEmptyDirectories);
     testObject.setSimulate(false);
-    testObject.setInputPath(testInputPath);
-    testObject.setOutputPath(testOutputPath);
+    testObject.setInputPath(TestHelpers::testInputPath);
+    testObject.setOutputPath(TestHelpers::testOutputPath);
     QCOMPARE(testObject.synchronize(), true);
 
-    QDir(testDataPath).removeRecursively();
+    TestHelpers::cleanUpTestDataDir();
 }
 
 /*!
@@ -135,13 +129,9 @@ void TstSpdrSynchronize::testAdvancedSynchronization()
  */
 void TstSpdrSynchronize::testDeepAdvancedSynchronization()
 {
-    QString testDataPath("testData");
-    QDir(testDataPath).removeRecursively();
+    TestHelpers::prepareTestDataDir();
 
-    QString testInputPath(testDataPath + QLatin1String("/input"));
-    QString testOutputPath(testDataPath + QLatin1String("/output"));
-
-    createTestFiles(testDataPath, false);
+    createTestFiles(TestHelpers::testDataPath, false);
 
     SpdrSynchronize testObject;
     testObject.setLogFile(logFilePath);
@@ -151,11 +141,11 @@ void TstSpdrSynchronize::testDeepAdvancedSynchronization()
                           | SpdrSynchronize::RemoveMissingFiles
                           | SpdrSynchronize::RemoveEmptyDirectories);
     testObject.setSimulate(false);
-    testObject.setInputPath(testInputPath);
-    testObject.setOutputPath(testOutputPath);
+    testObject.setInputPath(TestHelpers::testInputPath);
+    testObject.setOutputPath(TestHelpers::testOutputPath);
     QCOMPARE(testObject.synchronize(), true);
 
-    QDir(testDataPath).removeRecursively();
+    TestHelpers::cleanUpTestDataDir();
 }
 
 void TstSpdrSynchronize::testSuffixCaseSensitivity()
@@ -181,18 +171,7 @@ int TstSpdrSynchronize::createTestFiles(const QString &basePath, bool simplified
         QString filename(QString("file%1.txt").arg(QString::number(i)));
         QString inputFilePath = inputPath + "/" + filename;
 
-        QFile file(inputFilePath);
-
-        if (!file.open(QFile::Text | QFile::WriteOnly)) {
-            continue;
-        }
-
-        QString fileContent("Content of file number: ");
-        fileContent += QString::number(i);
-        fileContent += ". Random data: ";
-        fileContent += QString::number(qrand());
-        file.write(fileContent.toUtf8());
-        file.close();
+        TestHelpers::writeTestFile(i, inputPath + "/", TestHelpers::generateFileData(i));
 
         if (i != 0) { // file0.txt is no copied to output at all
             QString outputFilePath(outputPath + "/" + filename);

@@ -11,6 +11,8 @@
 #include <QDir>
 #include <QDate>
 
+#include "../testhelpers.h"
+
 /*!
   \ingroup tests
 
@@ -141,26 +143,20 @@ void TstSpdrImport::testFormatSetting()
  */
 void TstSpdrImport::testBasicImporting()
 {
-    QString testDataPath("testData");
-    QDir(testDataPath).removeRecursively();
+    TestHelpers::prepareTestDataDir(true);
 
-    QString testInputPath(testDataPath + QLatin1String("/testInput"));
-    QString testOutputPath(testDataPath + QLatin1String("/testOutput"));
-    QDir().mkpath(testInputPath);
-    //QDir().mkpath(testOutputPath);
-
-    int numberOfFiles = createTestFiles(testInputPath, true);
+    int numberOfFiles = createTestFiles(TestHelpers::testInputPath, true);
 
     SpdrImport testObject;
     testObject.setLogFile(logFilePath);
     testObject.setLogLevel(Spdr::Debug);
     testObject.setSimulate(true);
-    testObject.setInputPath(testInputPath);
-    testObject.setOutputPath(testOutputPath + "/<yyyy>/<MM>/");
+    testObject.setInputPath(TestHelpers::testInputPath);
+    testObject.setOutputPath(TestHelpers::testOutputPath + "/<yyyy>/<MM>/");
     QCOMPARE(testObject.import(), true);
 
     // After simulation: no actual data should be copied
-    QDir testOutputDir(testOutputPath);
+    QDir testOutputDir(TestHelpers::testOutputPath);
     QCOMPARE(testOutputDir.entryList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot).isEmpty(), true);
 
     testObject.setSimulate(false);
@@ -172,37 +168,31 @@ void TstSpdrImport::testBasicImporting()
     QCOMPARE(testOutputDir.cd(currentDate.toString("MM")), true);
     QCOMPARE(testOutputDir.entryList(QDir::Files | QDir::NoDotAndDotDot).count(), numberOfFiles);
 
-    QDir(testDataPath).removeRecursively();
+    TestHelpers::cleanUpTestDataDir();
 }
 
 void TstSpdrImport::testStarSubstitutionImporting()
 {
-    QString testDataPath("testData");
-    QDir(testDataPath).removeRecursively();
-
-    QString testInputPath(testDataPath + QLatin1String("/testInput"));
-    QString testOutputPath(testDataPath + QLatin1String("/testOutput"));
-    QDir().mkpath(testInputPath);
-    QDir().mkpath(testOutputPath);
+    TestHelpers::prepareTestDataDir(true);
 
     // Populate output path with folders that should match star expressions
     QDate currentDate(QDate::currentDate());
-    QDir().mkpath(testOutputPath + QLatin1String("/") + currentDate.toString("yyyy")
+    QDir().mkpath(TestHelpers::testOutputPath + QLatin1String("/") + currentDate.toString("yyyy")
                   + QLatin1String("/") + currentDate.toString("MM")
                   + QLatin1String(" - test text"));
 
-    int numberOfFiles = createTestFiles(testInputPath, true);
+    int numberOfFiles = createTestFiles(TestHelpers::testInputPath, true);
 
     SpdrImport testObject;
     testObject.setLogFile(logFilePath);
     testObject.setLogLevel(Spdr::Debug);
     testObject.setSimulate(true);
-    testObject.setInputPath(testInputPath);
-    testObject.setOutputPath(testOutputPath + "/<yyyy>/<MM>*/");
+    testObject.setInputPath(TestHelpers::testInputPath);
+    testObject.setOutputPath(TestHelpers::testOutputPath + "/<yyyy>/<MM>*/");
     QCOMPARE(testObject.import(), true);
 
     // After simulation: no actual data should be copied
-    QDir testOutputDir(testOutputPath);
+    QDir testOutputDir(TestHelpers::testOutputPath);
     QCOMPARE(testOutputDir.entryList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot).count(), 1);
 
     testObject.setSimulate(false);
@@ -213,13 +203,38 @@ void TstSpdrImport::testStarSubstitutionImporting()
     QCOMPARE(testOutputDir.cd(currentDate.toString("MM") + " - test text"), true);
     QCOMPARE(testOutputDir.entryList(QDir::Files | QDir::NoDotAndDotDot).count(), numberOfFiles);
 
-    QDir(testDataPath).removeRecursively();
+    TestHelpers::cleanUpTestDataDir();
 }
 
 void TstSpdrImport::testSuffixCaseSensitivity()
 {
-    // Copy the test directory
-    // Test case sensitivity
+    TestHelpers::prepareTestDataDir(true);
+
+    // Write one file, copy to output, then rename the suffix to test.
+    TestHelpers::writeTestFile(1, TestHelpers::testInputPath,
+                               TestHelpers::generateFileData(1));
+    QString outputPath(TestHelpers::testOutputPath + "/" + QString::number(QDate::currentDate().year()));
+    QDir().mkpath(outputPath);
+
+    QFile::copy(TestHelpers::testInputPath + "/file1.txt", outputPath + "/file1.txt");
+    QFile::rename(TestHelpers::testInputPath + "/file1.txt", TestHelpers::testInputPath + "/file1.TxT");
+
+    // Test with case insensitivity
+    SpdrImport testObject;
+    testObject.setLogFile(logFilePath);
+    testObject.setLogLevel(Spdr::Debug);
+    testObject.setSimulate(false);
+    testObject.setSuffixCaseSensitive(false);
+    testObject.setInputPath(TestHelpers::testInputPath);
+    testObject.setOutputPath(TestHelpers::testOutputPath + "/<yyyy>/");
+    QCOMPARE(testObject.import(), true);
+
+    // Observe the results. There should be just one, original file.
+    QStringList outFiles(QDir(outputPath + "/").entryList(QDir::NoDotAndDotDot | QDir::Files));
+    QCOMPARE(outFiles.length(), 1);
+    QCOMPARE(outFiles.at(0), QString("file1.txt"));
+
+    TestHelpers::cleanUpTestDataDir();
 }
 
 int TstSpdrImport::createTestFiles(const QString &basePath, bool includeSubdir)
@@ -228,26 +243,13 @@ int TstSpdrImport::createTestFiles(const QString &basePath, bool includeSubdir)
     int numberOfFiles = 15;
 
     for (int i = 0; i < numberOfFiles; i++) {
-        QString filename(QString("file%1.txt").arg(QString::number(i)));
-
         if (includeSubdir && (i % 2)) {
-            filename = basePath + "/subdir/" + filename;
+            TestHelpers::writeTestFile(i, basePath + "/subdir/",
+                                       TestHelpers::generateFileData(i));
         } else {
-            filename = basePath + "/" + filename;
+            TestHelpers::writeTestFile(i, basePath + "/",
+                                       TestHelpers::generateFileData(i));
         }
-
-        QFile file(filename);
-
-        if (!file.open(QFile::Text | QFile::WriteOnly)) {
-            continue;
-        }
-
-        QString fileContent("Content of file number: ");
-        fileContent += QString::number(i);
-        fileContent += ". Random data: ";
-        fileContent += QString::number(qrand());
-        file.write(fileContent.toUtf8());
-        file.close();
     }
 
     return numberOfFiles;
@@ -255,4 +257,3 @@ int TstSpdrImport::createTestFiles(const QString &basePath, bool includeSubdir)
 
 QTEST_MAIN(TstSpdrImport)
 #include "tst_spdrimport.moc"
-

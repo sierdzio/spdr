@@ -4,7 +4,9 @@ CONFIG += testcase
 
 include(../../../libraryIncludes.pri)
 include(../../../definitions.pri)
+include(../testincludes.pri)
 
+#HEADERS += ../testhelpers.h
 SOURCES += tst_spdrimport.cpp
 
 mac {
