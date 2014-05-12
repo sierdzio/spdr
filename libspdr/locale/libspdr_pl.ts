@@ -65,12 +65,12 @@
 <context>
     <name>SpdrFileData</name>
     <message>
-        <location filename="../spdrfiledata.cpp" line="152"/>
+        <location filename="../spdrfiledata.cpp" line="142"/>
         <source>File could not be opened for reading while attempting to create a hash! %1</source>
         <translation>Nie udało się otworzyć pliku do odczytania podczas próby stworzenia sumy kontrolnej! %1</translation>
     </message>
     <message>
-        <location filename="../spdrfiledata.cpp" line="155"/>
+        <location filename="../spdrfiledata.cpp" line="145"/>
         <source>Could not create an %1 hash for file %2</source>
         <translation>Nie udało się utworzyć sumy kontrolnej %1 dla pliku %2</translation>
     </message>
@@ -114,37 +114,37 @@
         <translation>KOPIA: Kopiowanie %1 do %2 zakończyło się: %3</translation>
     </message>
     <message>
-        <location filename="../spdrimport.cpp" line="328"/>
+        <location filename="../spdrimport.cpp" line="353"/>
         <source>Output file path set to: %1</source>
         <translation>Plik wyjściowy zmieniono na: %1</translation>
     </message>
     <message>
-        <location filename="../spdrimport.cpp" line="373"/>
+        <location filename="../spdrimport.cpp" line="398"/>
         <source>Star matching regular expression set to: %1</source>
         <translation>Dopasowywanie wieloznacznika (gwiazdki) do wyrażenia regularnego zmieniono na: %1</translation>
     </message>
     <message>
-        <location filename="../spdrimport.cpp" line="382"/>
+        <location filename="../spdrimport.cpp" line="407"/>
         <source>An existing directory that matches wildcard has been found: %1</source>
         <translation>Znaleziono folder pasujący do wieloznacznika (gwiazdki): %1</translation>
     </message>
     <message>
-        <location filename="../spdrimport.cpp" line="401"/>
+        <location filename="../spdrimport.cpp" line="426"/>
         <source>Path builder result: %1</source>
         <translation>Rezultat budowania ścieżki: %1</translation>
     </message>
     <message>
-        <location filename="../spdrimport.cpp" line="430"/>
+        <location filename="../spdrimport.cpp" line="455"/>
         <source>Missing tag enclosure: &lt; or &gt;: %1</source>
         <translation>Brakuje zamknięcia tagu: &lt; lub &gt;: %1</translation>
     </message>
     <message>
-        <location filename="../spdrimport.cpp" line="434"/>
+        <location filename="../spdrimport.cpp" line="459"/>
         <source>Date format tag is closed before it is opened: %1</source>
         <translation>Tag formatujący datę został zamknięty zanim został otwarty: %1</translation>
     </message>
     <message>
-        <location filename="../spdrimport.cpp" line="438"/>
+        <location filename="../spdrimport.cpp" line="463"/>
         <source>Too many date formatting tags: %1</source>
         <translation>Zbyt wiele tagów formatujących: %1</translation>
     </message>

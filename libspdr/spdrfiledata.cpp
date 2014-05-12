@@ -115,8 +115,6 @@ bool SpdrFileData::readFileData(const QString &filePath,
                                 const QString &relativePathBase,
                                 SearchDepth searchDepth, const SpdrLog *logger)
 {
-    //bool isLogging = (logger != 0);
-
     QFileInfo fileInfo(filePath);
     isValid = true;
     name = fileInfo.fileName();
@@ -130,14 +128,6 @@ bool SpdrFileData::readFileData(const QString &filePath,
     if (!setSearchDepth(searchDepth, logger)) {
         return false;
     }
-
-//    if (isLogging) {
-//        if (logger->logLevel() == Spdr::Debug) {
-//            logger->log(toString(), Spdr::Debug);
-//        } else {
-//            logger->log(QCoreApplication::translate("SpdrFileData", "DB: Successfully added file %1 to the database").arg(path), Spdr::ExcessiveLogging);
-//        }
-//    }
 
     return true;
 }
@@ -228,9 +218,6 @@ bool SpdrFileData::isFileNameEqual(const QString &name, const QString &other,
     QString twoName(two.baseName());
     QString oneSuffix(one.suffix());
     QString twoSuffix(two.suffix());
-
-    //QString debug(oneName + ", " + oneSuffix + " || ## || " + twoName + ", " + twoSuffix);
-    //qDebug(debug.toLocal8Bit().data());
 
     if (oneName == twoName && (oneSuffix.compare(twoSuffix, Qt::CaseInsensitive) == 0)) {
         return true;
